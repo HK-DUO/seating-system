@@ -1,0 +1,16 @@
+.seat-main {
+  @apply w-full h-full flex bg-Beige
+}
+
+.seat-main > div:nth-child(1){
+  @apply w-[740px] h-full p-[20px]
+}
+.seat-main > div:nth-child(1) > div:nth-child(1){
+  @apply w-full h-[40px] mb-[20px] flex justify-center gap-[60px]
+}
+.seat-main > div:nth-child(1) > div:nth-child(1) > button {
+  @apply w-[100px] h-full text-center rounded-md
+}
+.seat-main > div:nth-child(1) > div:nth-child(2){
+  @apply w-full h-[620px]
+}

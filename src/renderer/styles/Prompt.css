@@ -1,0 +1,21 @@
+.prompt {
+  @apply p-[20px] rounded-md bg-blue
+}
+.prompt > h1 {
+  @apply text-center text-[18px] font-[600]
+}
+.prompt > div {
+  @apply mt-[20px] flex justify-between
+}
+.prompt > div > input {
+  @apply rounded-md px-[10px]
+}
+
+.prompt > p {
+  @apply mt-[20px] font-[400] whitespace-pre-line text-[14px]
+}
+
+.prompt > div > button {
+  @apply w-[80px] p-[6px] rounded-md text-center bg-white
+}
+

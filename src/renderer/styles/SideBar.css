@@ -1,0 +1,22 @@
+.side-bar {
+  @apply w-[220px] p-[10px] h-full bg-blue
+}
+
+.side-bar > div:nth-child(3){
+  @apply mt-[40px] text-[18px] font-[600]
+}
+.side-bar > div > button {
+  @apply w-full h-[60px] mt-[20px] rounded-md text-center
+}
+.side-bar > div > button:nth-child(1) {
+  @apply bg-lightBlue
+}
+.side-bar > div > button:nth-child(2) {
+  @apply bg-red
+}
+.side-bar > div:nth-child(3) > div{
+  @apply mt-[20px] flex justify-between
+}
+.side-bar > div:nth-child(3) > div > button {
+  @apply w-[45%] h-[60px] rounded-md bg-lightBlue
+}

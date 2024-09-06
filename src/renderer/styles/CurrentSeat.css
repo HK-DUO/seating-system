@@ -1,0 +1,9 @@
+.current-seat {
+  @apply w-full h-[220px] mt-[10px] p-[10px] rounded-md bg-white
+}
+.current-seat > span {
+  @apply mb-[40px] block text-[18px]
+}
+.current-seat > p {
+  @apply mb-[10px] flex justify-between
+}

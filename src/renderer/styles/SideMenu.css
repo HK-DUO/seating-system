@@ -1,0 +1,16 @@
+.side-menu {
+  @apply w-[160px] h-full bg-deepBlue font-[600]
+}
+.side-menu > h1 {
+  @apply w-full h-[60px] flex justify-center items-center text-[24px] text-white
+}
+.side-menu > h1 > img {
+  @apply w-[26px] h-[26px] mr-[6px]
+}
+.side-menu > div {
+  @apply w-full px-[20px]
+}
+.side-menu > div > a {
+  @apply mt-[140px] w-[120px] h-[120px] flex justify-center items-center rounded-md bg-lightBlue text-[18px] text-black/60
+}
+
