@@ -52,23 +52,35 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
   }
 
 
+  const out = () =>{
+    room.rows.forEach((item, index) => {
+      item.seats.forEach(async(item, index) => {
+        if(selectSeat == item.num){
+          if(item.state !== false){
+            alert("오류", "사용중인 좌석이 아닙니다.")
+          } else {
+            outPrompt(String(selectRoom), String(selectSeat)).then(async (res: any) => {})
+          }
+        }
+      })
+    })
+  }
+
+
   return <div className="side-bar">
     <CurrentTime />
     <CurrentSeat selectSeat={selectSeat} restSeat={room.restSeats} totalSeat={room.totalSeats} roomNum={selectRoom} />
     <div>
       <button onClick={reserve}>예약
       </button>
-      <button
-        onClick={() => {
-          prompt('퇴실', '퇴실 후 좌석을 다시 이용하기 위해선 재예약이 필요합니다.\n퇴실 시 본인 좌석 정리,정돈').then((res) => console.log(res));
-        }}>퇴실
+      <button>퇴실
       </button>
       <div>
         <button onClick={() => {
           prompt('연장', '연장은 기본 사용시간의 2시간 증가합니다.\n연장을 통해 제한없이 이용가능합니다.').then((res) => console.log(res));
         }}>연장
         </button>
-        <button>퇴실요청
+        <button onClick={out}>퇴실요청
         </button>
       </div>
     </div>
