@@ -1,4 +1,5 @@
 type PropsType = {
+  type:number;
   num: number;
   line: number;
   state: boolean;
@@ -7,9 +8,9 @@ type PropsType = {
   setSeatNum: any;
 };
 
-function Seat({ num, line, state, disableSeats, seatNum,  setSeatNum }: PropsType) {
+function Seat({type, num, line, state, disableSeats, seatNum,  setSeatNum }: PropsType) {
   return <div
-    className={`w-[60px] h-[34px] px-[6px] border-black/60 border cursor-pointer hover:bg-blue  ${(state ? seatNum == num ? 'bg-blue' : 'bg-lightBlue' : seatNum == num ? 'bg-blue' : 'bg-red')} ${line % 3 == 0 ? 'mr-[100px]' : ''}`}
+    className={`h-[34px] px-[6px] border-black/60 border cursor-pointer hover:bg-blue ${type == 1 ? `w-[50px] ${line % 3 == 0 && 'mr-[50px]'}` : `w-[60px] ${line % 3 == 0 && 'mr-[100px]'}`} ${(state ? seatNum == num ? 'bg-blue' : 'bg-lightBlue' : seatNum == num ? 'bg-blue' : 'bg-red')}`}
     onClick={() => {
       setSeatNum(num);
     }}>

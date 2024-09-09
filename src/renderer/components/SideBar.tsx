@@ -113,7 +113,7 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
 
   return <div className="side-bar">
     <CurrentTime />
-    <CurrentSeat selectSeat={selectSeat} restSeat={room.restSeats} totalSeat={room.totalSeats} roomNum={selectRoom} />
+    <CurrentSeat selectSeat={selectSeat} restSeat={room?.restSeats} totalSeat={room?.totalSeats} roomNum={selectRoom} />
     <div>
       <button onClick={reserve}>예약
       </button>
