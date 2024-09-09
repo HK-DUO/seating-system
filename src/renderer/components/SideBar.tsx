@@ -22,7 +22,7 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
   const {alert, prompt, inPrompt, outPrompt} = useDialog();
 
   const reserve = () => {
-    room.rows.forEach((item, index) => {
+    if(selectSeat){room.rows.forEach((item, index) => {
       item.seats.forEach(async(item, index) => {
         if(selectSeat == item.num){
           if(item.state == false){
@@ -41,19 +41,60 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
                     ok = true;
                   }
                 }
-                  else {
+                else {
                   ok = true
                 }
               });
             }}
         }
       });
-    })
+    })}else {
+      alert("오류", "좌석을 선택하세요.")
+    }
+
   }
 
+  const out = async () =>{
+    let ok = false
+    while(!ok){
+      await prompt('퇴실').then(async (res: any) => {
+        if(res){
+          if (res.name == '') {
+            await alert('오류', '이름을 입력하세요.');
+          } else if (res.number == '') {
+            await alert('오류', '전화번호를 입력하세요.');
+          } else {
+            await alert('퇴실', '좌석이 반납되었습니다.');
+            ok = true
+          }
+        } else {
+          ok = true
+        }
+      });}
+  }
 
-  const out = () =>{
-    room.rows.forEach((item, index) => {
+  const extend = async () => {
+    let ok = false
+    while(!ok){
+      await prompt("연장").then(async (res: any) => {
+        if(res){
+          if (res.name == '') {
+            await alert('오류', '이름을 입력하세요.');
+          } else if (res.number == '') {
+            await alert('오류', '전화번호를 입력하세요.');
+          } else {
+            await alert('연장', '이용시간 연장이 완료되었습니다.');
+            ok = true
+          }
+        } else {
+          ok = true
+        }
+      })
+    }
+  }
+
+  const outRequest = () =>{
+    if(selectSeat){room.rows.forEach((item, index) => {
       item.seats.forEach(async(item, index) => {
         if(selectSeat == item.num){
           if(item.state !== false){
@@ -63,7 +104,10 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
           }
         }
       })
-    })
+    })}else {
+      alert("오류", "좌석을 선택하세요.")
+    }
+
   }
 
 
@@ -73,14 +117,12 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
     <div>
       <button onClick={reserve}>예약
       </button>
-      <button>퇴실
+      <button onClick={out}>퇴실
       </button>
       <div>
-        <button onClick={() => {
-          prompt('연장', '연장은 기본 사용시간의 2시간 증가합니다.\n연장을 통해 제한없이 이용가능합니다.').then((res) => console.log(res));
-        }}>연장
+        <button onClick={extend}>연장
         </button>
-        <button onClick={out}>퇴실요청
+        <button onClick={outRequest}>퇴실요청
         </button>
       </div>
     </div>
