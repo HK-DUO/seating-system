@@ -7,6 +7,7 @@ type PropsType = {
   seatNum?: number;
   setSeatNum: any;
   room: {
+    type: number;
     totalSeats: number,
     restSeats: number,
     rows: {
@@ -19,11 +20,12 @@ type PropsType = {
 function RoomLayout({type, setSeatNum, seatNum, room}: PropsType) {
 
   const room1Layout = room.rows.map((item, index) => (
-    <li className={`${item.row % 2 == 0 ? 'mb-[10px]' : ''} flex`}>
-      {item.seats.map((item, index) => Seat({
-        num: item.num, line: item.line, state: item.state, disableSeats: item.disableSeats,
-        seatNum: seatNum, setSeatNum: setSeatNum
-      }))}
+    <li key={index} className={`${item.row % 2 == 0 ? 'mb-[10px]' : ''} flex`}>
+      {item.seats.map((item, index) =>
+        (<div key={index}>
+          <Seat num={item.num} line={item.line} state={item.state} key={index} disableSeats={item.disableSeats}
+                seatNum={seatNum} setSeatNum={setSeatNum} />
+        </div>))}
     </li>
   ));
 

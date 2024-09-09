@@ -1,6 +1,7 @@
 export const room1 = {
-  totalSeats:129,
-  restSeats:117,
+  type: 1,
+  totalSeats: 129,
+  restSeats: 117,
   rows: [
     {
       row: 1,
@@ -195,4 +196,5 @@ export const room1 = {
         { num: 129, line: 8, state: true, disableSeats: false }
       ]
     }
-  ]};
+  ]
+};
