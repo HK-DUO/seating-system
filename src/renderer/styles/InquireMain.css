@@ -1,0 +1,31 @@
+.inquire-main {
+  @apply w-full h-full p-[20px] bg-Beige
+}
+
+.inquire-main > div:nth-child(1) {
+  @apply w-full h-[40px] mb-[40px] flex
+}
+.inquire-main > div:nth-child(1) > label {
+  @apply min-w-[100px] text-[18px] flex items-center
+}
+.inquire-main > div:nth-child(1) > input {
+  @apply w-full px-[10px]
+}
+
+.inquire-main > div:nth-child(2) {
+  @apply w-full h-[520px] mb-[40px] flex
+}
+.inquire-main > div:nth-child(2) > label {
+  @apply min-w-[100px] text-[18px]
+}
+.inquire-main > div:nth-child(2) > textarea {
+  @apply w-full p-[10px] resize-none overflow-auto
+}
+
+
+.inquire-main > div:nth-child(3) {
+  @apply flex items-center justify-center
+}
+.inquire-main > div:nth-child(3) > button {
+  @apply w-[100px] h-[40px] text-[18px] text-white bg-deepBlue rounded-md
+}
