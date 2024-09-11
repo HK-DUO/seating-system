@@ -1,6 +1,6 @@
 import SideBar from "./SideBar";
 import { useEffect, useState } from 'react';
-import RoomLayout from "./RoomLayout";
+import RoomLayout from "../layouts/RoomLayout";
 import "../styles/SeatMain.css";
 import { room1, room2 } from '../models/seatModel';
 

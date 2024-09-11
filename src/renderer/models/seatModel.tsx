@@ -16,7 +16,7 @@ export const room1 = {
         { num: 8, line: 8, state: true, disableSeats: false },
         { num: 9, line: 9, state: true, disableSeats: false },
         { num: 10, line: 10, state: true, disableSeats: false },
-        { num: 11, line: 11, state: true, disableSeats: false },
+        { num: 11, line: 11, state: true, disableSeats: false }
       ]
     },
     {
@@ -32,7 +32,7 @@ export const room1 = {
         { num: 20, line: 20, state: true, disableSeats: false },
         { num: 21, line: 21, state: true, disableSeats: false },
         { num: 22, line: 22, state: true, disableSeats: false },
-        { num: 23, line: 23, state: true, disableSeats: false },
+        { num: 23, line: 23, state: true, disableSeats: false }
       ]
     },
     {
@@ -48,7 +48,7 @@ export const room1 = {
         { num: 32, line: 32, state: true, disableSeats: false },
         { num: 33, line: 33, state: true, disableSeats: false },
         { num: 34, line: 34, state: true, disableSeats: false },
-        { num: 35, line: 35, state: true, disableSeats: false },
+        { num: 35, line: 35, state: true, disableSeats: false }
       ]
     },
     {
@@ -64,7 +64,7 @@ export const room1 = {
         { num: 44, line: 44, state: true, disableSeats: false },
         { num: 45, line: 45, state: true, disableSeats: false },
         { num: 46, line: 46, state: true, disableSeats: false },
-        { num: 47, line: 47, state: true, disableSeats: false },
+        { num: 47, line: 47, state: true, disableSeats: false }
       ]
     },
     {
@@ -80,7 +80,7 @@ export const room1 = {
         { num: 56, line: 56, state: true, disableSeats: false },
         { num: 57, line: 57, state: true, disableSeats: false },
         { num: 58, line: 58, state: true, disableSeats: false },
-        { num: 59, line: 59, state: true, disableSeats: false },
+        { num: 59, line: 59, state: true, disableSeats: false }
       ]
     },
     {
@@ -96,7 +96,7 @@ export const room1 = {
         { num: 68, line: 68, state: true, disableSeats: false },
         { num: 69, line: 69, state: true, disableSeats: false },
         { num: 70, line: 70, state: true, disableSeats: false },
-        { num: 71, line: 71, state: true, disableSeats: false },
+        { num: 71, line: 71, state: true, disableSeats: false }
       ]
     },
     {
