@@ -19,4 +19,14 @@ export type SEAT_DTO={
   disableSeats:boolean;
 }
 
+export type INIT_SEAT_DTO={
+  room_id:number;
+  seat_num:number;
+  seat_status:string;
+  is_special:number;
+}
+
+export type SEAT_STATUS_DTO={
+  seat_status:string;
+}
 

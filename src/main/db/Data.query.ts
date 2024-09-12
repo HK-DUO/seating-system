@@ -1,9 +1,9 @@
 
 
-const createReservationTableQuery:string = "CREATE TABLE Reservation (reservation_id INT AUTO_INCREMENT PRIMARY KEY, seat_id INT NOT NULL,user_id INT NOT NULL,reservation_start DATETIME NOT NULL,reservation_end DATETIME NOT NULL,FOREIGN KEY (seat_id) REFERENCES Seat(seat_id),FOREIGN KEY (user_id) REFERENCES User(user_id))"
-const createSeatTableQuery:string="CREATE TABLE Seat (seat_id INT AUTO_INCREMENT PRIMARY KEY, room_id INT NOT NULL, seat_num VARCHAR(255) NOT NULL, seat_status VARCHAR(255) NOT NULL, is_special BOOLEAN DEFAULT FALSE, FOREIGN KEY (room_id) REFERENCES ReadingRoom(room_id))"
-const createReadingRoomTableQuery:string= "CREATE TABLE ReadingRoom (room_id INT AUTO_INCREMENT PRIMARY KEY,room_name VARCHAR(255) NOT NULL,total_num_of_seat INT NOT NULL)"
-const createUserTableQuery:string = "CREATE TABLE User (user_id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, phone_number VARCHAR(255) NOT NULL UNIQUE)"
+const createReservationTableQuery:string = "CREATE TABLE IF NOT EXISTS Reservation (reservation_id INTEGER PRIMARY KEY AUTOINCREMENT, seat_id INTEGER NOT NULL,user_id INTEGER NOT NULL,reservation_start DATETIME NOT NULL,reservation_end DATETIME NOT NULL,FOREIGN KEY (seat_id) REFERENCES Seat(seat_id),FOREIGN KEY (user_id) REFERENCES User(user_id))"
+const createSeatTableQuery:string="CREATE TABLE IF NOT EXISTS Seat (seat_id INTEGER PRIMARY KEY AUTOINCREMENT, room_id INTEGER NOT NULL, seat_num INTEGER NOT NULL, seat_status VARCHAR(255) NOT NULL, is_special BOOLEAN DEFAULT FALSE, FOREIGN KEY (room_id) REFERENCES ReadingRoom(room_id))"
+const createReadingRoomTableQuery:string= "CREATE TABLE IF NOT EXISTS ReadingRoom (room_id INTEGER PRIMARY KEY AUTOINCREMENT,room_name VARCHAR(255) NOT NULL,total_num_of_seat INTEGER NOT NULL)"
+const createUserTableQuery:string = "CREATE TABLE IF NOT EXISTS User (user_id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255) NOT NULL, phone_number VARCHAR(255) NOT NULL UNIQUE)"
 
 
 const initReadingRoomData1:string="insert into ReadingRoom(room_id,room_name,total_num_of_seat) values(1,'제 1열람실',84)"
@@ -13,6 +13,16 @@ const initSeatData:string ="INSERT INTO Seat (seat_id, room_id, seat_num, seat_s
 const viewAllSeat:string="SELECT * from Seat where seat_id=?"
 const viewReadingRoom:string="SELECT * FROM Seat where room_id = @id"
 
+const createUserQuery:string="insert into USer(name,phone_number) values(?,?)"
+const createReservationQuery:string="INSERT INTO Reservation (user_id, seat_id, reservation_start, reservation_end) VALUES (?, ?, ?, ?)"
+
+const deleteAllUserQuery:string="DELETE FROM User"
+
+const isSeatAvailableQuery:string="SELECT seat_status FROM Seat WHERE seat_id = ?"
+const updateSeatStatusQuery:string="UPDATE Seat SET seat_status = ? WHERE seat_id = ?"
+
+
+// const hasReservationQuery:string="SELECT reservation_id FROM reservation WHERE user_id = ?"
 
 export const createTableQuery={
   reservation:createReservationTableQuery,
@@ -30,6 +40,21 @@ export const initDataQuery={
 export const viewQuery={
   all:viewAllSeat,
   reading_room:viewReadingRoom,
+}
+
+export const userQuery={
+  create:createUserQuery,
+  delete:deleteAllUserQuery,
+  // hasReservation:hasReservationQuery,
+}
+
+export const reservationQuery={
+  create:createReservationQuery,
+}
+
+export const seatQuery={
+  isAvailable:isSeatAvailableQuery,
+  updateStatus:updateSeatStatusQuery,
 }
 
 

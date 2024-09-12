@@ -1,7 +1,7 @@
 export type SEAT={
   seat_id:number;
   room_id:number;
-  seat_num:string;
+  seat_num:number;
   seat_status:string;
   is_special:number;
 }
@@ -14,7 +14,7 @@ export type READING_ROOM={
 }
 
 export type RESERVATION={
-  room_id:string;
+  reservation_id:string;
   seat_id:string;
   user_id:string;
   reservation_start:string;

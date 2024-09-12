@@ -16,7 +16,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { ElectronHandler } from './preload';
 
-import{init,viewReadingRoom} from "./db/Data.controller"
+import { createReservation, deleteAllUser, init, viewReadingRoom } from "./db/Data.controller";
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -136,6 +136,12 @@ app
     });
     ipcMain.handle("readingRoom:view",async (_,id:number)=>{
       return viewReadingRoom(id);
+    })
+    ipcMain.handle("user:delete",async ()=>{
+      return deleteAllUser();
+    })
+    ipcMain.handle("reservation:create",async (_,name:string,phone_number:string,seat_id:number)=>{
+      return createReservation(name,phone_number,seat_id);
     })
     createWindow();
     app.on('activate', () => {
