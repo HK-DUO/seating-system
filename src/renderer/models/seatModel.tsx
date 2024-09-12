@@ -22,17 +22,17 @@ export const room1 = {
     {
       row: 2,
       seats: [
-        { num: 13, line: 13, state: true, disableSeats: false },
-        { num: 14, line: 14, state: true, disableSeats: false },
-        { num: 15, line: 15, state: false, disableSeats: false },
-        { num: 16, line: 16, state: false, disableSeats: false },
-        { num: 17, line: 17, state: true, disableSeats: false },
-        { num: 18, line: 18, state: true, disableSeats: false },
-        { num: 19, line: 19, state: true, disableSeats: false },
-        { num: 20, line: 20, state: true, disableSeats: false },
-        { num: 21, line: 21, state: true, disableSeats: false },
-        { num: 22, line: 22, state: true, disableSeats: false },
-        { num: 23, line: 23, state: true, disableSeats: false }
+        { num: 13, line: 1, state: true, disableSeats: false },
+        { num: 14, line: 2, state: true, disableSeats: false },
+        { num: 15, line: 3, state: false, disableSeats: false },
+        { num: 16, line: 4, state: false, disableSeats: false },
+        { num: 17, line: 5, state: true, disableSeats: false },
+        { num: 18, line: 6, state: true, disableSeats: false },
+        { num: 19, line: 7, state: true, disableSeats: false },
+        { num: 20, line: 8, state: true, disableSeats: false },
+        { num: 21, line: 9, state: true, disableSeats: false },
+        { num: 22, line: 10, state: true, disableSeats: false },
+        { num: 23, line: 11, state: true, disableSeats: false }
       ]
     },
     {
@@ -84,6 +84,7 @@ export const room1 = {
       ]
     },
     {
+
       row: 6,
       seats: [
         { num: 61, line: 61, state: true, disableSeats: false },

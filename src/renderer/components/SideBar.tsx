@@ -25,8 +25,8 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
     if(selectSeat){room.rows.forEach((item, index) => {
       item.seats.forEach(async(item, index) => {
         if(selectSeat == item.num){
-          if(item.state == false){
-            alert('오류', "이미 사용중인 좌석입니다.");
+          if(!item.state){
+            await alert('오류', "이미 사용중인 좌석입니다.");
           } else {
             let ok = false;
             while (!ok) {
@@ -97,7 +97,7 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
     if(selectSeat){room.rows.forEach((item, index) => {
       item.seats.forEach(async(item, index) => {
         if(selectSeat == item.num){
-          if(item.state !== false){
+          if(item.state){
             alert("오류", "사용중인 좌석이 아닙니다.")
           } else {
             outPrompt(String(selectRoom), String(selectSeat)).then(async (res: any) => {})
@@ -107,7 +107,6 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
     })}else {
       alert("오류", "좌석을 선택하세요.")
     }
-
   }
 
 
