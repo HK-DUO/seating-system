@@ -13,16 +13,14 @@ function TestButton() {
     status: 1,
   };
 
-  const onCreate = () => {
-    window.electron.createTable();
+  const init = () => {
+    window.electron.init();
   };
 
-  const onSaveTest = () => {
-    window.electron.insertTODO(testTodo);
-  };
 
-  const onCheck = async () => {
-    await console.log(window.electron.getOneTODO(1));
+  const onView = async (id:number) => {
+    const result =  await window.electron.viewReadingRoom(id);
+    console.log(result);
   };
 
   const test = () => {
@@ -34,13 +32,10 @@ function TestButton() {
       <button className="w-full h-[40px] bg-white" onClick={test}>
         ipc 테스트
       </button>
-      <button className="w-full h-[40px] bg-white" onClick={onCreate}>
-        생성 테스트
+      <button className="w-full h-[40px] bg-white" onClick={init}>
+        초기화
       </button>
-      <button className="w-full h-[40px] bg-white" onClick={onSaveTest}>
-        삽입 테스트
-      </button>
-      <button className="w-full h-[40px] bg-white" onClick={onCheck}>
+      <button className="w-full h-[40px] bg-white" onClick={()=>onView(2)}>
         조회 테스트
       </button>
     </div>

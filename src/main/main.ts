@@ -15,16 +15,8 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { ElectronHandler } from './preload';
-import {
-  deleteTODO,
-  getAllTODO,
-  getOneTODO,
-  insertTODO,
-  updateTODO,
-  createTable,
-  TODO,
-} from './services/Database.service';
 
+import{init,viewReadingRoom} from "./db/Data.controller"
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -35,10 +27,6 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-// ipc test
-ipcMain.on('test-channel', (event, text: string) => {
-  console.log('test-message : ', text);
-});
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -142,24 +130,13 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
-    ipcMain.handle('todo:insert', async (_, todo: TODO) => {
-      insertTODO(todo);
+
+    ipcMain.handle('init', async () => {
+      init();
     });
-    ipcMain.handle('todo:update', async (_, todo: TODO) => {
-      updateTODO(todo);
-    });
-    ipcMain.handle('todo:delete', async (_, id: number) => {
-      deleteTODO(id);
-    });
-    ipcMain.handle('todo:getOne', async (_, id: number) => {
-      return getOneTODO(id);
-    });
-    ipcMain.handle('todo:getAll', async () => {
-      return getAllTODO();
-    });
-    ipcMain.handle('todo:createTable', async () => {
-      return createTable();
-    });
+    ipcMain.handle("readingRoom:view",async (_,id:number)=>{
+      return viewReadingRoom(id);
+    })
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
