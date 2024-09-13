@@ -1,6 +1,6 @@
 import {
-  check_reserved_seat,
-  check_reserved_user,
+  find_reserved_seat_id_by_user_id,
+  find_user_id,
   connect, count_reservation,
   create_reservation,
   create_user,
@@ -8,7 +8,7 @@ import {
   init_data,
   init_table,
   is_seat_available, update_seat_status,
-  view_all_seats
+  find_all_seats
 } from "./Data.repo";
 import { formatDateForSQLite, initSeat, toConvertRowDtos } from "./Data.service";
 import { READING_ROOM_DTO } from "../type/Dto.type";
@@ -22,7 +22,7 @@ export function init(){
 
 export function viewReadingRoom(room_id:number):READING_ROOM_DTO{
 
-  let seats = view_all_seats(room_id);
+  let seats = find_all_seats(room_id);
   let reservation_count = count_reservation(room_id)
   let restSeats= room_id==1 ? 84-reservation_count : 128-reservation_count;
   return {
@@ -68,13 +68,13 @@ export function deleteAllUser(){
 
 export function checkOut(name:string,phone_number:string){
 
-  let user = check_reserved_user(name,phone_number);
+  let user = find_user_id(name,phone_number);
   console.log("here")
   if(!user){
     return false;
   }
   console.log(user.user_id)
-  let seat_id = check_reserved_seat(user.user_id);
+  let seat_id = find_reserved_seat_id_by_user_id(user.user_id);
   console.log("hello")
   delete_reservation(user.user_id);
   let result = delete_user(user.user_id);

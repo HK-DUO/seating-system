@@ -37,7 +37,7 @@ export function init_table() {
   db.exec(createTableQuery.reading_room);
 }
 
-export function view_all_seats(id:number):SEAT[]{
+export function find_all_seats(id:number):SEAT[]{
 const db=connect();
   try{
     const stmt=db.prepare(viewQuery.reading_room);
@@ -104,7 +104,7 @@ type USER_ID_DTO={
   user_id:number,
 }
 
-export function check_reserved_user(name:string,phone_number:string){
+export function find_user_id(name:string,phone_number:string){
   const db = connect();
   const stmt=db.prepare(userQuery.check);
 
@@ -133,7 +133,7 @@ type RESERVED_SEAT_DTO={
   seat_id:number,
 }
 
-export function check_reserved_seat(user_id:number){
+export function find_reserved_seat_id_by_user_id(user_id:number){
   const db = connect();
   const stmt = db.prepare(reservationQuery.checkSeat);
   let result = stmt.get(user_id) as RESERVED_SEAT_DTO;
