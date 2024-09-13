@@ -5,17 +5,15 @@ import "../styles/SeatMain.css";
 
 
 function SeatMain() {
-  const [room, setRoom] = useState<any>();
-  const [visible, setVisible] = useState(false);
+  const [roomData, setRoomData] = useState<any>();
 
   const [roomNum, setRoomNum] = useState<number>(1);
   const [seatNum, setSeatNum] = useState<number>();
 
   useEffect(() => {
     onView(roomNum).then((res) => {
-      console.log(res.room)
-      setRoom(res.room);
-      setVisible(true);
+      console.log(res)
+      setRoomData(res);
     });
   }, [roomNum]);
 
@@ -30,21 +28,17 @@ function SeatMain() {
     <div>
       <div>
         <button onClick={() => {
-          setVisible(false);
           setRoomNum(1);
         }} className={roomNum == 1 ? 'bg-blue text-white' : 'bg-lightBlue'}>제1열람실
         </button>
         <button onClick={() => {
-          setVisible(false);
           setRoomNum(2);
         }} className={roomNum == 2 ? 'bg-blue text-white' : 'bg-lightBlue'}>제2열람실
         </button>
       </div>
-      <div className={visible ? 'visible' : 'invisible'}>
-        <RoomLayout type={roomNum} seatNum={seatNum} setSeatNum={setSeatNum} room={room} />
-      </div>
+        <RoomLayout type={roomData?.selectRoom} seatNum={seatNum} setSeatNum={setSeatNum} room={roomData?.room} />
     </div>
-    <SideBar room={room} selectRoom={roomNum} selectSeat={seatNum} />
+    <SideBar room={roomData?.room} selectRoom={roomNum} selectSeat={seatNum} />
   </div>;
 }
 
