@@ -2,7 +2,7 @@ import Database from "better-sqlite3";
 import path from "path";
 import { createTableQuery, initDataQuery, reservationQuery, seatQuery, userQuery, viewQuery } from "./Data.query";
 import { SEAT } from "../type/Entity.type";
-import { INIT_SEAT_DTO, SEAT_STATUS_DTO } from "../type/Dto.type";
+import { INIT_SEAT_DTO, RESERVATION_COUNT_DTO, SEAT_STATUS_DTO } from "../type/Dto.type";
 import { formatDateForSQLite } from "./Data.service";
 
 
@@ -14,7 +14,7 @@ export function connect() {
 }
 
 
-export function initData(seats:INIT_SEAT_DTO[]){
+export function init_data(seats:INIT_SEAT_DTO[]){
   const db = connect();
   db.exec(initDataQuery.reading_room_1);
   db.exec(initDataQuery.reading_room_2);
@@ -27,7 +27,7 @@ export function initData(seats:INIT_SEAT_DTO[]){
   insertInitData(seats);
 }
 
-export function initTable() {
+export function init_table() {
 
   const db = connect();
 
@@ -37,7 +37,7 @@ export function initTable() {
   db.exec(createTableQuery.reading_room);
 }
 
-export function viewAllSeats(id:number):SEAT[]{
+export function view_all_seats(id:number):SEAT[]{
 const db=connect();
   try{
     const stmt=db.prepare(viewQuery.reading_room);
@@ -55,9 +55,9 @@ export function create_user(name:string,phone_number:string){
   return Number(runResult.lastInsertRowid);
 }
 
-export function delete_user(){
+export function delete_all_user(){
   const db=connect();
-  db.exec(userQuery.delete)
+  db.exec(userQuery.deleteAll)
 }
 
 export function create_reservation(user_id: number, seat_id: number) {
@@ -65,17 +65,13 @@ export function create_reservation(user_id: number, seat_id: number) {
 
   const insertReservationStmt = db.prepare(reservationQuery.create);
 
-  let now = new Date();
-  let start = formatDateForSQLite(now);
-  let end = formatDateForSQLite(new Date(now.getTime() + 2 * 60 * 60 * 1000));
-
-  const info = insertReservationStmt.run(user_id, seat_id, start, end);
+  const info = insertReservationStmt.run(user_id, seat_id);
 
   // Return the reservation_id (auto-generated)
   return Number(info.lastInsertRowid);
 }
 
-export function isSeatAvailable(seat_id: number): boolean {
+export function is_seat_available(seat_id: number): boolean {
   const db = connect();
 
   const stmt = db.prepare(seatQuery.isAvailable);
@@ -86,7 +82,7 @@ export function isSeatAvailable(seat_id: number): boolean {
   return seat !==undefined && seat.seat_status=== 'available';
 }
 
-export function updateSeatStatus(seat_id:number,seat_status:string){
+export function update_seat_status(seat_id:number,seat_status:string){
   const db = connect();
 
   const stmt = db.prepare(seatQuery.updateStatus)
@@ -94,4 +90,52 @@ export function updateSeatStatus(seat_id:number,seat_status:string){
   stmt.run(seat_status,seat_id);
 }
 
+export function count_reservation(room_id:number){
 
+  const db = connect();
+  const stmt = db.prepare(reservationQuery.count);
+
+  let result = stmt.get(room_id) as RESERVATION_COUNT_DTO | undefined;
+
+  return result ? result.reserved_seat_count : 0;
+}
+
+type USER_ID_DTO={
+  user_id:number,
+}
+
+export function check_reserved_user(name:string,phone_number:string){
+  const db = connect();
+  const stmt=db.prepare(userQuery.check);
+
+
+  let newVar = stmt.get(name,phone_number) as USER_ID_DTO ;
+  console.log(newVar?.user_id)
+  return stmt.get(name,phone_number) as USER_ID_DTO | undefined;
+
+}
+
+export function delete_user(user_id:number){
+  const db = connect();
+  const stmt = db.prepare(userQuery.delete);
+  let result = stmt.run(user_id);
+
+  return result;
+}
+
+export function delete_reservation(user_id:number){
+  const db = connect();
+  const stmt = db.prepare(reservationQuery.delete);
+  let result = stmt.run(user_id);
+}
+
+type RESERVED_SEAT_DTO={
+  seat_id:number,
+}
+
+export function check_reserved_seat(user_id:number){
+  const db = connect();
+  const stmt = db.prepare(reservationQuery.checkSeat);
+  let result = stmt.get(user_id) as RESERVED_SEAT_DTO;
+  return result.seat_id;
+}

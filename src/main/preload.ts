@@ -26,7 +26,8 @@ const electronHandler = {
   init: () => ipcRenderer.invoke('init'),
   viewReadingRoom:(id:number)=>ipcRenderer.invoke('readingRoom:view',id),
   deleteUser:()=>ipcRenderer.invoke('user:delete'),
-  createReservation:(name:string,phone_number:string,seat_id:number)=>ipcRenderer.invoke('reservation:create',name,phone_number,seat_id),
+  checkIn:(name:string,phone_number:string,seat_id:number)=>ipcRenderer.invoke('reservation:checkin',name,phone_number,seat_id),
+  checkOut:(name:string,phone_number:string)=>ipcRenderer.invoke('reservation:checkout',name,phone_number),
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);

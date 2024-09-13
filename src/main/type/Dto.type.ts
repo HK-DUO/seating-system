@@ -13,6 +13,7 @@ export type ROW_DTO={
 }
 
 export type SEAT_DTO={
+  id:number;
   num:number;
   line:number;
   state:boolean;
@@ -28,5 +29,9 @@ export type INIT_SEAT_DTO={
 
 export type SEAT_STATUS_DTO={
   seat_status:string;
+}
+
+export type RESERVATION_COUNT_DTO={
+  reserved_seat_count:number;
 }
 

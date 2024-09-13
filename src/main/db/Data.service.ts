@@ -21,6 +21,7 @@ function toConvertSeatDtos(seats:SEAT[],id:number):SEAT_DTO[]{
   const seat_dto: SEAT_DTO[]=[];
   for(const seat of seats){
     seat_dto.push({
+      id:seat.seat_id,
       num:seat.seat_num,
       line:seat.seat_num%seatsPerRow==0?seatsPerRow:seat.seat_num%seatsPerRow,
       state:seat.seat_status == 'available',

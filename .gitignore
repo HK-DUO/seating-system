@@ -20,6 +20,7 @@ node_modules
 
 release/app/dist
 release/build
+release/app/database.db
 .erb/dll
 
 .idea
@@ -30,5 +31,9 @@ npm-debug.log.*
 *.sass.d.ts
 *.scss.d.ts
 
+<<<<<<< HEAD
 #database
 ./release/app/database.db
+=======
+
+>>>>>>> 0b41c04 (feat/db: 열람실 퇴실기능 구현)

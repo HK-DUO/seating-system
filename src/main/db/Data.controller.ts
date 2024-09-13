@@ -1,42 +1,45 @@
 import {
-  connect,
+  check_reserved_seat,
+  check_reserved_user,
+  connect, count_reservation,
   create_reservation,
   create_user,
-  delete_user,
-  initData,
-  initTable,
-  isSeatAvailable, updateSeatStatus,
-  viewAllSeats
+  delete_all_user, delete_reservation, delete_user,
+  init_data,
+  init_table,
+  is_seat_available, update_seat_status,
+  view_all_seats
 } from "./Data.repo";
 import { formatDateForSQLite, initSeat, toConvertRowDtos } from "./Data.service";
 import { READING_ROOM_DTO } from "../type/Dto.type";
 
 
 export function init(){
-  initTable();
-  initData(initSeat());
+  init_table();
+  init_data(initSeat());
 }
 
 
-export function viewReadingRoom(id:number):READING_ROOM_DTO{
+export function viewReadingRoom(room_id:number):READING_ROOM_DTO{
 
-  let seats = viewAllSeats(id);
-
+  let seats = view_all_seats(room_id);
+  let reservation_count = count_reservation(room_id)
+  let restSeats= room_id==1 ? 84-reservation_count : 128-reservation_count;
   return {
-    selectRoom: id,
+    selectRoom: room_id,
     room: {
       totalSeats: seats.length,
-      restSeats: 0,
-      rows: toConvertRowDtos(seats, id)
+      restSeats: restSeats,
+      rows: toConvertRowDtos(seats, room_id)
     }
   }
 }
 
-export function createReservation(name: string, phone_number: string, seat_id: number) {
+export function checkIn(name: string, phone_number: string, seat_id: number) {
   const db = connect();
   const transaction = db.transaction(() => {
 
-    let seatAvailable = isSeatAvailable(seat_id);
+    let seatAvailable = is_seat_available(seat_id);
     if (!seatAvailable) {
       console.error("Seat is either invalid or already reserved.");
       throw new Error("Seat is either invalid or already reserved.");
@@ -45,7 +48,7 @@ export function createReservation(name: string, phone_number: string, seat_id: n
 
     let reservation_id = create_reservation(user_id, seat_id);
 
-    updateSeatStatus(seat_id,"reserved")
+    update_seat_status(seat_id,"reserved")
 
     return reservation_id;
   })
@@ -60,5 +63,25 @@ export function createReservation(name: string, phone_number: string, seat_id: n
 }
 
 export function deleteAllUser(){
-  delete_user()
+  delete_all_user()
 }
+
+export function checkOut(name:string,phone_number:string){
+
+  let user = check_reserved_user(name,phone_number);
+  console.log("here")
+  if(!user){
+    return false;
+  }
+  console.log(user.user_id)
+  let seat_id = check_reserved_seat(user.user_id);
+  console.log("hello")
+  delete_reservation(user.user_id);
+  let result = delete_user(user.user_id);
+
+  update_seat_status(seat_id,"available")
+  // 예약도 삭제하기
+  return result.changes>0;
+
+}
+

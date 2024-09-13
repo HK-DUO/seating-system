@@ -1,6 +1,6 @@
 
 
-const createReservationTableQuery:string = "CREATE TABLE IF NOT EXISTS Reservation (reservation_id INTEGER PRIMARY KEY AUTOINCREMENT, seat_id INTEGER NOT NULL,user_id INTEGER NOT NULL,reservation_start DATETIME NOT NULL,reservation_end DATETIME NOT NULL,FOREIGN KEY (seat_id) REFERENCES Seat(seat_id),FOREIGN KEY (user_id) REFERENCES User(user_id))"
+const createReservationTableQuery:string = "CREATE TABLE IF NOT EXISTS Reservation (reservation_id INTEGER PRIMARY KEY AUTOINCREMENT, seat_id INTEGER NOT NULL,user_id INTEGER NOT NULL,reservation_start DATETIME DEFAULT (datetime('now','localtime')),reservation_end DATETIME DEFAULT (datetime('now','+11 hours')),FOREIGN KEY (seat_id) REFERENCES Seat(seat_id),FOREIGN KEY (user_id) REFERENCES User(user_id))"
 const createSeatTableQuery:string="CREATE TABLE IF NOT EXISTS Seat (seat_id INTEGER PRIMARY KEY AUTOINCREMENT, room_id INTEGER NOT NULL, seat_num INTEGER NOT NULL, seat_status VARCHAR(255) NOT NULL, is_special BOOLEAN DEFAULT FALSE, FOREIGN KEY (room_id) REFERENCES ReadingRoom(room_id))"
 const createReadingRoomTableQuery:string= "CREATE TABLE IF NOT EXISTS ReadingRoom (room_id INTEGER PRIMARY KEY AUTOINCREMENT,room_name VARCHAR(255) NOT NULL,total_num_of_seat INTEGER NOT NULL)"
 const createUserTableQuery:string = "CREATE TABLE IF NOT EXISTS User (user_id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255) NOT NULL, phone_number VARCHAR(255) NOT NULL UNIQUE)"
@@ -14,15 +14,18 @@ const viewAllSeat:string="SELECT * from Seat where seat_id=?"
 const viewReadingRoom:string="SELECT * FROM Seat where room_id = @id"
 
 const createUserQuery:string="insert into USer(name,phone_number) values(?,?)"
-const createReservationQuery:string="INSERT INTO Reservation (user_id, seat_id, reservation_start, reservation_end) VALUES (?, ?, ?, ?)"
-
 const deleteAllUserQuery:string="DELETE FROM User"
+const deleteUserQuery:string="DELETE FROM User WHERE user_id = ?"
 
+const createReservationQuery:string="INSERT INTO Reservation (user_id, seat_id) VALUES (?, ?)"
 const isSeatAvailableQuery:string="SELECT seat_status FROM Seat WHERE seat_id = ?"
+
 const updateSeatStatusQuery:string="UPDATE Seat SET seat_status = ? WHERE seat_id = ?"
 
-
-// const hasReservationQuery:string="SELECT reservation_id FROM reservation WHERE user_id = ?"
+const countReservationAboutRoomQuery:string = "SELECT COUNT(*) AS reserved_seat_count FROM Seat WHERE room_id = ? AND seat_status = 'reserved'"
+const checkReservedUserQuery:string="SELECT user_id FROM User WHERE name = ? AND phone_number = ?"
+const deleteReservationQuery:string="DELETE FROM Reservation WHERE user_id = ?"
+const checkReservedSeatQuery:string="SELECT seat_id FROM Reservation where user_id=?"
 
 export const createTableQuery={
   reservation:createReservationTableQuery,
@@ -44,12 +47,17 @@ export const viewQuery={
 
 export const userQuery={
   create:createUserQuery,
-  delete:deleteAllUserQuery,
+  deleteAll:deleteAllUserQuery,
+  check:checkReservedUserQuery,
+  delete:deleteUserQuery,
   // hasReservation:hasReservationQuery,
 }
 
 export const reservationQuery={
   create:createReservationQuery,
+  count:countReservationAboutRoomQuery,
+  delete:deleteReservationQuery,
+  checkSeat:checkReservedSeatQuery,
 }
 
 export const seatQuery={
