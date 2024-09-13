@@ -49,7 +49,7 @@ function TestButton() {
       <button className="w-full h-[40px] bg-white" onClick={init}>
         초기화
       </button>
-      <button className="w-full h-[40px] bg-white" onClick={() => onView(2)}>
+      <button className="w-full h-[40px] bg-white" onClick={() => onView(1)}>
         조회 테스트
       </button>
 

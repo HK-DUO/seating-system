@@ -4,12 +4,16 @@ import { INIT_SEAT_DTO, ROW_DTO, SEAT_DTO } from "../type/Dto.type";
 
 export function toConvertRowDtos(seats: SEAT[], id: number):ROW_DTO[]{
   let seatsPerRow:number = id==1 ? 11:8;
+
   const rowDtoArr:ROW_DTO[]=[];
   let seatDtoArr = toConvertSeatDtos(seats,id);
   for(let i=0;i<seats.length;i+=seatsPerRow){
+    if(id==1&&Math.floor(i/seatsPerRow)+1==7){
+      seatsPerRow-=2
+    }
     const rowSeats=seatDtoArr.slice(i,i+seatsPerRow);
     rowDtoArr.push({
-      row: Math.floor(i / seatsPerRow) + 1,
+      row: id==1&&Math.floor(i/seatsPerRow)+1>7?Math.floor(i/seatsPerRow):Math.floor(i/seatsPerRow)+1,
       seats:rowSeats,
     })
   }
@@ -20,10 +24,14 @@ function toConvertSeatDtos(seats:SEAT[],id:number):SEAT_DTO[]{
   let seatsPerRow:number = id==1 ? 11:8;
   const seat_dto: SEAT_DTO[]=[];
   for(const seat of seats){
+    let tmp = seat.seat_num;
+    if(id==1&&tmp>75){
+      tmp+=2
+    }
     seat_dto.push({
       id:seat.seat_id,
       num:seat.seat_num,
-      line:seat.seat_num%seatsPerRow==0?seatsPerRow:seat.seat_num%seatsPerRow,
+      line:tmp%seatsPerRow==0?seatsPerRow:tmp%seatsPerRow,
       state:seat.seat_status == 'available',
       disableSeats:seat.is_special==1,
     })
