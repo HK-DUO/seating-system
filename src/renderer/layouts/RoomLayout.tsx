@@ -12,7 +12,7 @@ type PropsType = {
     restSeats: number,
     rows: {
       row: number,
-      seats: { num: number, line: number, state: boolean, disableSeats: boolean }[]
+      seats: { id:number, num: number, line: number, state: boolean, disableSeats: boolean }[]
     }[];
   };
 };
