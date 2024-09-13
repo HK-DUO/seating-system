@@ -52,15 +52,8 @@ function TestButton() {
       <button className="w-full h-[40px] bg-white" onClick={() => onView(1)}>
         조회 테스트
       </button>
-
-      <button className="w-full h-[40px] bg-white" onClick={() => checkIn("tdf", "0210-124-4fds378", 1)}>
-        예약 테스트
-      </button>
-      <button className="w-full h-[40px] bg-white" onClick={() => checkOut("tdf", "0210-124-4fds378")}>
-        퇴실 테스트
-      </button>
       <button className="w-full h-[40px] bg-white" onClick={() => onDelete()}>
-        유저 전체삭제 테스트
+        유저리셋
       </button>
     </div>
   );
