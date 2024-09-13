@@ -13,7 +13,7 @@ type PropsType = {
     restSeats: number,
     rows: {
       row: number,
-      seats: { num: number, line: number, state: boolean, disableSeats: boolean }[]
+      seats: { id:number, num: number, line: number, state: boolean, disableSeats: boolean }[]
     }[];
   };
 };
@@ -37,8 +37,8 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
                   } else if (res.number == '') {
                     await alert('오류', '전화번호를 입력하세요.');
                   } else {
-                    await alert('예약완료', '좌석예약이 완료되었습니다.');
-                    ok = true;
+                    let response = await window.electron.createReservation(res.name, res.number, item.id)
+                    console.log(response)
                   }
                 }
                 else {

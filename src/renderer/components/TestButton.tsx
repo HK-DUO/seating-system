@@ -31,22 +31,22 @@ function TestButton() {
     await window.electron.deleteUser();
   }
 
-  const test = () => {
-    window.test.ipcRenderer.testMessage('testMessage !');
-  };
+  // const test = () => {
+  //   window.test.ipcRenderer.testMessage('testMessage !');
+  // };
 
   return (
     <div>
-      <button className="w-full h-[40px] bg-white" onClick={test}>
-        ipc 테스트
-      </button>
+      {/*<button className="w-full h-[40px] bg-white" onClick={test}>*/}
+      {/*  ipc 테스트*/}
+      {/*</button>*/}
       <button className="w-full h-[40px] bg-white" onClick={init}>
         초기화
       </button>
       <button className="w-full h-[40px] bg-white" onClick={() => onView(2)}>
         조회 테스트
       </button>
-      <button className="w-full h-[40px] bg-white" onClick={() => onReservation("tdf", "010-124-4fds378",8)}>
+      <button className="w-full h-[40px] bg-white" onClick={() => onReservation("tdf", "010-124-4fds371",7)}>
         유저 생성 테스트
       </button>
       <button className="w-full h-[40px] bg-white" onClick={() => onDelete()}>
