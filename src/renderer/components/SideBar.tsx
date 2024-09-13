@@ -37,8 +37,14 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
                   } else if (res.number == '') {
                     await alert('오류', '전화번호를 입력하세요.');
                   } else {
-                    let response = await window.electron.createReservation(res.name, res.number, item.id)
-                    console.log(response)
+                    await window.electron.createReservation(res.name, res.number, item.id).then(async(res)=>{
+                      if(res){
+                        await alert("예약", "좌석예약이 완료되었습니다.")
+                        ok = true
+                      } else {
+                        await alert("오류", "오류가 발생했습니다.")
+                      }
+                    })
                   }
                 }
                 else {
