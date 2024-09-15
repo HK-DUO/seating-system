@@ -8,7 +8,7 @@ import {
   init_data,
   init_table,
   is_seat_available, update_seat_status,
-  find_all_seats
+  find_all_seats, update_reservation_end, ask_checkout
 } from "./Data.repo";
 import { formatDateForSQLite, initSeat, toConvertRowDtos } from "./Data.service";
 import { READING_ROOM_DTO } from "../type/Dto.type";
@@ -69,19 +69,28 @@ export function deleteAllUser(){
 export function checkOut(name:string,phone_number:string){
 
   let user = find_user_id(name,phone_number);
-  console.log("here")
+
   if(!user){
     return false;
   }
-  console.log(user.user_id)
+
   let seat_id = find_reserved_seat_id_by_user_id(user.user_id);
-  console.log("hello")
+
   delete_reservation(user.user_id);
   let result = delete_user(user.user_id);
 
   update_seat_status(seat_id,"available")
   // 예약도 삭제하기
   return result.changes>0;
-
 }
 
+export function extend(seat_id:number){
+  let result = update_reservation_end(seat_id,'+1 hours');
+
+  return result.changes>0;
+}
+
+export function askCheckOut(seat_id:number){
+  let result = ask_checkout(seat_id,"+30 minutes");
+  return result.changes>0;
+}

@@ -16,7 +16,8 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { ElectronHandler } from './preload';
 
-import { checkIn, checkOut, deleteAllUser, init, viewReadingRoom } from "./db/Data.controller";
+import { askCheckOut, checkIn, checkOut, deleteAllUser, extend, init, viewReadingRoom } from "./db/Data.controller";
+import { auto_checkout } from "./db/Data.repo";
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -119,6 +120,11 @@ const createWindow = async () => {
  * Add event listeners...
  */
 
+//자동 퇴실요청 현재 1분간
+setInterval(() => {
+  auto_checkout();
+},  60*1000);
+
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
@@ -146,6 +152,13 @@ app
     ipcMain.handle("reservation:checkout",async (_,name:string,phone_number:string)=>{
       return checkOut(name,phone_number);
     })
+    ipcMain.handle("reservation:extend",async (_,seat_id:number)=>{
+      return extend(seat_id);
+    })
+    ipcMain.handle("reservation:askCheckout",async (_,seat_id:number)=>{
+      return askCheckOut(seat_id);
+    })
+
     createWindow();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

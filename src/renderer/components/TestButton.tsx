@@ -36,6 +36,12 @@ function TestButton() {
   const onDelete = async () => {
     await window.electron.deleteUser();
   }
+  const onExtend = async (seat_id:number) => {
+    await window.electron.extend(seat_id);
+  }
+  const onAskCheckout = async (seat_id:number) => {
+    await window.electron.askCheckout(seat_id);
+  }
 
   // const test = () => {
   //   window.test.ipcRenderer.testMessage('testMessage !');
@@ -54,6 +60,12 @@ function TestButton() {
       </button>
       <button className="w-full h-[40px] bg-white" onClick={() => onDelete()}>
         유저리셋
+      </button>
+      <button className="w-full h-[40px] bg-white" onClick={() => onExtend(15)}>
+        연장
+      </button>
+      <button className="w-full h-[40px] bg-white" onClick={() => onAskCheckout(15)}>
+        퇴실요청
       </button>
     </div>
   );

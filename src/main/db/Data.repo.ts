@@ -139,3 +139,27 @@ export function find_reserved_seat_id_by_user_id(user_id:number){
   let result = stmt.get(user_id) as RESERVED_SEAT_DTO;
   return result.seat_id;
 }
+
+
+export function update_reservation_end(seat_id:number,hours:string){
+  const db = connect();
+  const stmt = db.prepare(reservationQuery.extend);
+  return stmt.run(hours,seat_id)
+}
+
+export function ask_checkout(seat_id:number,minutes:string){
+  const db = connect();
+  const stmt = db.prepare(reservationQuery.askCheckout);
+  return stmt.run(minutes,seat_id)
+}
+
+export function auto_checkout(){
+  const db = connect();
+  const stmt = db.prepare(reservationQuery.autoCheckout);
+
+  const result = stmt.run()
+  if(result.changes>0){
+    console.log("자동 퇴실 함수에 의해 예약이 하나 삭제되었습니다.")
+  }
+  console.log(`${result.changes} expired reservations deleted.`);
+}
