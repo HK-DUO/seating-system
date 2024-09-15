@@ -8,10 +8,11 @@ import {
   init_data,
   init_table,
   is_seat_available, update_seat_status,
-  find_all_seats, update_reservation_end, ask_checkout
+  find_all_seats, update_reservation_end, ask_checkout, auto_checkout
 } from "./Data.repo";
 import { formatDateForSQLite, initSeat, toConvertRowDtos } from "./Data.service";
 import { READING_ROOM_DTO } from "../type/Dto.type";
+import { RESERVATION } from "../type/Entity.type";
 
 
 export function init(){
@@ -84,13 +85,63 @@ export function checkOut(name:string,phone_number:string){
   return result.changes>0;
 }
 
-export function extend(seat_id:number){
-  let result = update_reservation_end(seat_id,'+1 hours');
+//연장시 이름과 전화번호로 user_id 찾아낸후에 시간 늘리기
+export function extend(name:string,phone_number:string){
+  let user = find_user_id(name,phone_number);
+  if(!user){
+    return false;
+  }
+  let result = update_reservation_end(user.user_id,'+1 hours');
 
   return result.changes>0;
 }
 
 export function askCheckOut(seat_id:number){
-  let result = ask_checkout(seat_id,"+30 minutes");
+  let result = ask_checkout(seat_id,"+2 minutes");
   return result.changes>0;
+}
+
+export function autoCheckout(){
+  let result = auto_checkout();
+
+  if(result.changes>0){
+    console.log("자동 퇴실 함수에 의해 예약이 하나 삭제되었습니다.")
+
+  }
+}
+
+export function handleExpiredReservations(): void {
+  const db = connect();
+
+  // Step 1: Find all expired reservations
+  const expiredReservations = db.prepare(`
+    SELECT seat_id FROM Reservation
+    WHERE reservation_end < datetime('now', 'localtime')
+  `).all() as RESERVATION[]
+
+  // Step 2: Update the seat status to 'available' for each expired reservation
+  const updateSeatStatus = db.prepare(`
+    UPDATE Seat
+    SET seat_status = 'available'
+    WHERE seat_id = ?
+  `);
+
+  db.transaction(() => {
+
+    for (const reservation of expiredReservations) {
+      // Update the seat status for each seat tied to an expired reservation
+      updateSeatStatus.run(reservation.seat_id);
+
+      // delete_user(reservation.user_id)
+    }
+
+    // Step 3: Delete the expired reservations
+    db.prepare(`
+      DELETE FROM Reservation
+      WHERE reservation_end < datetime('now', 'localtime')
+    `).run();
+  })();
+  //유저도 삭제하기
+
+  console.log(`${expiredReservations.length} reservations expired and seats freed.`);
 }

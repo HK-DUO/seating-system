@@ -25,10 +25,10 @@ const countReservationAboutRoomQuery:string = "SELECT COUNT(*) AS reserved_seat_
 const checkReservedUserQuery:string="SELECT user_id FROM User WHERE name = ? AND phone_number = ?"
 const deleteReservationQuery:string="DELETE FROM Reservation WHERE user_id = ?"
 const checkReservedSeatQuery:string="SELECT seat_id FROM Reservation where user_id=?"
-const extendReservationEndQuery:string="UPDATE Reservation SET reservation_end= datetime(reservation_end, ? ) WHERE seat_id=?";
+const extendReservationEndQuery:string="UPDATE Reservation SET reservation_end= datetime(reservation_end, ? ) WHERE user_id=?";
 const askCheckoutReservationQuery:string="UPDATE Reservation SET reservation_end= datetime('now','localtime', ?) WHERE seat_id=?"
 const autoCheckoutReservationQuery:string="DELETE FROM Reservation WHERE reservation_end < datetime('now', 'localtime')"
-
+const checkReservationEndTimeQuery:string = "SELECT seat_id FROM Reservation WHERE reservation_end > datetime('now', 'localtime')";
 
 export const createTableQuery={
   reservation:createReservationTableQuery,
@@ -63,7 +63,8 @@ export const reservationQuery={
   checkSeat:checkReservedSeatQuery,
   extend:extendReservationEndQuery,
   askCheckout:askCheckoutReservationQuery,
-  autoCheckout:autoCheckoutReservationQuery
+  autoCheckout:autoCheckoutReservationQuery,
+  checkEndTime:checkReservationEndTimeQuery
 }
 
 export const seatQuery={

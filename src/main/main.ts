@@ -16,7 +16,16 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { ElectronHandler } from './preload';
 
-import { askCheckOut, checkIn, checkOut, deleteAllUser, extend, init, viewReadingRoom } from "./db/Data.controller";
+import {
+  askCheckOut,
+  checkIn,
+  checkOut,
+  deleteAllUser,
+  extend,
+  handleExpiredReservations,
+  init,
+  viewReadingRoom
+} from "./db/Data.controller";
 import { auto_checkout } from "./db/Data.repo";
 class AppUpdater {
   constructor() {
@@ -122,7 +131,7 @@ const createWindow = async () => {
 
 //자동 퇴실요청 현재 1분간
 setInterval(() => {
-  auto_checkout();
+  handleExpiredReservations();
 },  60*1000);
 
 app.on('window-all-closed', () => {
@@ -152,8 +161,8 @@ app
     ipcMain.handle("reservation:checkout",async (_,name:string,phone_number:string)=>{
       return checkOut(name,phone_number);
     })
-    ipcMain.handle("reservation:extend",async (_,seat_id:number)=>{
-      return extend(seat_id);
+    ipcMain.handle("reservation:extend",async (_,name:string,phone_number:string)=>{
+      return extend(name,phone_number);
     })
     ipcMain.handle("reservation:askCheckout",async (_,seat_id:number)=>{
       return askCheckOut(seat_id);

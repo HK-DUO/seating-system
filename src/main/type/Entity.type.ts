@@ -15,8 +15,8 @@ export type READING_ROOM={
 
 export type RESERVATION={
   reservation_id:string;
-  seat_id:string;
-  user_id:string;
+  seat_id:number;
+  user_id:number;
   reservation_start:string;
   reservation_end:string;
 }
