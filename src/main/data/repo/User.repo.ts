@@ -4,24 +4,24 @@ import { USER_ID_DTO } from "../type/Dto.type";
 import { userQuery } from "../query/User.query";
 
 
-export function create_user(name:string,phone_number:string){
+function create_user(name:string,phone_number:string){
 
   const db=connect();
 
   const stmt = db.prepare(userQuery.create);
-  let runResult = stmt.run(name, phone_number);
+  let result = stmt.run(name, phone_number);
 
-  return Number(runResult.lastInsertRowid);
+  return Number(result.lastInsertRowid);
 }
 
-export function delete_all_user(){
+function delete_all_user(){
 
   const db=connect();
 
   db.exec(userQuery.deleteAll)
 }
 
-export function find_user_id(name:string,phone_number:string){
+function find_user_id(name:string,phone_number:string){
 
   const db = connect();
 
@@ -30,7 +30,7 @@ export function find_user_id(name:string,phone_number:string){
   return stmt.get(name,phone_number) as USER_ID_DTO | undefined;
 }
 
-export function delete_user(user_id:number){
+function delete_user(user_id:number){
 
   const db = connect();
 

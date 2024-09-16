@@ -37,6 +37,8 @@ export function init_table() {
   db.exec(createTableQuery.seat);
   db.exec(createTableQuery.user);
   db.exec(createTableQuery.reading_room);
+  db.exec(createTableQuery.persist_user);
+  db.exec(createTableQuery.log)
 }
 
 

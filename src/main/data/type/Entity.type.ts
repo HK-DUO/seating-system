@@ -14,7 +14,7 @@ export type READING_ROOM={
 }
 
 export type RESERVATION={
-  reservation_id:string;
+  reservation_id:number;
   seat_id:number;
   user_id:number;
   reservation_start:string;
@@ -25,6 +25,20 @@ export type USER={
   user_id:number;
   name:string;
   phone_number:string;
+}
+
+export type PERSIST_USER={
+  persist_user_id:number;
+  name:string;
+  phone_number:string;
+}
+
+export type LOG={
+  log_id:number;
+  seat_id:number;
+  persist_user_id:number;
+  time:string;
+  feature:string;
 }
 
 

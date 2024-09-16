@@ -8,6 +8,7 @@ import { READING_ROOM_DTO } from "../type/Dto.type";
 import { seatRepo } from "../repo/Seat.repo";
 import { reservationRepo } from "../repo/Reservation.repo";
 import { userRepo } from "../repo/User.repo";
+import { persistUserRepo } from "../repo/PersistUser.repo";
 
 //테이블,좌석 초기화
 export function init(){
@@ -43,6 +44,10 @@ export function checkIn(name: string, phone_number: string, seat_id: number) {
     if (!seatAvailable) {
       console.error("좌석이 이미 예약된 좌석입니다.");
       throw new Error("좌석이 이미 예약된 좌석입니다.");
+    }
+
+    if(!persistUserRepo.is_exist(name,phone_number)){
+      persistUserRepo.create(name, phone_number);
     }
     let user_id = userRepo.create(name, phone_number);
 
@@ -113,7 +118,6 @@ export function autoCheckOut(): void {
 
   const expiredReservations = reservationRepo.find_expired();
 
-
   db.transaction(() => {
 
     for (const reservation of expiredReservations) {
@@ -123,6 +127,6 @@ export function autoCheckOut(): void {
     }
 
   })();
-  //유저도 삭제하기
+
   console.log(`${expiredReservations.length}개 좌석이 자동퇴실되었습니다.`);
 }
