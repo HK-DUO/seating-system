@@ -13,15 +13,19 @@ export function connect() {
 
 
 export function init_data(seats:INIT_SEAT_DTO[]){
+
   const db = connect();
+
   db.exec(initDataQuery.reading_room_1);
   db.exec(initDataQuery.reading_room_2);
   let stmt = db.prepare(initDataQuery.seat);
+
   let insertInitData = db.transaction((seats) => {
     for (const seat of seats) {
       stmt.run(seat.seat_id, seat.room_id, seat.seat_num, seat.seat_status, seat.is_special);
     }
   });
+
   insertInitData(seats);
 }
 

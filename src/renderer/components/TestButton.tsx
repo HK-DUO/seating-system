@@ -61,10 +61,10 @@ function TestButton() {
       <button className="w-full h-[40px] bg-white" onClick={() => onDelete()}>
         유저리셋
       </button>
-      <button className="w-full h-[40px] bg-white" onClick={() => onExtend("한창민","010-5426-3800")}>
+      <button className="w-full h-[40px] bg-white" onClick={() => onExtend("한창민","010-5426-3804")}>
         연장
       </button>
-      <button className="w-full h-[40px] bg-white" onClick={() => onAskCheckout(5)}>
+      <button className="w-full h-[40px] bg-white" onClick={() => onAskCheckout(6)}>
         퇴실요청
       </button>
     </div>

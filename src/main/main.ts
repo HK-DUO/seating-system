@@ -131,7 +131,7 @@ const createWindow = async () => {
 //자동 퇴실요청 원래 1분간으로 설정, 현재 10분
 setInterval(() => {
   autoCheckOut();
-},  10*60*1000);
+},  60*1000);
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even

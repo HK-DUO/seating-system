@@ -34,7 +34,9 @@ export function viewReadingRoom(room_id:number):READING_ROOM_DTO{
 
 //예약기능
 export function checkIn(name: string, phone_number: string, seat_id: number) {
+
   const db = connect();
+
   const transaction = db.transaction(() => {
 
     let seatAvailable = seatRepo.is_available(seat_id);
@@ -60,6 +62,7 @@ export function checkIn(name: string, phone_number: string, seat_id: number) {
 }
 
 export function deleteAllUser(){
+
   userRepo.delete_all()
 }
 
@@ -83,7 +86,9 @@ export function checkOut(name:string,phone_number:string){
 
 //연장기능
 export function extend(name:string,phone_number:string){
+
   let user = userRepo.find_user_id(name,phone_number);
+
   if(!user){
     return false;
   }
@@ -94,13 +99,16 @@ export function extend(name:string,phone_number:string){
 
 //퇴실요청 기능
 export function askCheckOut(seat_id:number){
+
   let result = reservationRepo.ask_checkout(seat_id,"+2 minutes");
+
   return result.changes>0;
 }
 
 
 //자동 퇴실기능
 export function autoCheckOut(): void {
+
   const db = connect();
 
   const expiredReservations = reservationRepo.find_expired();
