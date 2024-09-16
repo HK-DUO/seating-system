@@ -47,7 +47,7 @@ export function initSeat(){
       room_id: 1,
       seat_num: i,
       seat_status: 'available',
-      is_special: 0  // All seats are not special
+      is_special: 0
     });
   }
   for(let i=1;i<=128;i++){
@@ -60,9 +60,5 @@ export function initSeat(){
     })
   }
   return seats;
-}
-
-export function formatDateForSQLite(date:Date){
-  return date.toISOString().slice(0, 19).replace('T', ' ');
 }
 

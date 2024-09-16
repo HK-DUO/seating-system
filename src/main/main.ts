@@ -17,16 +17,15 @@ import { resolveHtmlPath } from './util';
 import { ElectronHandler } from './preload';
 
 import {
-  askCheckOut,
+  init,
+  askCheckOut, autoCheckOut,
   checkIn,
   checkOut,
   deleteAllUser,
   extend,
-  handleExpiredReservations,
-  init,
   viewReadingRoom
-} from "./db/Data.controller";
-import { auto_checkout } from "./db/Data.repo";
+} from "./data/controller/Data.controller";
+
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -129,10 +128,10 @@ const createWindow = async () => {
  * Add event listeners...
  */
 
-//자동 퇴실요청 현재 1분간
+//자동 퇴실요청 원래 1분간으로 설정, 현재 10분
 setInterval(() => {
-  handleExpiredReservations();
-},  60*1000);
+  autoCheckOut();
+},  10*60*1000);
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even

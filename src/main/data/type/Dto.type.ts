@@ -35,3 +35,16 @@ export type RESERVATION_COUNT_DTO={
   reserved_seat_count:number;
 }
 
+export type RESERVED_SEAT_DTO={
+  seat_id:number,
+}
+
+export type EXPIRED_RESERVATION_DTO={
+  seat_id:number,
+  user_id:number,
+  reservation_id:number,
+}
+
+export type USER_ID_DTO={
+  user_id:number,
+}
