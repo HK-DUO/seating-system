@@ -3,14 +3,17 @@ import { userQuery } from "../query/User.query";
 import { persistUserQuery } from "../query/PersistUser.query";
 
 
+type a ={
+  result:number,
+}
 function is_exist(name:string,phone_number:string){
 
   const db=connect();
 
   const stmt = db.prepare(persistUserQuery.find);
-  let result = stmt.run(name, phone_number);
+  let result = stmt.get(name, phone_number) as a
 
-  return result.changes>0
+  return true
 }
 
 function create_persist_user(name:string,phone_number:string){
