@@ -1,21 +1,28 @@
 import { connect } from "./Data.repo";
-import { userQuery } from "../query/User.query";
 import { persistUserQuery } from "../query/PersistUser.query";
+import { PERSIST_USER_EXIST_DTO } from "../type/Dto.type";
 
 
-type a ={
-  result:number,
-}
+
 function is_exist(name:string,phone_number:string){
 
   const db=connect();
 
-  const stmt = db.prepare(persistUserQuery.find);
-  let result = stmt.get(name, phone_number) as a
+  const stmt = db.prepare(persistUserQuery.exist);
+  let result = stmt.get(name, phone_number) as PERSIST_USER_EXIST_DTO
 
-  return true
+  return result.userExists===1;
 }
 
+function find_persist_user_id(name:string,phone_number:string){
+
+  const db=connect();
+
+  const stmt = db.prepare(persistUserQuery.find);
+  let result = stmt.get(name, phone_number) as { persist_user_id:number }
+
+  return result.persist_user_id;
+}
 function create_persist_user(name:string,phone_number:string){
 
   const db=connect();
@@ -28,4 +35,5 @@ function create_persist_user(name:string,phone_number:string){
 export const persistUserRepo={
   is_exist:is_exist,
   create:create_persist_user,
+  find:find_persist_user_id
 }

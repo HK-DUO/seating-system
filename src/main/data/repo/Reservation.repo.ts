@@ -21,7 +21,7 @@ function count_reservation(room_id:number){
   const stmt = db.prepare(reservationQuery.count);
   let result = stmt.get(room_id) as RESERVATION_COUNT_DTO | undefined;
 
-  return result ? result.reserved_seat_count : 0;
+  return result ? result.available_seat_count : 0;
 }
 
 function delete_reservation(user_id:number){
@@ -65,6 +65,14 @@ function find_expired_reservations(){
   return db.prepare(reservationQuery.expired).all() as EXPIRED_RESERVATION_DTO[];
 }
 
+function find_user_id_by_seat_id(seat_id:number){
+  const db = connect();
+
+  const stmt = db.prepare(reservationQuery.find_user_id);
+  const result= stmt.get(seat_id) as {user_id:number};
+  return result.user_id;
+}
+
 export const reservationRepo={
   delete: delete_reservation,
   create: create_reservation,
@@ -73,5 +81,6 @@ export const reservationRepo={
   update_end_time: update_reservation_end,
   ask_checkout: ask_checkout,
   find_expired:find_expired_reservations,
+  find_user_id:find_user_id_by_seat_id
 
 }

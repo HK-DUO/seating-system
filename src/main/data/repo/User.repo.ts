@@ -1,7 +1,7 @@
-
 import { connect } from "./Data.repo";
 import { USER_ID_DTO } from "../type/Dto.type";
 import { userQuery } from "../query/User.query";
+import { USER } from "../type/Entity.type";
 
 
 function create_user(name:string,phone_number:string){
@@ -38,9 +38,16 @@ function delete_user(user_id:number){
   return stmt.run(user_id);
 }
 
+function find_user(user_id:number){
+  const db = connect();
+  const stmt = db.prepare("select * from user where user_id=?");
+  return stmt.get(user_id) as USER;
+}
+
 export const userRepo={
   create:create_user,
   delete:delete_user,
   delete_all:delete_all_user,
   find_user_id:find_user_id,
+  find:find_user,
 }
