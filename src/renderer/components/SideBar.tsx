@@ -97,8 +97,16 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
           } else if (res.number == '') {
             await alert('오류', '전화번호를 입력하세요.');
           } else {
-            await alert('연장', '이용시간 연장이 완료되었습니다.');
-            ok = true
+            await window.electron.extend(res.name,res.number).then(async (res: any) => {
+              if(res){
+                await alert('연장', '이용시간 연장이 완료되었습니다.');
+                ok = true
+                window.location.reload()
+              }else{
+                await alert('오류', '연장 오류.');
+              }
+
+            })
           }
         } else {
           ok = true
