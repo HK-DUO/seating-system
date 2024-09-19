@@ -30,7 +30,7 @@ const electronHandler = {
   checkOut:(name:string,phone_number:string)=>ipcRenderer.invoke('reservation:checkout',name,phone_number),
   extend:(name:string,phone_number:string)=>ipcRenderer.invoke('reservation:extend',name,phone_number),
   askCheckout:(seat_id:number)=>ipcRenderer.invoke('reservation:askCheckout',seat_id),
-
+  viewAllLog:()=>ipcRenderer.invoke('log:all')
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);

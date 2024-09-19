@@ -35,7 +35,14 @@ function update_seat_status(seat_id:number,seat_status:string){
   stmt.run(seat_status,seat_id);
 }
 
+function find_seat(seat_id:number){
+  const db = connect();
+
+  const stmt=db.prepare(seatQuery.find);
+  return stmt.get(seat_id) as SEAT;
+}
 export const seatRepo={
+  find:find_seat,
   find_all:find_all_seats,
   is_available:is_seat_available,
   update_status:update_seat_status,

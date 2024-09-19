@@ -52,3 +52,13 @@ export type USER_ID_DTO={
 export type PERSIST_USER_EXIST_DTO={
   userExists:number,
 }
+
+export type LOG_DTO={
+  id:number,
+  room:number,
+  seat:number,
+  function:string,
+  timestamp:string,
+  nickname:string,
+  phoneNumber:string
+}

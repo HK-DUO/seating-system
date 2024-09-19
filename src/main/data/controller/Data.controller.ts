@@ -4,7 +4,7 @@ import {
   init_table
 } from "../repo/Data.repo";
 import { initSeat, toConvertRowDtos } from "../service/Data.service";
-import { READING_ROOM_DTO } from "../type/Dto.type";
+import { LOG_DTO, READING_ROOM_DTO } from "../type/Dto.type";
 import { seatRepo } from "../repo/Seat.repo";
 import { reservationRepo } from "../repo/Reservation.repo";
 import { userRepo } from "../repo/User.repo";
@@ -58,7 +58,7 @@ export function checkIn(name: string, phone_number: string, seat_id: number) {
     seatRepo.update_status(seat_id,"reserved")
 
     //로그남기기
-    logRepo.create(seat_id,persistUserRepo.find(name,phone_number),"reservation")
+    logRepo.create(seat_id,persistUserRepo.find_id(name,phone_number),"reservation")
 
     return reservation_id;
   })
@@ -93,7 +93,7 @@ export function checkOut(name:string,phone_number:string){
   seatRepo.update_status(seat_id,"available")
 
   //로그
-  logRepo.create(seat_id, persistUserRepo.find(name,phone_number),"manual-checkOut")
+  logRepo.create(seat_id, persistUserRepo.find_id(name,phone_number),"manual-checkOut")
 
   return result.changes>0;
 }
@@ -109,7 +109,7 @@ export function extend(name:string,phone_number:string){
   let result = reservationRepo.update_end_time(user.user_id,'+1 hours');
 
   //로그
-  logRepo.create(reservationRepo.find_seat_id_by_user_id(user.user_id), persistUserRepo.find(name,phone_number),"extend")
+  logRepo.create(reservationRepo.find_seat_id_by_user_id(user.user_id), persistUserRepo.find_id(name,phone_number),"extend")
 
   return result.changes>0;
 }
@@ -125,7 +125,7 @@ export function askCheckOut(seat_id:number){
   //로그
   //로그 여기에 당한 사람의 persistUserId가 아닌 한 사람의 아이디를 넣어야됨. 지금은 한사람은 입력하지 않으니까
   //만약 한사람 넣으면 요청할때 회원등록되도록 추가로직 필요
-  logRepo.create(seat_id, persistUserRepo.find(user.name,user.phone_number),"ask-CheckOut")
+  logRepo.create(seat_id, persistUserRepo.find_id(user.name,user.phone_number),"ask-CheckOut")
 
   return result.changes>0;
 }
@@ -146,10 +146,31 @@ export function autoCheckOut(): void {
       let user = userRepo.find(reservation.user_id);
       userRepo.delete(reservation.user_id);
       //로그
-      logRepo.create(reservation.seat_id, persistUserRepo.find(user.name,user.phone_number),"auto-CheckOut")
+      logRepo.create(reservation.seat_id, persistUserRepo.find_id(user.name,user.phone_number),"auto-CheckOut")
     }
 
   })();
 
   console.log(`${expiredReservations.length}개 좌석이 자동퇴실되었습니다.`);
+}
+
+//로그 조회
+export function viewAllLog(){
+  const logs = logRepo.find_all();
+  let log_dtos:LOG_DTO[]=[]
+  for(const log of logs){
+
+    let seat = seatRepo.find(log.seat_id);
+    let user=persistUserRepo.find(log.persist_user_id)
+    log_dtos.push({
+      id:log.log_id,
+      room:seat.room_id,
+      seat:seat.seat_num,
+      function:log.feature,
+      timestamp:log.time,
+      nickname:user.name,
+      phoneNumber:user.phone_number,
+    })
+  }
+  return log_dtos;
 }

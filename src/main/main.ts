@@ -23,7 +23,7 @@ import {
   checkOut,
   deleteAllUser,
   extend,
-  viewReadingRoom
+  viewReadingRoom, viewAllLog
 } from "./data/controller/Data.controller";
 
 class AppUpdater {
@@ -165,6 +165,9 @@ app
     })
     ipcMain.handle("reservation:askCheckout",async (_,seat_id:number)=>{
       return askCheckOut(seat_id);
+    })
+    ipcMain.handle("log:all",async ()=>{
+      return viewAllLog();
     })
 
     createWindow();
