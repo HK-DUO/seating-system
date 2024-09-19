@@ -1,0 +1,75 @@
+.admin-main {
+  @apply flex flex-col items-center;
+}
+
+.search-section {
+  @apply flex space-x-4 mb-5;
+}
+
+.log-table {
+  @apply w-11/12 mb-5;
+}
+
+.log-table table {
+  @apply w-full border-collapse table-fixed;
+}
+
+.log-table th, .log-table td {
+  @apply border border-gray-300 p-2 truncate;
+}
+
+.log-table th {
+  @apply bg-gray-100 text-left;
+}
+
+.log-table th:nth-child(1) {
+  @apply w-1/12; /* 로그 ID 열: 12% */
+}
+
+.log-table th:nth-child(2) {
+  @apply w-1/12; /* 열람실 열: 12% */
+}
+
+.log-table th:nth-child(3) {
+  @apply w-1/12; /* 좌석 번호 열: 12% */
+}
+
+.log-table th:nth-child(4) {
+  @apply w-1/12; /* 기능 열: 16% */
+}
+
+.log-table th:nth-child(5) {
+  @apply w-2/12; /* 시간 열: 16% */
+}
+
+.log-table th:nth-child(6) {
+  @apply w-2/12; /* 날짜 열: 16% */
+}
+
+.log-table th:nth-child(7) {
+  @apply w-2/12; /* 유저 닉네임 열: 16% */
+}
+
+.log-table th:nth-child(8) {
+  @apply w-2/12; /* 전화번호 열: 25% */
+}
+
+.pagination {
+  @apply mb-5;
+}
+
+.pagination button {
+  @apply px-4 py-2 mx-1 bg-gray-200 text-white rounded cursor-pointer;
+}
+
+.pagination span {
+  @apply mx-2;
+}
+
+.admin-actions button {
+  @apply bg-deepBlue text-white px-5 py-2 rounded cursor-pointer;
+}
+
+.admin-actions button:hover {
+  @apply bg-deepBlue;
+}

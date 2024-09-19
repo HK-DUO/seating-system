@@ -3,6 +3,7 @@ import SeatMain from "../components/SeatMain";
 import SideMenu from "./SideMenu";
 import React from "react";
 import InquireMain from '../components/InquireMain';
+import AdminMain from "../components/AdminMain";
 
 function MainRouter() {
   return <HashRouter>
@@ -11,6 +12,7 @@ function MainRouter() {
       <Routes>
         <Route path="" element={<SeatMain />} />
         <Route path="suggest" element={<InquireMain />} />
+        <Route path="admin" element={<AdminMain />} />
       </Routes>
     </div>
   </HashRouter>

@@ -1,42 +1,6 @@
 import React, { useState, useEffect } from 'react';
 function TestButton() {
 
-  const [isKey4Pressed, setIsKey4Pressed] = useState(false);
-  const [isKeyRPressed, setIsKeyRPressed] = useState(false);
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === '4') {
-        setIsKey4Pressed(true);
-      } else if (event.key.toLowerCase() === 'r') {
-        setIsKeyRPressed(true);
-      }
-    };
-
-    // Keyup event listener for resetting the key states
-    const handleKeyUp = (event: KeyboardEvent) => {
-      if (event.key === '4') {
-        setIsKey4Pressed(false);
-      } else if (event.key.toLowerCase() === 'r') {
-        setIsKeyRPressed(false);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
-    };
-  }, []);
-
-  const handleLogoClick = () => {
-    if (isKey4Pressed && isKeyRPressed) {
-      console.log('비밀창 접속완료');
-    } else {
-      console.log('You must hold both the "4" and "r" keys while clicking the logo!');
-    }
-  };
   type TODO = {
     id?: number;
     title: string;
@@ -77,9 +41,6 @@ function TestButton() {
       </button>
       <button className="w-full h-[40px] bg-white" onClick={() => onAskCheckout(6)}>
         퇴실요청
-      </button>
-      <button className="w-full h-[40px] bg-white" onClick={() => handleLogoClick()}>
-        관리자창
       </button>
     </div>
   );
