@@ -18,6 +18,7 @@ export function init_data(seats:INIT_SEAT_DTO[]){
 
   db.exec(initDataQuery.reading_room_1);
   db.exec(initDataQuery.reading_room_2);
+  db.exec(initDataQuery.config)
   let stmt = db.prepare(initDataQuery.seat);
 
   let insertInitData = db.transaction((seats) => {
@@ -39,6 +40,7 @@ export function init_table() {
   db.exec(createTableQuery.reading_room);
   db.exec(createTableQuery.persist_user);
   db.exec(createTableQuery.log)
+  db.exec(createTableQuery.config)
 }
 
 
