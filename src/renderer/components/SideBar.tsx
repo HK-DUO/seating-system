@@ -13,7 +13,7 @@ type PropsType = {
 };
 
 function SideBar({selectRoom, selectSeat, room}: PropsType) {
-  const {alert, prompt, inPrompt, outPrompt} = useDialog();
+  const {alert, userPrompt, inPrompt, outPrompt} = useDialog();
 
   const reserve = async () => {
     if(selectSeat){room?.rows.forEach((item, index) => {
@@ -58,7 +58,7 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
   const out = async () =>{
     let ok = false
     while(!ok){
-      await prompt('퇴실').then(async (res: any) => {
+      await userPrompt('퇴실').then(async (res: any) => {
         if(res){
           if (res.name == '') {
             await alert('오류', '이름을 입력하세요.');
@@ -84,7 +84,7 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
   const extend = async () => {
     let ok = false
     while(!ok){
-      await prompt("연장").then(async (res: any) => {
+      await userPrompt("연장").then(async (res: any) => {
         if(res){
           if (res.name == '') {
             await alert('오류', '이름을 입력하세요.');

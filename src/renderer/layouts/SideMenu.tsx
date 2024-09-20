@@ -3,16 +3,18 @@ import "../styles/SideMenu.css";
 import {YuseonIc} from "../assets/svg";
 import TestButton from "../components/TestButton";
 import { useEffect, useState } from "react";
+import { useDialog } from "../hooks/useDialog";
 
 
 function SideMenu() {
+  const { prompt, alert } = useDialog();
+
   const [isKey4Pressed, setIsKey4Pressed] = useState(false);
   const [isKeyRPressed, setIsKeyRPressed] = useState(false);
-  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
-  const [password,setPassword] = useState("");
   const navigate = useNavigate();
 
-  const correctPassword = "admin";
+  const correctPassword = 'admin';
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === '4') {
@@ -39,44 +41,44 @@ function SideMenu() {
     };
   }, []);
 
-  const handleLogoClick = () => {
+
+  const handleLogoClick = async () => {
     if (isKey4Pressed && isKeyRPressed) {
-      setShowPasswordPrompt(true);
+      let ok = false;
+      while (!ok) {
+        await prompt('관리자모드', '비밀번호').then(async (res) => {
+          if (res) {
+            if (res == correctPassword) {
+              navigate('/admin');
+              ok = true;
+            } else {
+              await alert('오류', '비밀번호 오류');
+            }
+          } else {
+            ok = true;
+          }
+        });
+      }
     } else {
-      console.log('You must hold both the "4" and "r" keys while clicking the logo!');
+      console.log(
+        'You must hold both the "4" and "r" keys while clicking the logo!',
+      );
     }
   };
-  const handlePasswordSubmit = () => {
-    if (password === correctPassword) {
-      // If password is correct, navigate to admin page
-      navigate("/admin");
-    } else {
-      alert("Incorrect password!");
-    }
-    setPassword(""); // Reset password input
-    setShowPasswordPrompt(false); // Hide password prompt
-  };
-  return <nav className="side-menu">
-    <h1>
-      <img src={YuseonIc} alt="yuseong-icon" onClick={handleLogoClick}/><span >노은도서관</span>
-    </h1>
-    <div>
-      <TestButton />
-      <Link to="">좌석예약</Link>
-      <Link to="/suggest">문의사항</Link>
-    </div>
-    {showPasswordPrompt && (
-      <div className="password-prompt">
-        <label>비밀번호를 입력하세요:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={handlePasswordSubmit}>확인</button>
+
+  return (
+    <nav className="side-menu">
+      <h1>
+        <img src={YuseonIc} alt="yuseong-icon" onClick={handleLogoClick} />
+        <span>노은도서관</span>
+      </h1>
+      <div>
+        <TestButton />
+        <Link to="">좌석예약</Link>
+        <Link to="/suggest">문의사항</Link>
       </div>
-    )}
-  </nav>;
+    </nav>
+  );
 }
 
 export default SideMenu;
