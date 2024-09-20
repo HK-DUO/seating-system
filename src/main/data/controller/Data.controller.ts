@@ -4,7 +4,7 @@ import {
   init_table
 } from "../repo/Data.repo";
 import { initSeat, toConvertRowDtos } from "../service/Data.service";
-import { LOG_DTO, READING_ROOM_DTO } from "../type/Dto.type";
+import { FeatureTranslations, LOG_DTO, READING_ROOM_DTO } from "../type/Dto.type";
 import { seatRepo } from "../repo/Seat.repo";
 import { reservationRepo } from "../repo/Reservation.repo";
 import { userRepo } from "../repo/User.repo";
@@ -164,7 +164,7 @@ export function viewAllLog(){
       id:log.log_id,
       room:seat.room_id,
       seat:seat.seat_num,
-      function:log.feature,
+      function:FeatureTranslations[log.feature as keyof typeof FeatureTranslations] || log.feature,
       timestamp:log.created_at,
       nickname:user.name,
       phoneNumber:user.phone_number,

@@ -62,3 +62,11 @@ export type LOG_DTO={
   nickname:string,
   phoneNumber:string
 }
+
+export enum FeatureTranslations {
+  "ask-CheckOut" = "퇴실요청",
+  "auto-CheckOut" = "자동퇴실",
+  "extend" = "연장",
+  "manual-checkOut" = "수동퇴실",
+  "reservation" = "예약",
+}
