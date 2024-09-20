@@ -87,10 +87,10 @@ function AdminMain() {
             <th>열람실</th>
             <th>좌석</th>
             <th>기능</th>
-            <th>시간</th>
-            <th>날짜</th>
             <th>유저 닉네임</th>
             <th>유저 전화번호</th>
+            <th>시간</th>
+            <th>날짜</th>
           </tr>
           </thead>
           <tbody>
@@ -100,10 +100,11 @@ function AdminMain() {
               <td>{log.room}</td>
               <td>{log.seat}</td>
               <td>{log.function}</td>
-              <td>{new Date(log.timestamp).toISOString().slice(0, 10)}</td> {/* 날짜 표시 */}
-              <td>{new Date(log.timestamp).toLocaleTimeString()}</td> {/* 시간 표시 */}
               <td>{log.nickname}</td>
               <td>{log.phoneNumber}</td>
+              <td>{new Date(log.timestamp).toISOString().slice(0, 10)}</td>
+              <td>{new Date(log.timestamp).toLocaleTimeString()}</td>
+
             </tr>
           ))}
           </tbody>
