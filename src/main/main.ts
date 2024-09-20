@@ -35,13 +35,7 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
-
-
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-});
+let canCloseApp = false;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -95,6 +89,13 @@ const createWindow = async () => {
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
+  mainWindow.on('close', (event) => {
+    if (!canCloseApp) {
+      event.preventDefault(); // Prevent closing
+      mainWindow?.webContents.send('app:closeDenied'); // Notify renderer process about the attempt to close
+    }
+  });
+
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
@@ -134,8 +135,6 @@ setInterval(() => {
 },  60*1000);
 
 app.on('window-all-closed', () => {
-  // Respect the OSX convention of having the application in memory even
-  // after all windows have been closed
   if (process.platform !== 'darwin') {
     app.quit();
   }
@@ -169,6 +168,10 @@ app
     ipcMain.handle("log:all",async ()=>{
       return viewAllLog();
     })
+    ipcMain.on('app:requestClose', (event) => {
+      canCloseApp = true;
+      app.quit(); // Close the app
+    });
 
     createWindow();
     app.on('activate', () => {

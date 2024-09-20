@@ -58,6 +58,11 @@ function AdminMain() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
+  const handleAppClose = () => {
+    // Request the main process to close the app
+    window.electron.requestAppClose();
+  };
+
   return (
     <div className="admin-main">
       <div className="admin-header">
@@ -122,6 +127,10 @@ function AdminMain() {
       </div>
       <div className="admin-actions">
         <button onClick={() => navigate("/")}>뒤로가기</button>
+      </div>
+      <div>
+        {/* Admin-only close button */}
+        <button onClick={handleAppClose}>앱 종료</button>
       </div>
     </div>
   );

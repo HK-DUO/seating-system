@@ -1,28 +1,9 @@
 // Disable no-unused-vars, broken for spread args
 /* eslint no-unused-vars: off */
-import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { contextBridge, ipcRenderer} from 'electron';
 
-export type Channels = 'ipc-example';
 
 const electronHandler = {
-  ipcRenderer: {
-    sendMessage(channel: Channels, ...args: unknown[]) {
-      ipcRenderer.send(channel, ...args);
-    },
-    on(channel: Channels, func: (...args: unknown[]) => void) {
-      const subscription = (_event: IpcRendererEvent, ...args: unknown[]) =>
-        func(...args);
-      ipcRenderer.on(channel, subscription);
-
-      return () => {
-        ipcRenderer.removeListener(channel, subscription);
-      };
-    },
-    once(channel: Channels, func: (...args: unknown[]) => void) {
-      ipcRenderer.once(channel, (_event, ...args) => func(...args));
-    },
-  },
-
   init: () => ipcRenderer.invoke('init'),
   viewReadingRoom:(id:number)=>ipcRenderer.invoke('readingRoom:view',id),
   deleteUser:()=>ipcRenderer.invoke('user:delete'),
@@ -30,7 +11,9 @@ const electronHandler = {
   checkOut:(name:string,phone_number:string)=>ipcRenderer.invoke('reservation:checkout',name,phone_number),
   extend:(name:string,phone_number:string)=>ipcRenderer.invoke('reservation:extend',name,phone_number),
   askCheckout:(seat_id:number,name:string,phone_number:string)=>ipcRenderer.invoke('reservation:askCheckout',seat_id,name,phone_number),
-  viewAllLog:()=>ipcRenderer.invoke('log:all')
+  viewAllLog:()=>ipcRenderer.invoke('log:all'),
+  requestAppClose: () => ipcRenderer.send('app:requestClose'),
+  notifyCloseDenied: (callback: () => void) => ipcRenderer.on('app:closeDenied', callback),
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);
