@@ -163,8 +163,8 @@ app
     ipcMain.handle("reservation:extend",async (_,name:string,phone_number:string)=>{
       return extend(name,phone_number);
     })
-    ipcMain.handle("reservation:askCheckout",async (_,seat_id:number)=>{
-      return askCheckOut(seat_id);
+    ipcMain.handle("reservation:askCheckout",async (_,seat_id:number,name:string,phone_number:string)=>{
+      return askCheckOut(seat_id,name,phone_number);
     })
     ipcMain.handle("log:all",async ()=>{
       return viewAllLog();

@@ -115,17 +115,15 @@ export function extend(name:string,phone_number:string){
 }
 
 //퇴실요청 기능
-export function askCheckOut(seat_id:number){
+export function askCheckOut(seat_id:number,name:string,phone_number:string){
 
   let result = reservationRepo.ask_checkout(seat_id,"+2 minutes");
 
-  let userId = reservationRepo.find_user_id(seat_id);
-  let user = userRepo.find(userId);
-
-  //로그
-  //로그 여기에 당한 사람의 persistUserId가 아닌 한 사람의 아이디를 넣어야됨. 지금은 한사람은 입력하지 않으니까
-  //만약 한사람 넣으면 요청할때 회원등록되도록 추가로직 필요
-  logRepo.create(seat_id, persistUserRepo.find_id(user.name,user.phone_number),"ask-CheckOut")
+  if(!persistUserRepo.is_exist(name,phone_number)){
+    persistUserRepo.create(name, phone_number);
+  }
+  let persist_user_id = persistUserRepo.find_id(name,phone_number);
+  logRepo.create(seat_id, persist_user_id,"ask-CheckOut")
 
   return result.changes>0;
 }

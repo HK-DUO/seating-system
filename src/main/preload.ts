@@ -29,7 +29,7 @@ const electronHandler = {
   checkIn:(name:string,phone_number:string,seat_id:number)=>ipcRenderer.invoke('reservation:checkin',name,phone_number,seat_id),
   checkOut:(name:string,phone_number:string)=>ipcRenderer.invoke('reservation:checkout',name,phone_number),
   extend:(name:string,phone_number:string)=>ipcRenderer.invoke('reservation:extend',name,phone_number),
-  askCheckout:(seat_id:number)=>ipcRenderer.invoke('reservation:askCheckout',seat_id),
+  askCheckout:(seat_id:number,name:string,phone_number:string)=>ipcRenderer.invoke('reservation:askCheckout',seat_id,name,phone_number),
   viewAllLog:()=>ipcRenderer.invoke('log:all')
 };
 
