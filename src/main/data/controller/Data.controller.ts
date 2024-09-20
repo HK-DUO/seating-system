@@ -167,7 +167,7 @@ export function viewAllLog(){
       room:seat.room_id,
       seat:seat.seat_num,
       function:log.feature,
-      timestamp:log.time,
+      timestamp:log.created_at,
       nickname:user.name,
       phoneNumber:user.phone_number,
     })

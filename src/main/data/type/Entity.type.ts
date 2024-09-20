@@ -37,7 +37,7 @@ export type LOG={
   log_id:number;
   seat_id:number;
   persist_user_id:number;
-  time:string;
+  created_at:string;
   feature:string;
 }
 
