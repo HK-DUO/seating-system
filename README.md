@@ -32,3 +32,5 @@
 // 현재 이 함수는 reserved의 갯수를 세는데 반대로 available을 세도록 수정하기
 
 ### test
+
+test
