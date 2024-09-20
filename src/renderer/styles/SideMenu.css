@@ -14,3 +14,18 @@
   @apply mt-[140px] w-[120px] h-[120px] flex justify-center items-center rounded-md bg-lightBlue text-[18px] text-black/60
 }
 
+.password-prompt {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 100;
+}
+
+.password-prompt input {
+  margin-right: 10px;
+}
