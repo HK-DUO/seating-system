@@ -1,17 +1,18 @@
 import React, {useState} from "react";
 import {getCurrentTime, getPlusTime} from "../utils/getTime";
 import "../styles/InPrompt.css"
+import { UserInfoType } from "../types/InfoType";
 
 
 type PropsType = {
   roomNum:string;
   seatNum:string;
-  onClickOk: (input:object) => void,
+  onClickOk: (input:UserInfoType) => void,
   onClickCancel: () => void
 }
 
 function InPrompt({roomNum, seatNum, onClickOk, onClickCancel}: PropsType) {
-  const [value, setValue] = useState({name: "", number: ""})
+  const [value, setValue] = useState<UserInfoType>({name: "", number: ""})
 
   const onChange = (e: any) => {
     if(e.target.name == "number"){

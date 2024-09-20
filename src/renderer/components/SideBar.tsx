@@ -4,25 +4,19 @@ import "../styles/SideBar.css"
 import SeatInfo from "./SeatInfo";
 import {useDialog} from "../hooks/useDialog";
 import { room1 } from '../models/seatModel';
+import { RoomInfoType } from "../types/InfoType";
 
 type PropsType = {
   selectRoom?: number;
   selectSeat?: number;
-  room: {
-    totalSeats: number,
-    restSeats: number,
-    rows: {
-      row: number,
-      seats: { id:number, num: number, line: number, state: boolean, disableSeats: boolean }[]
-    }[];
-  };
+  room?: RoomInfoType
 };
 
 function SideBar({selectRoom, selectSeat, room}: PropsType) {
   const {alert, prompt, inPrompt, outPrompt} = useDialog();
 
-  const reserve = () => {
-    if(selectSeat){room.rows.forEach((item, index) => {
+  const reserve = async () => {
+    if(selectSeat){room?.rows.forEach((item, index) => {
       item.seats.forEach(async(item, index) => {
         if(selectSeat == item.num){
           if(!item.state){
@@ -56,7 +50,7 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
         }
       });
     })}else {
-      alert("오류", "좌석을 선택하세요.")
+      await alert("오류", "좌석을 선택하세요.")
     }
 
   }
@@ -105,7 +99,6 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
               }else{
                 await alert('오류', '연장 오류.');
               }
-
             })
           }
         } else {
@@ -113,21 +106,54 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
         }
       })
     }
-  }
+  };
 
-  const outRequest = () =>{
-    if(selectSeat){room.rows.forEach((item, index) => {
+  const outRequest = async () =>{
+    if(selectSeat){room?.rows.forEach((item, index) => {
       item.seats.forEach(async(item, index) => {
         if(selectSeat == item.num){
           if(item.state){
             alert("오류", "사용중인 좌석이 아닙니다.")
           } else {
-            outPrompt(String(selectRoom), String(selectSeat)).then(async (res: any) => {})
+            let ok = false
+            while (!ok) {
+              await outPrompt(String(selectRoom), String(selectSeat)).then(
+                async (res: any) => {
+                  if (res) {
+                    if (res.name == '') {
+                      await alert('오류', '이름을 입력하세요.');
+                    }
+                    if (res.name == '') {
+                      await alert('오류', '전화번호를 입력하세요.');
+                    } else {
+                      await window.electron
+                        .askCheckout(item.id, res.name, res.number)
+                        .then(async (res: any) => {
+                          if (res) {
+                            await alert(
+                              '퇴실요청',
+                              '퇴실요청이 완료되었습니다.',
+                            );
+                            ok = true;
+                          } else {
+                            await alert(
+                              '오류',
+                              '퇴실요청이 완료되지 않았습니다.',
+                            );
+                          }
+                        });
+                    }
+                  } else {
+                    ok = true
+                  }
+                },
+              );
+            }
           }
         }
       })
     })}else {
-      alert("오류", "좌석을 선택하세요.")
+      await alert("오류", "좌석을 선택하세요.")
     }
   }
 

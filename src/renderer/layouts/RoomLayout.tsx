@@ -1,20 +1,13 @@
 import React from "react";
 
 import Seat from '../components/Seat';
+import { RoomInfoType } from "../types/InfoType";
 
 type PropsType = {
-  type: number;
+  type?: number;
   seatNum?: number;
   setSeatNum: any;
-  room?: {
-    type: number;
-    totalSeats: number,
-    restSeats: number,
-    rows: {
-      row: number,
-      seats: { id:number, num: number, line: number, state: boolean, disableSeats: boolean }[]
-    }[];
-  };
+  room?: RoomInfoType
 };
 
 function RoomLayout({type, setSeatNum, seatNum, room}: PropsType) {

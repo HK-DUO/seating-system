@@ -2,10 +2,11 @@ import SideBar from "./SideBar";
 import { useEffect, useState } from 'react';
 import RoomLayout from "../layouts/RoomLayout";
 import "../styles/SeatMain.css";
+import { RoomInfoType } from "../types/InfoType";
 
 
 function SeatMain() {
-  const [roomData, setRoomData] = useState<any>();
+  const [roomData, setRoomData] = useState<{selectRoom?:number, room?:RoomInfoType}>();
 
   const [roomNum, setRoomNum] = useState<number>(1);
   const [seatNum, setSeatNum] = useState<number>();

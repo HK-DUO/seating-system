@@ -5,6 +5,9 @@ import Alert from "../components/Alert";
 import Prompt from "../components/Prompt";
 import InPrompt from "../components/InPrompt";
 import OutPrompt from "../components/OutPrompt";
+import { UserInfoType } from "../types/InfoType";
+
+
 
 type AlertState = {
   type: "alert",
@@ -23,7 +26,7 @@ type PromptState = {
 
 type InPromptState = {
   type:"inPrompt",
-  onClickOk: (input:object) => void,
+  onClickOk: (input:UserInfoType) => void,
   onClickCancel: () => void
   roomNum:string;
   seatNum:string;
@@ -31,7 +34,7 @@ type InPromptState = {
 
 type OutPromptState = {
   type:"outPrompt",
-  onClickOk: () => void,
+  onClickOk: (input:UserInfoType) => void,
   onClickCancel: () => void
   roomNum:string;
   seatNum:string;
@@ -76,13 +79,13 @@ function DialogProvider({children}: PropsType) {
     });
   }
 
-  const inPrompt = (roomNum?: string, seatNum?: string): Promise<object | undefined> => {
+  const inPrompt = (roomNum?: string, seatNum?: string): Promise<UserInfoType | undefined> => {
     return new Promise((resolve) => {
       setState({
         type: "inPrompt",
         roomNum: roomNum ?? "",
         seatNum: seatNum ?? "",
-        onClickOk: (input: object) => {
+        onClickOk: (input: UserInfoType) => {
           setState(undefined);
           resolve(input);
         },
@@ -94,19 +97,19 @@ function DialogProvider({children}: PropsType) {
     });
   };
 
-  const outPrompt = (roomNum?: string, seatNum?: string): Promise<boolean> => {
+  const outPrompt = (roomNum?: string, seatNum?: string): Promise<UserInfoType | undefined> => {
     return new Promise((resolve) => {
       setState({
         type: "outPrompt",
         roomNum: roomNum ?? "",
         seatNum: seatNum ?? "",
-        onClickOk: () => {
+        onClickOk: (input: UserInfoType) => {
           setState(undefined);
-          resolve(true);
+          resolve(input);
         },
         onClickCancel: () => {
           setState(undefined);
-          resolve(false);
+          resolve(undefined);
         },
       });
     });

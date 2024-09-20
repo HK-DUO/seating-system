@@ -2,8 +2,8 @@ import "../styles/CurrentSeat.css"
 
 type PropsType = {
   roomNum?: number
-  totalSeat: number;
-  restSeat: number
+  totalSeat?: number;
+  restSeat?: number
   selectSeat?: number;
 };
 

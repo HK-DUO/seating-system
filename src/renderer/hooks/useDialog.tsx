@@ -1,11 +1,12 @@
 import React from "react";
+import { UserInfoType } from "../types/InfoType";
 
 
 type Type = {
   alert: (message?: string, subMessage?: string) => Promise<boolean>
   prompt: (message?: string, subMessage?: string) => Promise<object | undefined>
-  inPrompt: (roomNum?:string, seatNum?:string) => Promise<object | undefined>
-  outPrompt: (roomNum?:string, seatNum?:string) => Promise<boolean>
+  inPrompt: (roomNum?:string, seatNum?:string) => Promise<UserInfoType | undefined>
+  outPrompt: (roomNum?:string, seatNum?:string) => Promise<UserInfoType | undefined>
 };
 
 const DialogContext = React.createContext<Type>({
