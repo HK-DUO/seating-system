@@ -25,7 +25,7 @@ function find_persist_user_id(name:string,phone_number:string){
 
   const db=connect();
 
-  const stmt = db.prepare(persistUserQuery.find);
+  const stmt = db.prepare(persistUserQuery.find_id);
   let result = stmt.get(name, phone_number) as { persist_user_id:number }
 
   return result.persist_user_id;
