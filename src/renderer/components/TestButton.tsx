@@ -23,8 +23,8 @@ function TestButton() {
     await window.electron.deleteUser();
   }
 
-  const onAskCheckout = async (seat_id:number) => {
-    await window.electron.askCheckout(seat_id);
+  const onAskCheckout = async (seat_id:number,name:string,phone_number:string) => {
+    await window.electron.askCheckout(seat_id,name,phone_number);
   }
 
 
@@ -39,7 +39,7 @@ function TestButton() {
       <button className="w-full h-[40px] bg-white" onClick={() => onDelete()}>
         유저리셋
       </button>
-      <button className="w-full h-[40px] bg-white" onClick={() => onAskCheckout(6)}>
+      <button className="w-full h-[40px] bg-white" onClick={() => onAskCheckout(6,"test","010-1212-1212")}>
         퇴실요청
       </button>
     </div>
