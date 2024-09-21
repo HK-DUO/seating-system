@@ -1,6 +1,6 @@
-import SideBar from "./SideBar";
+import SideBar from "../components/SideBar";
 import { useEffect, useState } from 'react';
-import RoomLayout from "../layouts/RoomLayout";
+import RoomLayout from "./RoomLayout";
 import "../styles/SeatMain.css";
 import { RoomInfoType } from "../types/InfoType";
 
@@ -30,11 +30,11 @@ function SeatMain() {
       <div>
         <button onClick={() => {
           setRoomNum(1);
-        }} className={roomNum == 1 ? 'bg-blue text-white' : 'bg-lightBlue'}>제1열람실
+        }} className={roomNum == 1 ? 'bg-blue text-white' : 'bg-light-blue'}>제1열람실
         </button>
         <button onClick={() => {
           setRoomNum(2);
-        }} className={roomNum == 2 ? 'bg-blue text-white' : 'bg-lightBlue'}>제2열람실
+        }} className={roomNum == 2 ? 'bg-blue text-white' : 'bg-light-blue'}>제2열람실
         </button>
       </div>
         <RoomLayout type={roomData?.selectRoom} seatNum={seatNum} setSeatNum={setSeatNum} room={roomData?.room} />

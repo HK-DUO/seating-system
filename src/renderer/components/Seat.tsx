@@ -13,7 +13,7 @@ function Seat({type,row, num, line, state, disableSeats, seatNum,  setSeatNum }:
   return <div
     className={`h-[34px] px-[6px] border-black/60 border cursor-pointer hover:bg-blue
     ${type == 1 ? `w-[50px] ${line % 3 == 0 && `${row == 8 ? 'ml-[50px]' : 'mr-[50px]'}`}` : `w-[60px] ${line % 3 == 0 && 'mr-[110px]'}`}
-    ${(state ? seatNum == num ? 'bg-blue' : 'bg-lightBlue' : seatNum == num ? 'bg-blue' : 'bg-red')}`}
+    ${(state ? seatNum == num ? 'bg-blue' : 'bg-light-blue' : seatNum == num ? 'bg-blue' : 'bg-red')}`}
     onClick={() => {
       setSeatNum(num);
     }}>

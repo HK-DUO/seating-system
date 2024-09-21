@@ -1,0 +1,7 @@
+.admin-nav {
+  @apply w-full h-[50px] flex justify-between bg-light-blue
+}
+
+.admin-nav > a {
+  @apply w-[33.3333333%] flex justify-center items-center text-white border border-black/60
+}

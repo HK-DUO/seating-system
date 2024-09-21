@@ -67,9 +67,9 @@
 }
 
 .admin-actions button {
-  @apply bg-deepBlue text-white px-5 py-2 rounded cursor-pointer;
+  @apply bg-deep-blue text-white px-5 py-2 rounded cursor-pointer;
 }
 
 .admin-actions button:hover {
-  @apply bg-deepBlue;
+  @apply bg-deep-blue;
 }

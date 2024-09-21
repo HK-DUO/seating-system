@@ -9,7 +9,7 @@
   @apply w-full h-[60px] mt-[20px] rounded-md text-center
 }
 .side-bar > div > button:nth-child(1) {
-  @apply bg-lightBlue
+  @apply bg-light-blue
 }
 .side-bar > div > button:nth-child(2) {
   @apply bg-red
@@ -18,5 +18,5 @@
   @apply mt-[20px] flex justify-between
 }
 .side-bar > div:nth-child(3) > div > button {
-  @apply w-[45%] h-[60px] rounded-md bg-lightBlue
+  @apply w-[45%] h-[60px] rounded-md bg-light-blue
 }

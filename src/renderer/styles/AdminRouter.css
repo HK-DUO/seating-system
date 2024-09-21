@@ -1,0 +1,11 @@
+.admin-router {
+  @apply w-full h-full bg-beige p-[20px]
+}
+
+.admin-router > h1 {
+  @apply mb-[20px] h-[50px] text-[32px] font-[600] text-center
+}
+
+.admin-router > div {
+  @apply w-full h-[610px] bg-white
+}

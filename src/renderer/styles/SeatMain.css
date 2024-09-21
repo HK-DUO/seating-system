@@ -1,6 +1,7 @@
 .seat-main {
-  @apply w-full h-full flex bg-Beige
+  @apply w-full h-full flex bg-beige
 }
+
 
 .seat-main > div:nth-child(1){
   @apply w-[740px] h-full p-[20px]

@@ -1,5 +1,5 @@
 .inquire-main {
-  @apply w-full h-full p-[20px] bg-Beige
+  @apply w-full h-full p-[20px] bg-beige
 }
 
 .inquire-main > div:nth-child(1) {
@@ -27,5 +27,5 @@
   @apply flex items-center justify-center
 }
 .inquire-main > div:nth-child(3) > button {
-  @apply w-[100px] h-[40px] text-[18px] text-white bg-deepBlue rounded-md
+  @apply w-[100px] h-[40px] text-[18px] text-white bg-deep-blue rounded-md
 }

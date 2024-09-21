@@ -65,9 +65,6 @@ function AdminMain() {
 
   return (
     <div className="admin-main">
-      <div className="admin-header">
-        <h1>관리자 콘솔</h1>
-      </div>
       {/* 검색 섹션 */}
       <div className="search-section">
         <label>날짜 검색:</label>
