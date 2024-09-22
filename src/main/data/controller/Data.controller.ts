@@ -53,8 +53,8 @@ export function checkIn(name: string, phone_number: string, seat_id: number) {
     }
 
     let user_id = userRepo.create(name, phone_number);
-
-    let reservation_id = reservationRepo.create(user_id, seat_id);
+    let time = "+"+configRepo.find().reservation_time.toString()+" hours";
+    let reservation_id = reservationRepo.create(user_id, seat_id,time);
 
     seatRepo.update_status(seat_id,"reserved")
 
@@ -111,10 +111,16 @@ export function extend(name:string,phone_number:string){
   if(!user){
     return false;
   }
-  let result = reservationRepo.update_end_time(user.user_id,'+1 hours');
+  let time = "+"+configRepo.find().extend_time.toString()+" hours";
+  let result = reservationRepo.update_end_time(user.user_id,time);
 
+  let seat_id = reservationRepo.find_seat_id_by_user_id(user.user_id);
+
+  if(seatRepo.find(seat_id).ask_checkout_flag){
+    seatRepo.update_ask_checkout_flag(seat_id,0)
+  }
   //로그
-  logRepo.create(reservationRepo.find_seat_id_by_user_id(user.user_id), persistUserRepo.find_id(name,phone_number),"extend")
+  logRepo.create(seat_id, persistUserRepo.find_id(name,phone_number),"extend")
 
   return result.changes>0;
 }
@@ -128,7 +134,8 @@ export function askCheckOut(seat_id:number,name:string,phone_number:string){
     return false;
   }
 
-  let result = reservationRepo.ask_checkout(seat_id,"+2 minutes");
+  let time = "+"+configRepo.find().ask_checkout_time.toString()+" minutes";
+  let result = reservationRepo.ask_checkout(seat_id,time);
   seatRepo.update_ask_checkout_flag(seat_id,1);
   if(!persistUserRepo.is_exist(name,phone_number)){
     persistUserRepo.create(name, phone_number);
@@ -153,7 +160,6 @@ export function autoCheckOut(): void {
 
       if(seatRepo.find(reservation.seat_id).ask_checkout_flag){
         seatRepo.update_ask_checkout_flag(reservation.seat_id,0)
-
       }
       seatRepo.update_status(reservation.seat_id,"available")
       reservationRepo.delete(reservation.user_id)

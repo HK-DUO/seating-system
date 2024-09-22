@@ -4,12 +4,12 @@ import { connect } from "./Data.repo";
 import { reservationQuery } from "../query/Reservation.query";
 
 
-function create_reservation(user_id: number, seat_id: number) {
+function create_reservation(user_id: number, seat_id: number,reservation_time:string) {
 
   const db = connect();
 
   const stmt = db.prepare(reservationQuery.create);
-  const result = stmt.run(user_id, seat_id);
+  const result = stmt.run(user_id, seat_id,reservation_time);
 
   return Number(result.lastInsertRowid);
 }

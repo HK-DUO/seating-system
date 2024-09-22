@@ -22,7 +22,7 @@ function TestButton() {
       <button className="w-full h-[40px] bg-white" onClick={viewConfig}>
         설정보기
       </button>
-      <button className="w-full h-[40px] bg-white" onClick={()=>updateConfig(2,1,30)}>
+      <button className="w-full h-[40px] bg-white" onClick={()=>updateConfig(2,1,2)}>
         설정변경
       </button>
     </div>
