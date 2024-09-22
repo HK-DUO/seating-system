@@ -23,6 +23,9 @@ release/build
 release/app/database.db
 .erb/dll
 
+#env
+.env
+
 .idea
 .vscode
 
