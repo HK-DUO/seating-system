@@ -33,7 +33,7 @@ function toConvertSeatDtos(seats:SEAT[],id:number):SEAT_DTO[]{
       num:seat.seat_num,
       line:tmp%seatsPerRow==0?seatsPerRow:tmp%seatsPerRow,
       state:seat.seat_status == 'available',
-      disableSeats:seat.is_special==1,
+      disableSeats:seat.is_priority==1,
     })
   }
   return seat_dto;

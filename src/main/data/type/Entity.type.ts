@@ -3,7 +3,8 @@ export type SEAT={
   room_id:number;
   seat_num:number;
   seat_status:string;
-  is_special:number;
+  is_priority:number;
+  ask_checkout_flag:number;
 }
 
 

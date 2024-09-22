@@ -87,6 +87,10 @@ export function checkOut(name:string,phone_number:string){
 
   let seat_id = reservationRepo.find_seat_id_by_user_id(user.user_id);
 
+  if(seatRepo.find(seat_id).ask_checkout_flag){
+    seatRepo.update_ask_checkout_flag(seat_id,0);
+  }
+
   reservationRepo.delete(user.user_id);
   let result = userRepo.delete(user.user_id);
 
@@ -117,8 +121,14 @@ export function extend(name:string,phone_number:string){
 //퇴실요청 기능
 export function askCheckOut(seat_id:number,name:string,phone_number:string){
 
-  let result = reservationRepo.ask_checkout(seat_id,"+2 minutes");
+  //이미 퇴실요청중일때
+  if(seatRepo.find(seat_id).ask_checkout_flag){
+    console.log("이미 퇴실요청이 들어온 좌석입니다.")
+    return false;
+  }
 
+  let result = reservationRepo.ask_checkout(seat_id,"+2 minutes");
+  seatRepo.update_ask_checkout_flag(seat_id,1);
   if(!persistUserRepo.is_exist(name,phone_number)){
     persistUserRepo.create(name, phone_number);
   }
@@ -139,6 +149,11 @@ export function autoCheckOut(): void {
   db.transaction(() => {
 
     for (const reservation of expiredReservations) {
+
+      if(seatRepo.find(reservation.seat_id).ask_checkout_flag){
+        seatRepo.update_ask_checkout_flag(reservation.seat_id,0)
+
+      }
       seatRepo.update_status(reservation.seat_id,"available")
       reservationRepo.delete(reservation.user_id)
       let user = userRepo.find(reservation.user_id);
