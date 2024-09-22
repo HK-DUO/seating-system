@@ -42,4 +42,12 @@ export type LOG={
   feature:string;
 }
 
+export type Config={
+  config_id:number;
+  reservation_time:number;
+  extend_time:number;
+  ask_checkout_time:number;
+  password:string;
+}
+
 

@@ -23,7 +23,7 @@ import {
   checkOut,
   deleteAllUser,
   extend,
-  viewReadingRoom, viewAllLog
+  viewReadingRoom, viewAllLog, viewConfig, updateConfig
 } from "./data/controller/Data.controller";
 
 class AppUpdater {
@@ -167,6 +167,10 @@ app
     })
     ipcMain.handle("log:all",async ()=>{
       return viewAllLog();
+    })
+    ipcMain.handle("config:view",async ()=>{return viewConfig()});
+    ipcMain.handle("config:update",async (_,reservation_time:number,extend_time:number,ask_checkout_time:number)=>{
+      return updateConfig(reservation_time,extend_time,ask_checkout_time);
     })
     ipcMain.on('app:requestClose', (event) => {
       canCloseApp = true;

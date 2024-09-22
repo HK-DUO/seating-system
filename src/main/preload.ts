@@ -12,6 +12,8 @@ const electronHandler = {
   extend:(name:string,phone_number:string)=>ipcRenderer.invoke('reservation:extend',name,phone_number),
   askCheckout:(seat_id:number,name:string,phone_number:string)=>ipcRenderer.invoke('reservation:askCheckout',seat_id,name,phone_number),
   viewAllLog:()=>ipcRenderer.invoke('log:all'),
+  viewConfig:()=>ipcRenderer.invoke('config:view'),
+  updateConfig:(reservation_time:number,extend_time:number,ask_checkout_time:number)=>ipcRenderer.invoke('config:update',reservation_time,extend_time,ask_checkout_time),
   requestAppClose: () => ipcRenderer.send('app:requestClose'),
   notifyCloseDenied: (callback: () => void) => ipcRenderer.on('app:closeDenied', callback),
 };
