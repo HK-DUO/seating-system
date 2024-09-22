@@ -106,7 +106,6 @@ function AdminMain() {
               <td>{log.phoneNumber}</td>
               <td>{new Date(log.timestamp).toISOString().slice(0, 10)}</td>
               <td>{new Date(log.timestamp).toLocaleTimeString()}</td>
-
             </tr>
           ))}
           </tbody>
@@ -121,9 +120,6 @@ function AdminMain() {
         <button onClick={handleNextPage} disabled={currentPage === totalPages}>
           다음 페이지
         </button>
-      </div>
-      <div className="admin-actions">
-        <button onClick={() => navigate("/")}>뒤로가기</button>
       </div>
       <div>
         {/* Admin-only close button */}

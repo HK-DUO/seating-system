@@ -2,6 +2,13 @@
   @apply w-full h-[50px] flex justify-between bg-light-blue
 }
 
-.admin-nav > a {
-  @apply w-[33.3333333%] flex justify-center items-center text-white border border-black/60
+.admin-nav > a  {
+  @apply w-[25%] flex justify-center items-center text-white border border-black/60
+}
+.admin-nav > a:hover{
+  @apply bg-deep-blue
+}
+
+.admin-nav > button {
+  @apply w-[25%] bg-red border border-black/60
 }

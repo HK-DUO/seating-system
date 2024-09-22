@@ -7,6 +7,7 @@ import UserPrompt from "../components/UserPrompt";
 import InPrompt from "../components/InPrompt";
 import OutPrompt from "../components/OutPrompt";
 import { UserInfoType } from "../types/InfoType";
+import Confirm from "../components/Confirm";
 
 
 
@@ -15,6 +16,14 @@ type AlertState = {
   message: string;
   subMessage: string,
   onClickOk: () => void
+};
+
+type ConfirmState = {
+  type: 'confirm';
+  message: string;
+  subMessage: string;
+  onClickOk: () => void;
+  onClickCancel: () => void;
 };
 
 type PromptState = {
@@ -54,7 +63,7 @@ type PropsType = {
 };
 
 function DialogProvider({children}: PropsType) {
-  const [state, setState] = React.useState<AlertState | PromptState | UserPromptState | InPromptState | OutPromptState>();
+  const [state, setState] = React.useState<AlertState | ConfirmState | PromptState | UserPromptState | InPromptState | OutPromptState>();
 
   const alert = (message?: string, subMessage?:string): Promise<boolean> => {
     return new Promise((resolve) => {
@@ -65,6 +74,24 @@ function DialogProvider({children}: PropsType) {
         onClickOk: () => {
           setState(undefined);
           resolve(true);
+        },
+      });
+    });
+  };
+
+  const confirm = (message?: string, subMessage?:string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      setState({
+        type: 'confirm',
+        message: message ?? '',
+        subMessage: subMessage ?? '',
+        onClickOk: () => {
+          setState(undefined);
+          resolve(true);
+        },
+        onClickCancel: () => {
+          setState(undefined);
+          resolve(false);
         },
       });
     });
@@ -144,7 +171,7 @@ function DialogProvider({children}: PropsType) {
 
   return (
     <DialogContext.Provider
-      value={{ alert, prompt, userPrompt, inPrompt, outPrompt }}
+      value={{ alert, confirm, prompt, userPrompt, inPrompt, outPrompt }}
     >
       {children}
       {state && (
@@ -154,6 +181,14 @@ function DialogProvider({children}: PropsType) {
               message={state.message}
               subMessage={state.subMessage}
               onClickOk={state.onClickOk}
+            />
+          )}
+          {state.type == 'confirm' && (
+            <Confirm
+              message={state.message}
+              subMessage={state.subMessage}
+              onClickOk={state.onClickOk}
+              onClickCancel={state.onClickCancel}
             />
           )}
           {state.type == 'prompt' && (

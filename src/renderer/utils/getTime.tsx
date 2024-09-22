@@ -17,7 +17,6 @@ const getPlusTime = () => {
   } else return ((today.getHours() <= 22) ?
     today.getHours() + 2
     : today.getHours() - 22) + " : " + today.getMinutes();
-
 }
 
 export {getPlusTime, getCurrentTime};
