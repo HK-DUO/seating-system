@@ -20,6 +20,12 @@ function update_all(reservation_time:number,extend_time:number,ask_checkout_time
   stmt.run(reservation_time,extend_time,ask_checkout_time);
 }
 
+function update_password(password:string){
+  const db = connect();
+  const stmt = db.prepare(configQuery.update_password);
+  return stmt.run(password);
+}
+
 function update_reservation_time(hours:number){
   const db=connect();
   const stmt = db.prepare(configQuery.update_reservation);
@@ -46,6 +52,7 @@ export const configRepo={
   update_reservation:update_reservation_time,
   update_extend:update_extend_time,
   update_ask_checkout:update_ask_checkout_time,
+  update_password:update_password,
   update_all:update_all,
 
 }
