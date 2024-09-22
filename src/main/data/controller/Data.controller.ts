@@ -10,6 +10,7 @@ import { reservationRepo } from "../repo/Reservation.repo";
 import { userRepo } from "../repo/User.repo";
 import { persistUserRepo } from "../repo/PersistUser.repo";
 import { logRepo } from "../repo/Log.repo";
+import { configRepo } from "../repo/Config.repo";
 
 //테이블,좌석 초기화
 export function init(){
@@ -186,4 +187,12 @@ export function viewAllLog(){
     })
   }
   return log_dtos;
+}
+
+export function viewConfig(){
+  return configRepo.find();
+}
+
+export function updateConfig(reservation_time:number,extend_time:number,ask_checkout_time:number){
+  return configRepo.update_all(reservation_time,extend_time,ask_checkout_time);
 }

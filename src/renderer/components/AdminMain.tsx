@@ -4,17 +4,6 @@ import { useEffect, useState } from "react";
 import { LOG_DTO } from "../../main/data/type/Dto.type";
 
 
-// 가짜 로그 데이터 (백엔드에서 받아올 실제 로그 데이터로 대체 가능)
-// const logs = Array.from({ length: 100 }, (_, index) => ({
-//   id: index + 1,
-//   room: `${Math.floor(index / 10) + 1}`,
-//   seat: `${index % 10 + 1}`,
-//   function: '예약',
-//   timestamp: new Date().toISOString(),
-//   nickname: `닉네임 ${index + 1}`,
-//   phoneNumber: `010-0000-${String(index + 1).padStart(4, '0')}`,
-// }));
-
 function AdminMain() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
