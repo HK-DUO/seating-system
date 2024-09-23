@@ -20,14 +20,15 @@ export async function init_data(seats:INIT_SEAT_DTO[]){
   db.exec(initDataQuery.reading_room_1);
   db.exec(initDataQuery.reading_room_2);
   db.exec(initDataQuery.admin)
+
   let stmt1 = db.prepare(initDataQuery.config);
-  let hashedPassword= await hashingPW("admin")
-  stmt1.run(hashedPassword)
-  let stmt = db.prepare(initDataQuery.seat);
+  stmt1.run(await hashingPW("admin"))
+
+  let stmt2 = db.prepare(initDataQuery.seat);
 
   let insertInitData = db.transaction((seats) => {
     for (const seat of seats) {
-      stmt.run(seat.seat_id, seat.room_id, seat.seat_num, seat.seat_status, seat.is_special);
+      stmt2.run(seat.seat_id, seat.room_id, seat.seat_num, seat.seat_status, seat.is_special);
     }
   });
 

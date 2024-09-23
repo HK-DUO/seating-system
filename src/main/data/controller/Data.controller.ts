@@ -25,11 +25,12 @@ export function reset(){
   deleteData();
   resetSeat();
   configRepo.update_all(2,1,30)
-
+  configRepo.update_password("admin")
   logRepo.create(1, persistUserRepo.find_id("admin","000-0000-0000"),"data-reset")
 
   return new ResponseEntity("리셋 성공",200)
 }
+
 export async function checkingPassword(password:string):Promise<ResponseEntity<boolean>> {
   let hashedPassword = configRepo.find().password;
 
