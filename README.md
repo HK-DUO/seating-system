@@ -1,10 +1,65 @@
-# seating-system
-노은도서관 좌석예약 앱
-<img width="666" alt="스크린샷 2024-08-14 오후 3 58 27" src="https://github.com/user-attachments/assets/b4ad7c44-0eb2-4cc5-9b86-dbd98153331e">
-## todo
-- 개별 좌석 
-- api로 관리자 컴퓨터에서 클라이언트db 나 로그 확인하도록
+# 노은도서관 열람실 좌석예약 시스템
 
+### ✨노은도서관 열람실 좌석예약시스템, NL✨
+<img width="666" alt="스크린샷 2024-08-14 오후 3 58 27" src="https://github.com/user-attachments/assets/b4ad7c44-0eb2-4cc5-9b86-dbd98153331e">
+
+
+## 🗨️ About 농행동행
+"소비자가 느끼는 농촌관광의 진입장벽을 허물어주는 농촌관광 플랫폼"
+
+현재의 농촌관광의 소비패턴 "정보탐색 → 여행선택 → 예약 → 예약관리 → 여행
+(소비)" 과정에서의 겪는 불편함을 농행동행 플랫폼을 통해 해소
+<table>
+<tr>
+<td align="center">
+   <img width="666" alt="스크린샷 2024-08-14 오후 3 58 27" src="https://github.com/user-attachments/assets/b4ad7c44-0eb2-4cc5-9b86-dbd98153331e">
+</td>
+<td align="center">
+    <img width="1186" alt="스크린샷 2024-09-23 오후 7 22 18" src="https://github.com/user-attachments/assets/63379b33-8f64-4a8c-b8f9-1af36dd6ed95">
+</td>
+
+</tr>
+<tr>
+<td align="center">메인 페이지</td>
+<td align="center">관리자 페이지</td>
+</tr>
+
+</table>
+## 👨🏻‍💻 Member
+<table>
+<tr>
+<td align="center">프론트엔드</td>
+<td align="center">백엔드</td>
+
+</tr>
+  <tr>
+    <td align="center" width="120px">
+      <a href="https://github.com/kimsunin" target="_blank">
+        <img src="https://avatars.githubusercontent.com/kimsunin" alt="김선인 프로필" />
+      </a>
+    </td>
+    <td align="center" width="120px">
+      <a href="https://github.com/hcmhcs" target="_blank">
+        <img src="https://avatars.githubusercontent.com/hcmhcs" alt="한창민 프로필" />
+      </a>
+  </tr>
+ <tr>
+    <td align="center">
+      <a href="https://github.com/kimsunin" target="_blank">
+        김선인
+      </a>
+    </td>
+     <td align="center">
+      <a href="https://github.com/hcmhcs" target="_blank">
+       한창민
+      </a>
+    </td>
+  </tr>
+<tr>
+<td align="center"> <a href="https://github.com/HK-DUO/seating-system">Repository</a></td>
+<td align="center"> <a href="https://github.com/HK-DUO/seating-system">Repository</a></td>
+</tr>
+</table>
 
 
 ### test
