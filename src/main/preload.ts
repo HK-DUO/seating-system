@@ -5,6 +5,7 @@ import { contextBridge, ipcRenderer} from 'electron';
 
 const electronHandler = {
   init: () => ipcRenderer.invoke('init'),
+  reset: () => ipcRenderer.invoke('reset'),
   viewReadingRoom:(id:number)=>ipcRenderer.invoke('readingRoom:view',id),
   deleteUser:()=>ipcRenderer.invoke('user:delete'),
   checkIn:(name:string,phone_number:string,seat_id:number)=>ipcRenderer.invoke('reservation:checkin',name,phone_number,seat_id),

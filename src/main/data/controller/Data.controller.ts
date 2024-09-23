@@ -1,7 +1,7 @@
 import {
-  connect,
+  connect, deleteData,
   init_data,
-  init_table
+  init_table, resetSeat
 } from "../repo/Data.repo";
 import { initSeat, toConvertRowDtos } from "../service/Data.service";
 import { FeatureTranslations, LOG_DTO, READING_ROOM_DTO } from "../type/Dto.type";
@@ -18,6 +18,17 @@ export function init(){
   init_table();
   init_data(initSeat());
   return new ResponseEntity("초기화 성공",200)
+}
+
+//데이터 리셋
+export function reset(){
+  deleteData();
+  resetSeat();
+  configRepo.update_all(2,1,30)
+
+  logRepo.create(1, persistUserRepo.find_id("admin","000-0000-0000"),"data-reset")
+
+  return new ResponseEntity("리셋 성공",200)
 }
 
 

@@ -23,7 +23,7 @@ import {
   checkOut,
   deleteAllUser,
   extend,
-  viewReadingRoom, viewAllLog, viewConfig, updateConfig
+  viewReadingRoom, viewAllLog, viewConfig, updateConfig, reset
 } from "./data/controller/Data.controller";
 import { ResponseEntity } from "./data/class/Response.class";
 import { LOG_DTO, READING_ROOM_DTO } from "./data/type/Dto.type";
@@ -149,6 +149,9 @@ app
 
     ipcMain.handle('init', async () => {
       return init()
+    });
+    ipcMain.handle('reset', async () => {
+      return reset()
     });
     ipcMain.handle("readingRoom:view",async (_,id:number)=>{
       return viewReadingRoom(id) as ResponseEntity<READING_ROOM_DTO>

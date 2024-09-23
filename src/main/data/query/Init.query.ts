@@ -20,13 +20,29 @@ const initReadingRoomData1:string="INSERT into ReadingRoom(room_id,room_name,tot
 const initReadingRoomData2:string="INSERT into ReadingRoom(room_id,room_name,total_num_of_seat) VALUES(2,'제 2열람실',128)"
 const initSeatData:string ="INSERT INTO Seat (seat_id, room_id, seat_num, seat_status, is_priority) VALUES (?, ?, ?, ?, ?)"
 const initConfigData:string="INSERT into Config(reservation_time,extend_time,ask_checkout_time) VALUES(2,1,30)"
-
+const initAdminData:string="INSERT into PersistUser(name,phone_number) values('admin','000-0000-0000')"
 export const initDataQuery={
   reading_room_1:initReadingRoomData1,
   reading_room_2:initReadingRoomData2,
   seat:initSeatData,
-  config:initConfigData
+  config:initConfigData,
+  admin:initAdminData
 }
+
+const deleteReservationDataQuery:string="DELETE FROM Reservation"
+const resetReservationSequenceQuery:string="DELETE FROM sqlite_sequence WHERE name = 'Reservation'"
+const deleteUserDataQuery:string="DELETE FROM User"
+const resetUserSequenceQuery:string="DELETE FROM sqlite_sequence WHERE name = 'User'"
+const resetSeatDataQuery:string="Update Seat SET seat_status = 'available',ask_checkout_flag = 0"
+
+export const resetDataQuery={
+  delete_reservation:deleteReservationDataQuery,
+  delete_user:deleteUserDataQuery,
+  reset_reservation_sequence:resetReservationSequenceQuery,
+  reset_user_sequence:resetUserSequenceQuery,
+  reset_seat_data:resetSeatDataQuery,
+}
+
 
 
 

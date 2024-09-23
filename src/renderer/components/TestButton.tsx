@@ -5,6 +5,9 @@ function TestButton() {
   const init = () => {
     window.electron.init();
   };
+  const reset = () => {
+    window.electron.reset();
+  };
 
   const viewConfig = async ()=>{
      await window.electron.viewConfig().then(async (res)=>console.log(res));
@@ -19,10 +22,13 @@ function TestButton() {
       <button className="w-full h-[40px] bg-white" onClick={init}>
         초기화
       </button>
+      <button className="w-full h-[40px] bg-white" onClick={reset}>
+        데이터리셋
+      </button>
       <button className="w-full h-[40px] bg-white" onClick={viewConfig}>
         설정보기
       </button>
-      <button className="w-full h-[40px] bg-white" onClick={()=>updateConfig(2,1,2)}>
+      <button className="w-full h-[40px] bg-white" onClick={() => updateConfig(2, 1, 2)}>
         설정변경
       </button>
     </div>
