@@ -10,7 +10,7 @@
   @apply text-[20px]
 }
 .admin-setting > div > input {
-  @apply w-[140px] h-[30px] pl-[10px]
+  @apply w-[140px] h-[30px] pl-[10px] border border-black/20
 }
 
 .admin-setting > div > button {
