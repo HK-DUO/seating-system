@@ -65,7 +65,7 @@
 </table>
 
 ## 🛠️ Skills
-<img width="430" alt="스크린샷 2024-09-23 오후 7 50 03" src="https://github.com/user-attachments/assets/16aded0d-110b-4362-aec6-8cec30d12867">
+<img width="410" alt="스크린샷 2024-09-23 오후 7 51 28" src="https://github.com/user-attachments/assets/18092578-81fa-4ea6-ba6f-b3a0145d0c1e">g
 
 ## 💻 진행중
 ### fe
