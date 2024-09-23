@@ -1,6 +1,6 @@
 # seating-system
 노은도서관 좌석예약 앱
-
+<img width="666" alt="스크린샷 2024-08-14 오후 3 58 27" src="https://github.com/user-attachments/assets/b4ad7c44-0eb2-4cc5-9b86-dbd98153331e">
 ## todo
 - 개별 좌석 
 - api로 관리자 컴퓨터에서 클라이언트db 나 로그 확인하도록
