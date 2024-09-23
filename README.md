@@ -1,7 +1,8 @@
 # 노은도서관 열람실 좌석예약 시스템
 
 ### ✨노은도서관 열람실 좌석예약시스템, NL✨
-<img width="666" alt="스크린샷 2024-08-14 오후 3 58 27" src="https://github.com/user-attachments/assets/b4ad7c44-0eb2-4cc5-9b86-dbd98153331e">
+<img width="1199" alt="스크린샷 2024-09-23 오후 7 17 58" src="https://github.com/user-attachments/assets/a2973b1e-1eb6-4170-8a83-335467e1575d">
+
 
 
 ## 🗨️ About 농행동행
@@ -12,7 +13,7 @@
 <table>
 <tr>
 <td align="center">
-   <img width="666" alt="스크린샷 2024-08-14 오후 3 58 27" src="https://github.com/user-attachments/assets/b4ad7c44-0eb2-4cc5-9b86-dbd98153331e">
+   <img width="1199" alt="스크린샷 2024-09-23 오후 7 17 58" src="https://github.com/user-attachments/assets/a2973b1e-1eb6-4170-8a83-335467e1575d">
 </td>
 <td align="center">
     <img width="1186" alt="스크린샷 2024-09-23 오후 7 22 18" src="https://github.com/user-attachments/assets/63379b33-8f64-4a8c-b8f9-1af36dd6ed95">
