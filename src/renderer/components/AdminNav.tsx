@@ -10,6 +10,7 @@ function AdminNav(){
   const closeApp = async () =>{
     await confirm("종료", "정말 종료하시겠습니끼?").then((res)=>{
       if(res){
+        localStorage.removeItem("askDbReset")
         window.electron.requestAppClose()
       }
     })
