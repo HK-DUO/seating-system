@@ -3,7 +3,8 @@ export type SEAT={
   room_id:number;
   seat_num:number;
   seat_status:string;
-  is_special:number;
+  is_priority:number;
+  ask_checkout_flag:number;
 }
 
 
@@ -39,6 +40,14 @@ export type LOG={
   persist_user_id:number;
   created_at:string;
   feature:string;
+}
+
+export type Config={
+  config_id:number;
+  reservation_time:number;
+  extend_time:number;
+  ask_checkout_time:number;
+  password:string;
 }
 
 

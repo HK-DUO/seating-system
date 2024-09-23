@@ -35,6 +35,13 @@ function update_seat_status(seat_id:number,seat_status:string){
   stmt.run(seat_status,seat_id);
 }
 
+function update_ask_checkout_flag(seat_id:number,ask_checkout_flag:number){
+  const db = connect();
+
+  const stmt = db.prepare(seatQuery.updateAskCheckoutFlag);
+  stmt.run(ask_checkout_flag,seat_id);
+}
+
 function find_seat(seat_id:number){
   const db = connect();
 
@@ -46,4 +53,5 @@ export const seatRepo={
   find_all:find_all_seats,
   is_available:is_seat_available,
   update_status:update_seat_status,
+  update_ask_checkout_flag:update_ask_checkout_flag,
 }

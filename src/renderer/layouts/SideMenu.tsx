@@ -4,6 +4,7 @@ import {YuseonIc} from "../assets/svg";
 import TestButton from "../components/TestButton";
 import { useEffect, useState } from "react";
 import { useDialog } from "../hooks/useDialog";
+import { Config } from "../../main/data/type/Entity.type";
 
 
 function SideMenu() {
@@ -13,7 +14,6 @@ function SideMenu() {
   const [isKeyRPressed, setIsKeyRPressed] = useState(false);
   const navigate = useNavigate();
 
-  const correctPassword = 'admin';
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -47,8 +47,12 @@ function SideMenu() {
       let ok = false;
       while (!ok) {
         await prompt('관리자모드', '비밀번호').then(async (res) => {
+          let adminPassword;
+          await window.electron.viewConfig().then((res:Config)=> {
+            adminPassword = res.password;
+          })
           if (res) {
-            if (res == correctPassword) {
+            if (res == adminPassword) {
               navigate('/admin');
               ok = true;
             } else {
