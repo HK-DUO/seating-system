@@ -2,6 +2,7 @@ import "../styles/AdminMain.css"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { LOG_DTO } from "../../main/data/type/Dto.type";
+import { ResponseEntity } from "../../main/data/class/Response.class";
 
 
 function AdminMain() {
@@ -14,15 +15,18 @@ function AdminMain() {
 
   // 데이터 로딩 함수
   const loadLogs = async () => {
+    console.log("loadLogs 실행");
     try {
-      const logs = await window.electron.viewAllLog()
-      setLogs(logs);
+      const logs = await window.electron.viewAllLog() as ResponseEntity<LOG_DTO[]>;
+      console.log(logs.data);
+      setLogs(logs.data);
     } catch (error) {
       console.error('Failed to load logs:', error);
     }
   };
 
   useEffect(() => {
+    console.log("admin-main: log - userEffect");
     loadLogs();
   }, []);
 

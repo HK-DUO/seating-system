@@ -70,3 +70,5 @@ export enum FeatureTranslations {
   "manual-checkOut" = "수동퇴실",
   "reservation" = "예약",
 }
+
+

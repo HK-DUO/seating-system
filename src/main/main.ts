@@ -25,6 +25,9 @@ import {
   extend,
   viewReadingRoom, viewAllLog, viewConfig, updateConfig
 } from "./data/controller/Data.controller";
+import { ResponseEntity } from "./data/class/Response.class";
+import { LOG_DTO, READING_ROOM_DTO } from "./data/type/Dto.type";
+import { Config } from "./data/type/Entity.type";
 
 class AppUpdater {
   constructor() {
@@ -145,30 +148,30 @@ app
   .then(() => {
 
     ipcMain.handle('init', async () => {
-      init();
+      return init()
     });
     ipcMain.handle("readingRoom:view",async (_,id:number)=>{
-      return viewReadingRoom(id);
+      return viewReadingRoom(id) as ResponseEntity<READING_ROOM_DTO>
     })
     ipcMain.handle("user:delete",async ()=>{
-      return deleteAllUser();
+      return deleteAllUser() as ResponseEntity<boolean>
     })
     ipcMain.handle("reservation:checkin",async (_,name:string,phone_number:string,seat_id:number)=>{
-      return checkIn(name,phone_number,seat_id);
+      return checkIn(name,phone_number,seat_id) as ResponseEntity<any>
     })
     ipcMain.handle("reservation:checkout",async (_,name:string,phone_number:string)=>{
-      return checkOut(name,phone_number);
+      return checkOut(name,phone_number) as ResponseEntity<boolean>
     })
     ipcMain.handle("reservation:extend",async (_,name:string,phone_number:string)=>{
-      return extend(name,phone_number);
+      return extend(name,phone_number) as ResponseEntity<boolean>
     })
     ipcMain.handle("reservation:askCheckout",async (_,seat_id:number,name:string,phone_number:string)=>{
-      return askCheckOut(seat_id,name,phone_number);
+      return askCheckOut(seat_id,name,phone_number) as ResponseEntity<boolean>
     })
     ipcMain.handle("log:all",async ()=>{
-      return viewAllLog();
+      return viewAllLog() as ResponseEntity<LOG_DTO[]>
     })
-    ipcMain.handle("config:view",async ()=>{return viewConfig()});
+    ipcMain.handle("config:view",async ()=>{return viewConfig() as ResponseEntity<Config>});
     ipcMain.handle("config:update",async (_,reservation_time:number,extend_time:number,ask_checkout_time:number)=>{
       return updateConfig(reservation_time,extend_time,ask_checkout_time);
     })

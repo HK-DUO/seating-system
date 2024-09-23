@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import RoomLayout from "./RoomLayout";
 import "../styles/SeatMain.css";
 import { RoomInfoType } from "../types/InfoType";
+import { READING_ROOM_DTO } from "../../main/data/type/Dto.type";
+import { ResponseEntity } from "../../main/data/class/Response.class";
 
 
 function SeatMain() {
@@ -14,13 +16,13 @@ function SeatMain() {
   useEffect(() => {
     onView(roomNum).then((res) => {
       console.log(res)
-      setRoomData(res);
+      setRoomData(res.data);
     });
   }, [roomNum]);
 
   const onView = async (num: number): Promise<any> => {
     setSeatNum(undefined);
-    let res = await window.electron.viewReadingRoom(num);
+    let res = await window.electron.viewReadingRoom(num) as ResponseEntity<READING_ROOM_DTO>;
     return res;
   };
 

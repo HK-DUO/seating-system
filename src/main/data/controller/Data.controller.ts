@@ -11,31 +11,35 @@ import { userRepo } from "../repo/User.repo";
 import { persistUserRepo } from "../repo/PersistUser.repo";
 import { logRepo } from "../repo/Log.repo";
 import { configRepo } from "../repo/Config.repo";
+import { ResponseEntity } from "../class/Response.class";
 
 //테이블,좌석 초기화
 export function init(){
   init_table();
   init_data(initSeat());
+  return new ResponseEntity("초기화 성공",200)
 }
 
 
 //실시간 좌석보기 기능
-export function viewReadingRoom(room_id:number):READING_ROOM_DTO{
+export function viewReadingRoom(room_id:number):ResponseEntity<READING_ROOM_DTO>{
 
   let seats = seatRepo.find_all(room_id);
   let available_count = reservationRepo.count(room_id)
-  return {
+  const result = {
     selectRoom: room_id,
-    room: {
-      totalSeats: seats.length,
+      room: {
+    totalSeats: seats.length,
       restSeats: available_count,
       rows: toConvertRowDtos(seats, room_id)
-    }
   }
+  }as READING_ROOM_DTO
+
+  return new ResponseEntity(result,200)
 }
 
 //예약기능
-export function checkIn(name: string, phone_number: string, seat_id: number) {
+export function checkIn(name: string, phone_number: string, seat_id: number){
 
   const db = connect();
 
@@ -65,16 +69,18 @@ export function checkIn(name: string, phone_number: string, seat_id: number) {
   })
 
   try {
-    return transaction();
+    let result = transaction();
+    return new ResponseEntity(result,200);
   } catch (error) {
     console.error("예약 과정중 오류", error);
-    return null;
+    return new ResponseEntity(error,400,"예약 오류");
   }
 }
 
 export function deleteAllUser(){
 
   userRepo.delete_all()
+  return new ResponseEntity(true,200,"모든 사용자 삭제 완료");
 }
 
 //수동 퇴실기능
@@ -83,7 +89,7 @@ export function checkOut(name:string,phone_number:string){
   let user = userRepo.find_user_id(name,phone_number);
 
   if(!user){
-    return false;
+    return new ResponseEntity(false,400,"이용중인 사용자가 아닙니다.");
   }
 
   let seat_id = reservationRepo.find_seat_id_by_user_id(user.user_id);
@@ -100,7 +106,7 @@ export function checkOut(name:string,phone_number:string){
   //로그
   logRepo.create(seat_id, persistUserRepo.find_id(name,phone_number),"manual-checkOut")
 
-  return result.changes>0;
+  return new ResponseEntity(result.changes>0,200);
 }
 
 //연장기능
@@ -109,7 +115,7 @@ export function extend(name:string,phone_number:string){
   let user = userRepo.find_user_id(name,phone_number);
 
   if(!user){
-    return false;
+    return new ResponseEntity(false,400,"이용중인 사용자가 아닙니다.");
   }
   let time = "+"+configRepo.find().extend_time.toString()+" hours";
   let result = reservationRepo.update_end_time(user.user_id,time);
@@ -121,8 +127,7 @@ export function extend(name:string,phone_number:string){
   }
   //로그
   logRepo.create(seat_id, persistUserRepo.find_id(name,phone_number),"extend")
-
-  return result.changes>0;
+  return new ResponseEntity(result.changes>0,200);
 }
 
 //퇴실요청 기능
@@ -131,7 +136,7 @@ export function askCheckOut(seat_id:number,name:string,phone_number:string){
   //이미 퇴실요청중일때
   if(seatRepo.find(seat_id).ask_checkout_flag){
     console.log("이미 퇴실요청이 들어온 좌석입니다.")
-    return false;
+    return new ResponseEntity(false,400,"퇴실요청 중복 오류");
   }
 
   let time = "+"+configRepo.find().ask_checkout_time.toString()+" minutes";
@@ -143,7 +148,7 @@ export function askCheckOut(seat_id:number,name:string,phone_number:string){
   let persist_user_id = persistUserRepo.find_id(name,phone_number);
   logRepo.create(seat_id, persist_user_id,"ask-CheckOut")
 
-  return result.changes>0;
+  return new ResponseEntity(result.changes>0,200);
 }
 
 
@@ -192,13 +197,14 @@ export function viewAllLog(){
       phoneNumber:user.phone_number,
     })
   }
-  return log_dtos;
+  return new ResponseEntity(log_dtos,200);
 }
 
 export function viewConfig(){
-  return configRepo.find();
+  return new ResponseEntity(configRepo.find());
 }
 
 export function updateConfig(reservation_time:number,extend_time:number,ask_checkout_time:number){
-  return configRepo.update_all(reservation_time,extend_time,ask_checkout_time);
+  let result = configRepo.update_all(reservation_time,extend_time,ask_checkout_time);
+  return new ResponseEntity(result.changes>0,200);
 }

@@ -17,7 +17,7 @@ function find_config(){
 function update_all(reservation_time:number,extend_time:number,ask_checkout_time:number){
   const db = connect();
   const stmt = db.prepare(configQuery.update_all);
-  stmt.run(reservation_time,extend_time,ask_checkout_time);
+  return stmt.run(reservation_time,extend_time,ask_checkout_time);
 }
 
 function update_password(password:string){

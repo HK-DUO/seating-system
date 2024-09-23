@@ -32,7 +32,7 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
                     await alert('오류', '전화번호를 입력하세요.');
                   } else {
                     await window.electron.checkIn(res.name, res.number, item.id).then(async(res)=>{
-                      if(res){
+                      if(res.data){
                         await alert("예약", "좌석예약이 완료되었습니다.")
                         ok = true
                         window.location.reload()
@@ -66,7 +66,7 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
             await alert('오류', '전화번호를 입력하세요.');
           } else {
            await window.electron.checkOut(res.name, res.number).then(async (res)=>{
-             if(res == true){
+             if(res.data == true){
                await alert("퇴실", "퇴실이 완료되었습니다")
                ok = true
                window.location.reload()
@@ -92,7 +92,7 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
             await alert('오류', '전화번호를 입력하세요.');
           } else {
             await window.electron.extend(res.name,res.number).then(async (res: any) => {
-              if(res){
+              if(res.data){
                 await alert('연장', '이용시간 연장이 완료되었습니다.');
                 ok = true
                 window.location.reload()
@@ -129,7 +129,7 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
                       await window.electron
                         .askCheckout(item.id, res.name, res.number)
                         .then(async (res: any) => {
-                          if (res) {
+                          if (res.data) {
                             await alert(
                               '퇴실요청',
                               '퇴실요청이 완료되었습니다.',

@@ -5,6 +5,7 @@ import TestButton from "../components/TestButton";
 import { useEffect, useState } from "react";
 import { useDialog } from "../hooks/useDialog";
 import { Config } from "../../main/data/type/Entity.type";
+import { ResponseEntity } from "../../main/data/class/Response.class";
 
 
 function SideMenu() {
@@ -48,8 +49,8 @@ function SideMenu() {
       while (!ok) {
         await prompt('관리자모드', '비밀번호').then(async (res) => {
           let adminPassword;
-          await window.electron.viewConfig().then((res:Config)=> {
-            adminPassword = res.password;
+          await window.electron.viewConfig().then((res)=> {
+            adminPassword = res.data.password;
           })
           if (res) {
             if (res == adminPassword) {

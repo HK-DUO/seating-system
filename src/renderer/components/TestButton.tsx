@@ -6,12 +6,12 @@ function TestButton() {
     window.electron.init();
   };
 
-  const viewConfig=()=>{
-    window.electron.viewConfig();
+  const viewConfig = async ()=>{
+     await window.electron.viewConfig().then(async (res)=>console.log(res));
   }
 
-  const updateConfig=(reservation_time:number,extend_time:number,ask_checkout_time:number)=>{
-    window.electron.updateConfig(reservation_time,extend_time,ask_checkout_time);
+  const updateConfig = async (reservation_time:number,extend_time:number,ask_checkout_time:number)=>{
+    await window.electron.updateConfig(reservation_time,extend_time,ask_checkout_time).then(async (res)=>console.log(res));
   }
 
   return (
