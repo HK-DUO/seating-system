@@ -15,6 +15,7 @@ const electronHandler = {
   viewAllLog:()=>ipcRenderer.invoke('log:all'),
   viewConfig:()=>ipcRenderer.invoke('config:view'),
   updateConfig:(reservation_time:number,extend_time:number,ask_checkout_time:number)=>ipcRenderer.invoke('config:update',reservation_time,extend_time,ask_checkout_time),
+  checkingPassword:(password:string)=>ipcRenderer.invoke('check:password',password),
   requestAppClose: () => ipcRenderer.send('app:requestClose'),
   notifyCloseDenied: (callback: () => void) => ipcRenderer.on('app:closeDenied', callback),
 };

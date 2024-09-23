@@ -23,7 +23,7 @@ import {
   checkOut,
   deleteAllUser,
   extend,
-  viewReadingRoom, viewAllLog, viewConfig, updateConfig, reset
+  viewReadingRoom, viewAllLog, viewConfig, updateConfig, reset, checkingPassword
 } from "./data/controller/Data.controller";
 import { ResponseEntity } from "./data/class/Response.class";
 import { LOG_DTO, READING_ROOM_DTO } from "./data/type/Dto.type";
@@ -173,6 +173,9 @@ app
     })
     ipcMain.handle("log:all",async ()=>{
       return viewAllLog() as ResponseEntity<LOG_DTO[]>
+    })
+    ipcMain.handle("check:password",async (_,password:string)=>{
+      return checkingPassword(password);
     })
     ipcMain.handle("config:view",async ()=>{return viewConfig() as ResponseEntity<Config>});
     ipcMain.handle("config:update",async (_,reservation_time:number,extend_time:number,ask_checkout_time:number)=>{

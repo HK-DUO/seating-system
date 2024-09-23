@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useDialog } from "../hooks/useDialog";
 import { Config } from "../../main/data/type/Entity.type";
 import { ResponseEntity } from "../../main/data/class/Response.class";
+import { checkingPassword } from "../../main/data/controller/Data.controller";
 
 
 function SideMenu() {
@@ -48,12 +49,10 @@ function SideMenu() {
       let ok = false;
       while (!ok) {
         await prompt('관리자모드', '비밀번호').then(async (res) => {
-          let adminPassword;
-          await window.electron.viewConfig().then((res)=> {
-            adminPassword = res.data.password;
-          })
+          // let adminPassword;
+          let result = await window.electron.checkingPassword(res?res:"")
           if (res) {
-            if (res == adminPassword) {
+            if (result.data) {
               navigate('/admin');
               ok = true;
             } else {
@@ -62,6 +61,19 @@ function SideMenu() {
           } else {
             ok = true;
           }
+          // await window.electron.viewConfig().then((res)=> {
+          //   adminPassword = res.data.password;
+          // })
+          // if (res) {
+          //   if (res == adminPassword) {
+          //     navigate('/admin');
+          //     ok = true;
+          //   } else {
+          //     await alert('오류', '비밀번호 오류');
+          //   }
+          // } else {
+          //   ok = true;
+          // }
         });
       }
     } else {

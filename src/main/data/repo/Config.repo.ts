@@ -3,6 +3,7 @@ import { seatQuery } from "../query/Seat.query";
 import { Config, SEAT } from "../type/Entity.type";
 import { configQuery } from "../query/Config.query";
 import { persistUserQuery } from "../query/PersistUser.query";
+import { hashingPW } from "../service/Data.service";
 
 
 function find_config(){
@@ -14,16 +15,18 @@ function find_config(){
   return result;
 }
 
+
 function update_all(reservation_time:number,extend_time:number,ask_checkout_time:number){
   const db = connect();
   const stmt = db.prepare(configQuery.update_all);
   return stmt.run(reservation_time,extend_time,ask_checkout_time);
 }
 
-function update_password(password:string){
+async function update_password(password:string){
   const db = connect();
   const stmt = db.prepare(configQuery.update_password);
-  return stmt.run(password);
+  let hashedPassword = await hashingPW(password);
+  return stmt.run(hashedPassword);
 }
 
 function update_reservation_time(hours:number){

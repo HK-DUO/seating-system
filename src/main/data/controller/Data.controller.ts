@@ -3,7 +3,7 @@ import {
   init_data,
   init_table, resetSeat
 } from "../repo/Data.repo";
-import { initSeat, toConvertRowDtos } from "../service/Data.service";
+import { checkingPW, initSeat, toConvertRowDtos } from "../service/Data.service";
 import { FeatureTranslations, LOG_DTO, READING_ROOM_DTO } from "../type/Dto.type";
 import { seatRepo } from "../repo/Seat.repo";
 import { reservationRepo } from "../repo/Reservation.repo";
@@ -30,6 +30,14 @@ export function reset(){
 
   return new ResponseEntity("리셋 성공",200)
 }
+export async function checkingPassword(password:string):Promise<ResponseEntity<boolean>> {
+  let hashedPassword = configRepo.find().password;
+
+  let result = await checkingPW(password,hashedPassword)
+
+  return new ResponseEntity(result,result ?200:400)
+}
+
 
 
 //실시간 좌석보기 기능

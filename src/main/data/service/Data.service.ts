@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { SEAT } from "../type/Entity.type";
 import { INIT_SEAT_DTO, ROW_DTO, SEAT_DTO } from "../type/Dto.type";
 
@@ -60,5 +61,17 @@ export function initSeat(){
     })
   }
   return seats;
+}
+
+export const hashingPW = async (password:string) => {
+  const saltRounds = 10
+
+  const salt = await bcrypt.genSalt(saltRounds)
+
+  return await bcrypt.hash(password, salt);
+}
+
+export const checkingPW = async (resPassword:string,correctPassword:string) => {
+  return await bcrypt.compare(resPassword, correctPassword);
 }
 

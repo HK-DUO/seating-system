@@ -12,5 +12,4 @@ export const configQuery={
   update_ask_checkout:updateAskCheckoutTimeQuery,
   update_password:updatePasswordQuery,
   update_all:updateAllQuery,
-
 }
