@@ -64,6 +64,9 @@
 </tr>
 </table>
 
+## 🛠️ Skills
+<img width="430" alt="스크린샷 2024-09-23 오후 7 50 03" src="https://github.com/user-attachments/assets/16aded0d-110b-4362-aec6-8cec30d12867">
+
 ## 💻 진행중
 ### fe
 - [ ] 관리자페이지 ui, ux
