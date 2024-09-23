@@ -24,10 +24,10 @@ function AdminSetting(){
 
   return (
     <div className={'admin-setting'}>
-      <div onChange={onChange}>
         <div>
           <label>기본 예약시간 변경</label>
           <input
+            onChange={onChange}
             name={'checkInTime'}
             value={basicTime.checkInTime}
             type={'number'}
@@ -36,6 +36,7 @@ function AdminSetting(){
         <div>
           <label>기본 연장시간 변경</label>
           <input
+            onChange={onChange}
             name={'extendTime'}
             value={basicTime.extendTime}
             type={'number'}
@@ -44,6 +45,7 @@ function AdminSetting(){
         <div>
           <label>퇴실요청 대기시간 변경</label>
           <input
+            onChange={onChange}
             name={'askCheckOutTime'}
             value={basicTime.askCheckOutTime}
             type={'number'}
@@ -63,7 +65,6 @@ function AdminSetting(){
           </button>
           <button onClick={onSubmit}>적용</button>
         </div>
-      </div>
     </div>
   );
 }

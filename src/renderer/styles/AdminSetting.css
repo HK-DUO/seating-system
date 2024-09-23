@@ -1,28 +1,24 @@
 .admin-setting {
-  @apply w-full h-[560px] p-[20px]
+  @apply w-full h-[560px] pt-[40px] px-[180px]
 }
 
 .admin-setting > div {
-  @apply w-full h-full py-[40px] px-[200px] bg-gray-300
+ @apply w-full h-[40px] mb-[40px] flex justify-between items-center
 }
 
-.admin-setting > div > div {
- @apply w-full h-[40px] mt-[40px] flex justify-between items-center
-}
-
-.admin-setting > div > div > label {
+.admin-setting> div > label {
   @apply text-[20px]
 }
-.admin-setting > div > div > input {
+.admin-setting > div > input {
   @apply w-[140px] h-[30px] pl-[10px]
 }
 
-.admin-setting > div > div > button {
+.admin-setting > div > button {
   @apply w-[200px] h-full text-[20px]
 }
-.admin-setting > div > div > button:nth-child(1) {
+.admin-setting> div > button:nth-child(1) {
   @apply bg-red
 }
-.admin-setting > div > div > button:nth-child(2) {
+.admin-setting > div > button:nth-child(2) {
   @apply bg-light-blue
 }

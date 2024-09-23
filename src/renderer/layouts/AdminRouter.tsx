@@ -14,7 +14,7 @@ function AdminRouter() {
         <AdminNav />
         <Routes>
           <Route path="" element={<AdminSetting />} />
-          <Route path="log" element={<AdminMain />} />
+          <Route path="log" element={<AdminLog />} />
           <Route path="user" element={<AdminUser />}/>
         </Routes>
       </div>
