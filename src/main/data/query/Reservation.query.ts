@@ -9,6 +9,7 @@ const askCheckoutReservationQuery:string="UPDATE Reservation SET reservation_end
 const autoCheckoutReservationQuery:string="DELETE FROM Reservation WHERE reservation_end < datetime('now', 'localtime')"
 const findExpiredReservationQuery:string="SELECT seat_id,user_id,reservation_id FROM Reservation WHERE reservation_end < datetime('now', 'localtime')"
 const findUserIdBySeatIdQuery:string="SELECT user_id FROM Reservation where seat_id=?"
+const findReservationEndTimeQuery:string="SELECT reservation_end FROM Reservation where user_id=?"
 
 export const reservationQuery={
   create:createReservationQuery,
@@ -20,4 +21,5 @@ export const reservationQuery={
   autoCheckout:autoCheckoutReservationQuery,
   expired:findExpiredReservationQuery,
   find_user_id:findUserIdBySeatIdQuery,
+  find_end_time:findReservationEndTimeQuery
 }

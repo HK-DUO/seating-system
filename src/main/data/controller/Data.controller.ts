@@ -137,6 +137,15 @@ export function extend(name:string,phone_number:string){
   if(!user){
     return new ResponseEntity(false,400,"이용중인 사용자가 아닙니다.");
   }
+
+  const end_time = new Date(reservationRepo.find_end_time(user.user_id)).getTime()
+  const now = new Date().getTime()
+
+  //연장에 제한두기
+  if(end_time-now>(60*60*1000)){
+    return new ResponseEntity(false,400,"퇴실 1시간전부터 연장이 가능합니다.");
+  }
+
   let time = "+"+configRepo.find().extend_time.toString()+" hours";
   let result = reservationRepo.update_end_time(user.user_id,time);
 

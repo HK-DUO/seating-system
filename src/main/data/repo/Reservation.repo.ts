@@ -73,6 +73,14 @@ function find_user_id_by_seat_id(seat_id:number){
   return result.user_id;
 }
 
+function find_end_time(user_id:number){
+  const db = connect();
+  const stmt=db.prepare(reservationQuery.find_end_time);
+  let result = stmt.get(user_id) as {reservation_end:string}
+  return result.reservation_end;
+
+}
+
 export const reservationRepo={
   delete: delete_reservation,
   create: create_reservation,
@@ -81,6 +89,7 @@ export const reservationRepo={
   update_end_time: update_reservation_end,
   ask_checkout: ask_checkout,
   find_expired:find_expired_reservations,
-  find_user_id:find_user_id_by_seat_id
+  find_user_id:find_user_id_by_seat_id,
+  find_end_time:find_end_time
 
 }
