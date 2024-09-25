@@ -7,6 +7,16 @@ const getCurrentTime = () => {
 
 };
 
+const getExitTime = (plusMinutes:number) => {
+  const today = new Date();
+
+  today.setMinutes(today.getMinutes()+plusMinutes);
+
+  if(today.getMinutes() < 10){
+    return today.getHours() + " : " + `0${today.getMinutes()}`;
+  } else return today.getHours() + " : " + today.getMinutes();
+}
+
 const getPlusTime = () => {
   const today = new Date();
 
@@ -19,5 +29,5 @@ const getPlusTime = () => {
     : today.getHours() - 22) + " : " + today.getMinutes();
 }
 
-export {getPlusTime, getCurrentTime};
+export {getPlusTime, getCurrentTime,getExitTime};
 
