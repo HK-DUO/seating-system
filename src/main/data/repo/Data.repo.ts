@@ -13,6 +13,7 @@ export function connect() {
 }
 
 
+
 export async function init_data(seats:INIT_SEAT_DTO[]){
 
   const db = connect();
@@ -33,6 +34,27 @@ export async function init_data(seats:INIT_SEAT_DTO[]){
   });
 
   insertInitData(seats);
+}
+
+
+type seat_info={
+  room_id:number,seat_num:number
+}
+const prioritySeats:seat_info[]=[
+  {room_id:1, seat_num:56},
+  {room_id:1, seat_num:57},
+  {room_id:2, seat_num:126},
+  {room_id:2, seat_num:127},
+  {room_id:2, seat_num:128},
+]
+
+export function update_priority(){
+  const db = connect();
+  let stmt=db.prepare(initDataQuery.priority)
+  //노약자석 업데이트
+  for(const seat of prioritySeats){
+    stmt.run(seat.room_id,seat.seat_num);
+  }
 }
 
 export function init_table() {

@@ -1,7 +1,7 @@
 import {
   connect, deleteData,
   init_data,
-  init_table, resetSeat
+  init_table, resetSeat, update_priority
 } from "../repo/Data.repo";
 import { checkingPW, initSeat, toConvertRowDtos } from "../service/Data.service";
 import { FeatureTranslations, LOG_DTO, READING_ROOM_DTO } from "../type/Dto.type";
@@ -17,6 +17,7 @@ import { ResponseEntity } from "../class/Response.class";
 export function init(){
   init_table();
   init_data(initSeat());
+  update_priority();
   return new ResponseEntity("초기화 성공",200)
 }
 
@@ -24,6 +25,7 @@ export function init(){
 export function reset(){
   deleteData();
   resetSeat();
+  update_priority();
   configRepo.update_all(2,1,30)
   configRepo.update_password("admin")
   logRepo.create(1, persistUserRepo.find_id("admin","000-0000-0000"),"data-reset")

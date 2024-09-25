@@ -21,12 +21,14 @@ const initReadingRoomData2:string="INSERT into ReadingRoom(room_id,room_name,tot
 const initSeatData:string ="INSERT INTO Seat (seat_id, room_id, seat_num, seat_status, is_priority) VALUES (?, ?, ?, ?, ?)"
 const initConfigData:string="INSERT into Config(reservation_time,extend_time,ask_checkout_time,password) VALUES(2,1,30,?)"
 const initAdminData:string="INSERT into PersistUser(name,phone_number) values('admin','000-0000-0000')"
+const initPrioritySeat:string="UPDATE Seat SET is_priority =1 WHERE room_id=? AND seat_num=?"
 export const initDataQuery={
   reading_room_1:initReadingRoomData1,
   reading_room_2:initReadingRoomData2,
   seat:initSeatData,
   config:initConfigData,
-  admin:initAdminData
+  admin:initAdminData,
+  priority:initPrioritySeat
 }
 
 const deleteReservationDataQuery:string="DELETE FROM Reservation"
