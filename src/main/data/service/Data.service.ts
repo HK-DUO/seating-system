@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from 'bcryptjs';
 import { SEAT } from "../type/Entity.type";
 import { INIT_SEAT_DTO, ROW_DTO, SEAT_DTO } from "../type/Dto.type";
 
