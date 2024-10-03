@@ -232,6 +232,12 @@
       "buildResources": "assets",
       "output": "release/build"
     },
+    "extraFiles": [{
+    "from": "./release/app/database.db",
+    "to": "./Resources/database.db",
+    "filter": ["**/*"]
+  }
+],
     "extraResources": [
       "./assets/**"
     ],

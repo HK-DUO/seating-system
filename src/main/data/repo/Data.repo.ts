@@ -3,11 +3,16 @@ import path from "path";
 import { createTableQuery, initDataQuery, resetDataQuery } from "../query/Init.query";
 import { INIT_SEAT_DTO } from "../type/Dto.type";
 import { hashingPW } from "../service/Data.service";
+import { app } from "electron";
 
 
 export function connect() {
+  // return Database(
+  //   path.join(__dirname, '../../../../', 'release/app', 'database.db'),
+  //   { verbose: console.log, fileMustExist: true },
+  // );
   return Database(
-    path.join(__dirname, '../../../../', 'release/app', 'database.db'),
+    path.join(app.getAppPath(), '../', 'database.db'),
     { verbose: console.log, fileMustExist: true },
   );
 }
