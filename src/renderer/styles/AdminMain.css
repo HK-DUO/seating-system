@@ -14,7 +14,8 @@
   @apply w-full border-collapse table-fixed;
 }
 
-.log-table th, .log-table td {
+.log-table th,
+.log-table td {
   @apply border border-gray-300 p-2 truncate;
 }
 

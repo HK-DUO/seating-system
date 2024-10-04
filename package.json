@@ -177,7 +177,7 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "SeatSystem",
+    "productName": "노은도서관 열람실 좌석예약 시스템",
     "appId": "org.erb.ElectronReact",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
@@ -187,6 +187,7 @@
       "package.json"
     ],
     "mac": {
+      "icon": "./src/renderer/assets/yuseong.icns",
       "sign": ".erb/scripts/notarize.js",
       "notarize": false,
       "target": {
@@ -217,11 +218,13 @@
       ]
     },
     "win": {
+      "icon": "./src/renderer/assets/yuseong.ico",
       "target": [
         "nsis"
       ]
     },
     "linux": {
+      "icon": "./src/renderer/assets/yuseong.png",
       "target": [
         "AppImage"
       ],
@@ -239,8 +242,7 @@
         "filter": [
           "**/*"
         ]
-      }
-      ,
+      },
       "./assets/**"
     ],
     "publish": {

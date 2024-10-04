@@ -10,8 +10,11 @@
 }
 .inquire-main > div:nth-child(1) > input {
   @apply w-full px-[10px]
-}
 
+
+
+  
+}
 .inquire-main > div:nth-child(2) {
   @apply w-full h-[520px] mb-[40px] flex
 }

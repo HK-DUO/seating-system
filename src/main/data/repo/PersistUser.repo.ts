@@ -4,10 +4,11 @@ import { PERSIST_USER_EXIST_DTO } from "../type/Dto.type";
 import { PERSIST_USER } from "../type/Entity.type";
 
 
-
 function is_exist(name:string,phone_number:string){
 
   const db=connect();
+
+  
 
   const stmt = db.prepare(persistUserQuery.exist);
   let result = stmt.get(name, phone_number) as PERSIST_USER_EXIST_DTO

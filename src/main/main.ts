@@ -18,16 +18,22 @@ import { ElectronHandler } from './preload';
 
 import {
   init,
-  askCheckOut, autoCheckOut,
+  askCheckOut,
+  autoCheckOut,
   checkIn,
   checkOut,
   deleteAllUser,
   extend,
-  viewReadingRoom, viewAllLog, viewConfig, updateConfig, reset, checkingPassword
-} from "./data/controller/Data.controller";
-import { ResponseEntity } from "./data/class/Response.class";
-import { LOG_DTO, READING_ROOM_DTO } from "./data/type/Dto.type";
-import { Config } from "./data/type/Entity.type";
+  viewReadingRoom,
+  viewAllLog,
+  viewConfig,
+  updateConfig,
+  reset,
+  checkingPassword,
+} from './data/controller/Data.controller';
+import { ResponseEntity } from './data/class/Response.class';
+import { LOG_DTO, READING_ROOM_DTO } from './data/type/Dto.type';
+import { Config } from './data/type/Entity.type';
 
 class AppUpdater {
   constructor() {
@@ -93,7 +99,7 @@ const createWindow = async () => {
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
   mainWindow.on('close', (event) => {
-    canCloseApp=true;
+    canCloseApp = true;
     app.quit();
     if (!canCloseApp) {
       event.preventDefault(); // Prevent closing
@@ -137,7 +143,7 @@ const createWindow = async () => {
 //자동 퇴실요청 원래 1분간으로 설정, 현재 10분
 setInterval(() => {
   autoCheckOut();
-},  60*1000);
+}, 60 * 1000);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -148,41 +154,66 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
-
     ipcMain.handle('init', async () => {
-      return init()
+      return init();
     });
     ipcMain.handle('reset', async () => {
-      return reset()
+      return reset();
     });
-    ipcMain.handle("readingRoom:view",async (_,id:number)=>{
-      return viewReadingRoom(id) as ResponseEntity<READING_ROOM_DTO>
-    })
-    ipcMain.handle("user:delete",async ()=>{
-      return deleteAllUser() as ResponseEntity<boolean>
-    })
-    ipcMain.handle("reservation:checkin",async (_,name:string,phone_number:string,seat_id:number)=>{
-      return checkIn(name,phone_number,seat_id) as ResponseEntity<any>
-    })
-    ipcMain.handle("reservation:checkout",async (_,name:string,phone_number:string)=>{
-      return checkOut(name,phone_number) as ResponseEntity<boolean>
-    })
-    ipcMain.handle("reservation:extend",async (_,name:string,phone_number:string)=>{
-      return extend(name,phone_number) as ResponseEntity<boolean>
-    })
-    ipcMain.handle("reservation:askCheckout",async (_,seat_id:number,name:string,phone_number:string)=>{
-      return askCheckOut(seat_id,name,phone_number) as ResponseEntity<boolean>
-    })
-    ipcMain.handle("log:all",async ()=>{
-      return viewAllLog() as ResponseEntity<LOG_DTO[]>
-    })
-    ipcMain.handle("check:password",async (_,password:string)=>{
+    ipcMain.handle('readingRoom:view', async (_, id: number) => {
+      return viewReadingRoom(id) as ResponseEntity<READING_ROOM_DTO>;
+    });
+    ipcMain.handle('user:delete', async () => {
+      return deleteAllUser() as ResponseEntity<boolean>;
+    });
+    ipcMain.handle(
+      'reservation:checkin',
+      async (_, name: string, phone_number: string, seat_id: number) => {
+        return checkIn(name, phone_number, seat_id) as ResponseEntity<any>;
+      },
+    );
+    ipcMain.handle(
+      'reservation:checkout',
+      async (_, name: string, phone_number: string) => {
+        return checkOut(name, phone_number) as ResponseEntity<boolean>;
+      },
+    );
+    ipcMain.handle(
+      'reservation:extend',
+      async (_, name: string, phone_number: string) => {
+        return extend(name, phone_number) as ResponseEntity<boolean>;
+      },
+    );
+    ipcMain.handle(
+      'reservation:askCheckout',
+      async (_, seat_id: number, name: string, phone_number: string) => {
+        return askCheckOut(
+          seat_id,
+          name,
+          phone_number,
+        ) as ResponseEntity<boolean>;
+      },
+    );
+    ipcMain.handle('log:all', async () => {
+      return viewAllLog() as ResponseEntity<LOG_DTO[]>;
+    });
+    ipcMain.handle('check:password', async (_, password: string) => {
       return checkingPassword(password);
-    })
-    ipcMain.handle("config:view",async ()=>{return viewConfig() as ResponseEntity<Config>});
-    ipcMain.handle("config:update",async (_,reservation_time:number,extend_time:number,ask_checkout_time:number)=>{
-      return updateConfig(reservation_time,extend_time,ask_checkout_time);
-    })
+    });
+    ipcMain.handle('config:view', async () => {
+      return viewConfig() as ResponseEntity<Config>;
+    });
+    ipcMain.handle(
+      'config:update',
+      async (
+        _,
+        reservation_time: number,
+        extend_time: number,
+        ask_checkout_time: number,
+      ) => {
+        return updateConfig(reservation_time, extend_time, ask_checkout_time);
+      },
+    );
     ipcMain.on('app:requestClose', (event) => {
       canCloseApp = true;
       app.quit(); // Close the app

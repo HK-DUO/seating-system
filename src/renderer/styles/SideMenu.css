@@ -8,6 +8,9 @@
   @apply w-[26px] h-[26px] mr-[6px]
 }
 .side-menu > div {
+
+
+  
   @apply w-full px-[20px]
 }
 .side-menu > div > a {

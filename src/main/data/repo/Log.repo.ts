@@ -4,6 +4,9 @@ import { reservationQuery } from "../query/Reservation.query";
 import { LOG } from "../type/Entity.type";
 
 
+
+
+
 function create_log(seat_id:number, persist_user_id:number, feature:string) {
 
   const db = connect();
