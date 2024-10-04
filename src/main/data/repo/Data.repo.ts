@@ -7,12 +7,15 @@ import { app } from "electron";
 
 
 export function connect() {
-  // return Database(
-  //   path.join(__dirname, '../../../../', 'release/app', 'database.db'),
-  //   { verbose: console.log, fileMustExist: true },
-  // );
+
+  const isDev = process.env.NODE_ENV === 'development';
+
+  const dbPath = isDev
+    ? path.join(__dirname, '../../../../', 'release/app', 'database.db')  // Development path
+    : path.join(app.getAppPath(),'../',  'database.db');
+//process.resourcesPath
   return Database(
-    path.join(app.getAppPath(), '../', 'database.db'),
+    dbPath,
     { verbose: console.log, fileMustExist: true },
   );
 }

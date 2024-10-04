@@ -177,7 +177,7 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
+    "productName": "SeatSystem",
     "appId": "org.erb.ElectronReact",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
@@ -232,13 +232,15 @@
       "buildResources": "assets",
       "output": "release/build"
     },
-    "extraFiles": [{
-    "from": "./release/app/database.db",
-    "to": "./Resources/database.db",
-    "filter": ["**/*"]
-  }
-],
     "extraResources": [
+      {
+        "from": "./release/app/database.db",
+        "to": "database.db",
+        "filter": [
+          "**/*"
+        ]
+      }
+      ,
       "./assets/**"
     ],
     "publish": {
