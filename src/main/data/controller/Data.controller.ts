@@ -15,17 +15,23 @@ import { ResponseEntity } from "../class/Response.class";
 
 //테이블,좌석 초기화
 export function init(){
-  init_table();
-  init_data(initSeat());
-  update_priority();
+
+  const db =connect()
+  const initTransaction = db.transaction(() => {
+    init_table(db);          // Step 1: Table initialization
+    init_data(db,initSeat()).then(()=>update_priority(db)); // Step 2: Data initialization
+      // Step 3:Priority seat update
+  });
+  initTransaction();
   return new ResponseEntity("초기화 성공",200)
 }
 
 //데이터 리셋
 export function reset(){
-  deleteData();
-  resetSeat();
-  update_priority();
+  const db = connect();
+  deleteData(db);
+  resetSeat(db);
+  update_priority(db);
   configRepo.update_all(2,1,30)
   configRepo.update_password("admin")
   logRepo.create(1, persistUserRepo.find_id("admin","000-0000-0000"),"data-reset")

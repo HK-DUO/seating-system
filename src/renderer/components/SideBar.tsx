@@ -5,7 +5,8 @@ import SeatInfo from "./SeatInfo";
 import {useDialog} from "../hooks/useDialog";
 import { room1 } from '../models/seatModel';
 import { RoomInfoType } from "../types/InfoType";
-
+import income from "../assets/income.png"
+import outcome from "../assets/outcome.png"
 type PropsType = {
   selectRoom?: number;
   selectSeat?: number;
@@ -33,7 +34,7 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
                   } else {
                     await window.electron.checkIn(res.name, res.number, item.id).then(async(res)=>{
                       if(res.data){
-                        await alert("예약", "좌석예약이 완료되었습니다.")
+                        await alert("입실", "좌석입실이 완료되었습니다.")
                         ok = true
                         window.location.reload()
                       } else {
@@ -162,9 +163,9 @@ function SideBar({selectRoom, selectSeat, room}: PropsType) {
     <CurrentTime />
     <CurrentSeat selectSeat={selectSeat} restSeat={room?.restSeats} totalSeat={room?.totalSeats} roomNum={selectRoom} />
     <div>
-      <button onClick={reserve}>예약
+      <button onClick={reserve}>입실<img src={income} width='25' height='25'></img>
       </button>
-      <button onClick={out}>퇴실
+      <button onClick={out}>퇴실<img src ={outcome} width='25' height='25'></img>
       </button>
       <div>
         <button onClick={extend}>연장

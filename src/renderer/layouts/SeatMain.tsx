@@ -10,7 +10,7 @@ import { ResponseEntity } from "../../main/data/class/Response.class";
 function SeatMain() {
   const [roomData, setRoomData] = useState<{selectRoom?:number, room?:RoomInfoType}>();
 
-  const [roomNum, setRoomNum] = useState<number>(1);
+  const [roomNum, setRoomNum] = useState<number>(2);
   const [seatNum, setSeatNum] = useState<number>();
 
   useEffect(() => {
@@ -30,13 +30,13 @@ function SeatMain() {
   return <div className="seat-main">
     <div>
       <div>
-        <button onClick={() => {
-          setRoomNum(1);
-        }} className={roomNum == 1 ? 'bg-blue text-white' : 'bg-light-blue'}>제1열람실
-        </button>
+        {/* <button onClick={() => { */}
+        {/*   setRoomNum(1); */}
+        {/* }} className={roomNum == 1 ? 'bg-blue text-white' : 'bg-light-blue'}>제1열람실 */}
+        {/* </button> */}
         <button onClick={() => {
           setRoomNum(2);
-        }} className={roomNum == 2 ? 'bg-blue text-white' : 'bg-light-blue'}>제2열람실
+        }} className={roomNum == 2 ? 'bg-blue text-white' : 'bg-light-blue'}>열람실
         </button>
       </div>
         <RoomLayout type={roomData?.selectRoom} seatNum={seatNum} setSeatNum={setSeatNum} room={roomData?.room} />

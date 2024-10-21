@@ -51,7 +51,7 @@ export function initSeat(){
       is_special: 0
     });
   }
-  for(let i=1;i<=128;i++){
+  for(let i=1;i<=112;i++){
     seats.push({
       // seat_id:84+i,
       room_id:2,

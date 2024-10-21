@@ -19,9 +19,9 @@ function TestButton() {
 
   return (
     <div>
-      {/* <button className="w-full h-[40px] bg-white" onClick={init}> */}
-      {/*   초기화 */}
-      {/* </button> */}
+      <button className="w-full h-[40px] bg-white" onClick={init}>
+        초기화
+      </button>
       {/* <button className="w-full h-[40px] bg-white" onClick={reset}> */}
       {/*   데이터리셋 */}
       {/* </button> */}
