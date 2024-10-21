@@ -2,6 +2,7 @@
 import { EXPIRED_RESERVATION_DTO, RESERVATION_COUNT_DTO, RESERVED_SEAT_DTO } from "../type/Dto.type";
 import { connect } from "./Data.repo";
 import { reservationQuery } from "../query/Reservation.query";
+import { RESERVATION } from "../type/Entity.type";
 
 
 function create_reservation(user_id: number, seat_id: number,reservation_time:string) {
@@ -81,6 +82,12 @@ function find_end_time(user_id:number){
 
 }
 
+function find_all_reservation() {
+  const db = connect();
+  const stmt = db.prepare(reservationQuery.find_all);
+  return stmt.all() as RESERVATION[]
+}
+
 export const reservationRepo={
   delete: delete_reservation,
   create: create_reservation,
@@ -90,6 +97,7 @@ export const reservationRepo={
   ask_checkout: ask_checkout,
   find_expired:find_expired_reservations,
   find_user_id:find_user_id_by_seat_id,
-  find_end_time:find_end_time
+  find_end_time:find_end_time,
+  find_all:find_all_reservation,
 
 }

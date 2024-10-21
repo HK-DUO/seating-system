@@ -18,6 +18,7 @@ export type SEAT_DTO={
   line:number;
   state:boolean;
   disableSeats:boolean;
+  end_time:string|null;
 }
 
 export type INIT_SEAT_DTO={

@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { SEAT } from "../type/Entity.type";
 import { INIT_SEAT_DTO, ROW_DTO, SEAT_DTO } from "../type/Dto.type";
+import { reservationRepo } from "../repo/Reservation.repo";
 
 
 export function toConvertRowDtos(seats: SEAT[], id: number):ROW_DTO[]{
@@ -8,6 +9,15 @@ export function toConvertRowDtos(seats: SEAT[], id: number):ROW_DTO[]{
 
   const rowDtoArr:ROW_DTO[]=[];
   let seatDtoArr = toConvertSeatDtos(seats,id);
+  let reservations = reservationRepo.find_all();
+  if(reservations){
+    for(const reservation of reservations){
+      const matchSeatDto = seatDtoArr.find(seatDto=>seatDto.id === reservation.seat_id);
+      if(matchSeatDto){
+        matchSeatDto.end_time=reservation.reservation_end.split(" ")[1].substring(0, 5);
+      }
+    }
+  }
   for(let i=0;i<seats.length;i+=seatsPerRow){
     if(id==1&&Math.floor(i/seatsPerRow)+1==7){
       seatsPerRow-=2
@@ -35,6 +45,7 @@ function toConvertSeatDtos(seats:SEAT[],id:number):SEAT_DTO[]{
       line:tmp%seatsPerRow==0?seatsPerRow:tmp%seatsPerRow,
       state:seat.seat_status == 'available',
       disableSeats:seat.is_priority==1,
+      end_time:null,
     })
   }
   return seat_dto;

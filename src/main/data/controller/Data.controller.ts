@@ -62,7 +62,7 @@ export function viewReadingRoom(room_id:number):ResponseEntity<READING_ROOM_DTO>
       rows: toConvertRowDtos(seats, room_id)
   }
   }as READING_ROOM_DTO
-
+  console.log(result);
   return new ResponseEntity(result,200)
 }
 
