@@ -6,8 +6,9 @@
   @apply mt-[40px] text-[18px] font-[600];
 }
 .side-bar > div > button {
-  @apply w-full h-[60px] mt-[20px] rounded-md text-center;
+  @apply w-full h-[60px] mt-[20px] items-center flex justify-center gap-[10px] rounded-md text-center;
 }
+
 .side-bar > div > button:nth-child(1) {
   @apply bg-light-blue;
 }

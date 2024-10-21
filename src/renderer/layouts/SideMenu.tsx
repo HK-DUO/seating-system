@@ -1,13 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
-import "../styles/SideMenu.css";
-import {YuseonIc} from "../assets/svg";
-import TestButton from "../components/TestButton";
-import { useEffect, useState } from "react";
-import { useDialog } from "../hooks/useDialog";
-import { Config } from "../../main/data/type/Entity.type";
-import { ResponseEntity } from "../../main/data/class/Response.class";
-import { checkingPassword } from "../../main/data/controller/Data.controller";
-
+import { Link, useNavigate } from 'react-router-dom';
+import '../styles/SideMenu.css';
+import { YuseonIc } from '../assets/svg';
+import TestButton from '../components/TestButton';
+import { useEffect, useState } from 'react';
+import { useDialog } from '../hooks/useDialog';
+import { Config } from '../../main/data/type/Entity.type';
+import { ResponseEntity } from '../../main/data/class/Response.class';
+import { checkingPassword } from '../../main/data/controller/Data.controller';
 
 function SideMenu() {
   const { prompt, alert } = useDialog();
@@ -15,7 +14,6 @@ function SideMenu() {
   const [isKey4Pressed, setIsKey4Pressed] = useState(false);
   const [isKeyRPressed, setIsKeyRPressed] = useState(false);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -43,14 +41,13 @@ function SideMenu() {
     };
   }, []);
 
-
   const handleLogoClick = async () => {
     if (isKey4Pressed && isKeyRPressed) {
       let ok = false;
       while (!ok) {
         await prompt('관리자모드', '비밀번호').then(async (res) => {
           // let adminPassword;
-          let result = await window.electron.checkingPassword(res?res:"")
+          let result = await window.electron.checkingPassword(res ? res : '');
           if (res) {
             if (result.data) {
               navigate('/admin');
