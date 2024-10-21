@@ -43,7 +43,7 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
                               ok = true;
                               window.location.reload();
                             } else {
-                              await alert('오류', '오류가 발생했습니다.');
+                              await alert('오류', res.message);
                             }
                           });
                       }
@@ -80,7 +80,7 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
                   ok = true;
                   window.location.reload();
                 } else {
-                  await alert('오류', '퇴실이 완료되지 않았습니다');
+                  await alert('오류', res.message);
                 }
               });
           }
@@ -109,7 +109,7 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
                   ok = true;
                   window.location.reload();
                 } else {
-                  await alert('오류', '연장 오류.');
+                  await alert('오류', res.message);
                 }
               });
           }
@@ -149,10 +149,7 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
                               );
                               ok = true;
                             } else {
-                              await alert(
-                                '오류',
-                                '퇴실요청이 완료되지 않았습니다.',
-                              );
+                              await alert('오류', res.message);
                             }
                           });
                       }

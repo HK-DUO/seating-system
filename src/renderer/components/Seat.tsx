@@ -9,6 +9,7 @@ type PropsType = {
   disableSeats: boolean;
   seatNum?: number;
   setSeatNum: any;
+  endTime: string | null;
 };
 
 function Seat({
@@ -20,10 +21,11 @@ function Seat({
   disableSeats,
   seatNum,
   setSeatNum,
+  endTime,
 }: PropsType) {
   return (
     <div
-      className={`h-[39.5px] px-[6px] border-black/60 border cursor-pointer hover:bg-blue relative flex flex-col items-center justify-between
+      className={`h-[39.5px] px-[6px] border-black/60 border cursor-pointer hover:bg-blue flex flex-col items-center
     ${type == 1 ? `w-[50px] ${line % 3 == 0 && `${row == 8 ? 'ml-[50px]' : 'mr-[50px]'}`}` : `w-[60px] ${line % 3 == 0 && 'mr-[110px]'}`}
     ${state ? (seatNum == num ? 'bg-blue' : 'bg-light-blue') : seatNum == num ? 'bg-blue' : 'bg-red'}
     ${disableSeats && 'bg-red'}`}
@@ -31,7 +33,12 @@ function Seat({
         setSeatNum(num);
       }}
     >
-      <span className="text-[12px] top-[10px] mt-[3px]">{num}</span>
+      <span className="text-[14px] font-[600]">{num}</span>
+      {endTime && (
+        <span className="text-[12px] text-center text-black/50">
+          ~ {endTime}
+        </span>
+      )}
       {disableSeats && <img src={PrioritySeatIc} width={18} />}
     </div>
   );

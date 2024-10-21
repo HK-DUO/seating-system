@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Seat from '../components/Seat';
 import { RoomInfoType } from '../types/InfoType';
 
@@ -23,6 +21,7 @@ function RoomLayout({ type, setSeatNum, seatNum, room }: PropsType) {
       {item.seats.map((item, itemIndex) => (
         <div key={itemIndex}>
           <Seat
+            endTime={item.end_time}
             type={1}
             row={index + 1}
             num={item.num}
@@ -46,6 +45,7 @@ function RoomLayout({ type, setSeatNum, seatNum, room }: PropsType) {
       {item.seats.map((item, itemIndex) => (
         <div key={itemIndex}>
           <Seat
+            endTime={item.end_time}
             type={2}
             row={index + 1}
             num={item.num}
