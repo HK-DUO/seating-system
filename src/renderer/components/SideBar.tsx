@@ -20,7 +20,9 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
       room?.rows.forEach((item, index) => {
         item.seats.forEach(async (item, index) => {
           if (selectSeat == item.num) {
-            if (!item.state) {
+            if (item.disableSeats) {
+              await alert('오류', '노약좌석은 예약이 불가합니다');
+            } else if (!item.state) {
               await alert('오류', '이미 사용중인 좌석입니다.');
             } else {
               let ok = false;

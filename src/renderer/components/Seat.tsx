@@ -25,7 +25,8 @@ function Seat({
     <div
       className={`h-[39.5px] px-[6px] border-black/60 border cursor-pointer hover:bg-blue relative flex flex-col items-center justify-between
     ${type == 1 ? `w-[50px] ${line % 3 == 0 && `${row == 8 ? 'ml-[50px]' : 'mr-[50px]'}`}` : `w-[60px] ${line % 3 == 0 && 'mr-[110px]'}`}
-    ${state ? (seatNum == num ? 'bg-blue' : 'bg-light-blue') : seatNum == num ? 'bg-blue' : 'bg-red'}`}
+    ${state ? (seatNum == num ? 'bg-blue' : 'bg-light-blue') : seatNum == num ? 'bg-blue' : 'bg-red'}
+    ${disableSeats && 'bg-red'}`}
       onClick={() => {
         setSeatNum(num);
       }}

@@ -14,8 +14,9 @@ type RoomInfoType = {
       line: number;
       state: boolean;
       disableSeats: boolean;
+      end_time: string | null;
     }[];
   }[];
 };
 
-export {UserInfoType, RoomInfoType}
+export { UserInfoType, RoomInfoType };
