@@ -177,7 +177,7 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "노은도서관 열람실 좌석예약 시스템",
+    "productName": "노은도서관 열람실 체크인 시스템",
     "appId": "org.erb.ElectronReact",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
