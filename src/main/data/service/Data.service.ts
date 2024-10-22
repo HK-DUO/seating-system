@@ -9,6 +9,7 @@ export function toConvertRowDtos(seats: SEAT[], id: number):ROW_DTO[]{
 
   const rowDtoArr:ROW_DTO[]=[];
   let seatDtoArr = toConvertSeatDtos(seats,id);
+
   let reservations = reservationRepo.find_all();
   if(reservations){
     for(const reservation of reservations){

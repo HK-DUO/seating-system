@@ -4,9 +4,9 @@ import { SEAT_STATUS_DTO } from "../type/Dto.type";
 import { seatQuery } from "../query/Seat.query";
 
 
-function find_all_seats(id:number):SEAT[]{
+const db=connect();
 
-  const db=connect();
+function find_all_seats(id:number):SEAT[]{
 
   try{
     const stmt=db.prepare(seatQuery.findAll);
@@ -19,8 +19,6 @@ function find_all_seats(id:number):SEAT[]{
 
 function is_seat_available(seat_id: number): boolean {
 
-  const db = connect();
-
   const stmt = db.prepare(seatQuery.isAvailable);
   const seat = stmt.get(seat_id) as SEAT_STATUS_DTO|undefined;
 
@@ -29,21 +27,17 @@ function is_seat_available(seat_id: number): boolean {
 
 function update_seat_status(seat_id:number,seat_status:string){
 
-  const db = connect();
-
   const stmt = db.prepare(seatQuery.updateStatus)
   stmt.run(seat_status,seat_id);
 }
 
 function update_ask_checkout_flag(seat_id:number,ask_checkout_flag:number){
-  const db = connect();
 
   const stmt = db.prepare(seatQuery.updateAskCheckoutFlag);
   stmt.run(ask_checkout_flag,seat_id);
 }
 
 function find_seat(seat_id:number){
-  const db = connect();
 
   const stmt=db.prepare(seatQuery.find);
   return stmt.get(seat_id) as SEAT;

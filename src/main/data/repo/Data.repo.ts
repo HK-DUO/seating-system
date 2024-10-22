@@ -20,7 +20,8 @@ export function connect() {
   return Database(dbPath, { verbose: console.log, fileMustExist: true });
 }
 
-export async function init_data(db:Database.Database,seats: INIT_SEAT_DTO[]) {
+const db =connect();
+export async function init_data(seats: INIT_SEAT_DTO[]) {
 
   db.exec(initDataQuery.reading_room_1);
   db.exec(initDataQuery.reading_room_2);
@@ -46,19 +47,21 @@ export async function init_data(db:Database.Database,seats: INIT_SEAT_DTO[]) {
   insertInitData(seats);
 }
 
-type seat_info = {
-  room_id: number;
-  seat_num: number;
-};
-const prioritySeats: seat_info[] = [
-  { room_id: 1, seat_num: 56 },
-  { room_id: 1, seat_num: 57 },
-  { room_id: 2, seat_num: 110 },
-  { room_id: 2, seat_num: 111 },
-  { room_id: 2, seat_num: 112 },
-];
+export function update_priority() {
 
-export function update_priority(db:Database.Database) {
+  type seat_info = {
+    room_id: number;
+    seat_num: number;
+  };
+
+  const prioritySeats: seat_info[] = [
+    { room_id: 1, seat_num: 56 },
+    { room_id: 1, seat_num: 57 },
+    { room_id: 2, seat_num: 110 },
+    { room_id: 2, seat_num: 111 },
+    { room_id: 2, seat_num: 112 },
+  ];
+
   let stmt = db.prepare(initDataQuery.priority);
   //노약자석 업데이트
   for (const seat of prioritySeats) {
@@ -66,7 +69,7 @@ export function update_priority(db:Database.Database) {
   }
 }
 
-export function init_table(db:Database.Database) {
+export function init_table() {
 
   db.exec(createTableQuery.reservation);
   db.exec(createTableQuery.seat);
@@ -75,9 +78,10 @@ export function init_table(db:Database.Database) {
   db.exec(createTableQuery.persist_user);
   db.exec(createTableQuery.log);
   db.exec(createTableQuery.config);
+  db.exec(createTableQuery.inquiry);
 }
 
-export function deleteData(db:Database.Database) {
+export function deleteData() {
 
   db.exec(resetDataQuery.delete_reservation);
   db.exec(resetDataQuery.reset_reservation_sequence);
@@ -85,6 +89,6 @@ export function deleteData(db:Database.Database) {
   db.exec(resetDataQuery.reset_user_sequence);
 }
 
-export function resetSeat(db:Database.Database) {
+export function resetSeat() {
   db.exec(resetDataQuery.reset_seat_data);
 }
