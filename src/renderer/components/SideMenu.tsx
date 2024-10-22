@@ -1,12 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/SideMenu.css';
-import { YuseonIc } from '../assets/svg';
-import TestButton from '../components/TestButton';
+import TestButton from '@/components/TestButton';
 import { useEffect, useState } from 'react';
-import { useDialog } from '../hooks/useDialog';
-import { Config } from '../../main/data/type/Entity.type';
-import { ResponseEntity } from '../../main/data/class/Response.class';
-import { checkingPassword } from '../../main/data/controller/Data.controller';
+import { useDialog } from '@/hooks/useDialog';
+import '@/styles/SideMenu.css';
+import { YuseonIc } from '@/assets/svg';
 
 function SideMenu() {
   const { prompt, alert } = useDialog();

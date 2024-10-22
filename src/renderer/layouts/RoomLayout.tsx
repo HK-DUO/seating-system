@@ -21,16 +21,12 @@ function RoomLayout({ type, setSeatNum, seatNum, room }: PropsType) {
       {item.seats.map((item, itemIndex) => (
         <div key={itemIndex}>
           <Seat
-            endTime={item.end_time}
-            type={1}
+            type={type}
             row={index + 1}
-            num={item.num}
-            line={item.line}
-            state={item.state}
             key={itemIndex}
-            disableSeats={item.disableSeats}
             seatNum={seatNum}
             setSeatNum={setSeatNum}
+            seat={item}
           />
         </div>
       ))}
@@ -45,16 +41,12 @@ function RoomLayout({ type, setSeatNum, seatNum, room }: PropsType) {
       {item.seats.map((item, itemIndex) => (
         <div key={itemIndex}>
           <Seat
-            endTime={item.end_time}
-            type={2}
+            type={type}
             row={index + 1}
-            num={item.num}
-            line={item.line}
-            state={item.state}
             key={itemIndex}
-            disableSeats={item.disableSeats}
             seatNum={seatNum}
             setSeatNum={setSeatNum}
+            seat={item}
           />
         </div>
       ))}

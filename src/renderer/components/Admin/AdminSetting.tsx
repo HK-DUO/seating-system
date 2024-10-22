@@ -1,9 +1,9 @@
-import "../styles/AdminSetting.css"
-import { useEffect, useState } from "react";
-import { useDialog } from "../hooks/useDialog";
+import '@/styles/AdminSetting.css';
+import { useEffect, useState } from 'react';
+import { useDialog } from '@/hooks/useDialog';
 
-function AdminSetting(){
-  const {alert} = useDialog();
+function AdminSetting() {
+  const { alert } = useDialog();
 
   const [basicTime, setBasicTime] = useState({
     checkInTime: 1,
@@ -15,16 +15,20 @@ function AdminSetting(){
     viewConfig();
   }, []);
 
-  const viewConfig = async ()=>{
+  const viewConfig = async () => {
     let res = await window.electron.viewConfig();
-    setBasicTime({checkInTime: res.data.reservation_time, extendTime: res.data.extend_time, askCheckOutTime: res.data.ask_checkout_time})
-  }
+    setBasicTime({
+      checkInTime: res.data.reservation_time,
+      extendTime: res.data.extend_time,
+      askCheckOutTime: res.data.ask_checkout_time,
+    });
+  };
 
-  const onChange = (e:any) => {
-    if(e.target.value >= 1 && e.target.value <= 3) {
+  const onChange = (e: any) => {
+    if (e.target.value >= 1 && e.target.value <= 3) {
       setBasicTime({ ...basicTime, [e.target.name]: e.target.value });
     }
-  }
+  };
 
   const onSubmit = async () => {
     let res = await window.electron.updateConfig(
@@ -39,7 +43,6 @@ function AdminSetting(){
       await alert('오류', '기본설정 변경에 오류가 발생했습니다.');
     }
   };
-
 
   return (
     <div className={'admin-setting'}>
@@ -57,7 +60,7 @@ function AdminSetting(){
         <input
           onChange={onChange}
           name={'extendTime'}
-          value={ basicTime.extendTime}
+          value={basicTime.extendTime}
           type={'number'}
         />
       </div>

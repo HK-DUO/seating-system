@@ -1,10 +1,11 @@
-import { Route, Routes } from "react-router-dom";
-import AdminSetting from "../components/AdminSetting";
-import AdminLog from "../components/AdminLog";
-import AdminUser from "../components/AdminUser";
-import '../styles/AdminRouter.css'
-import AdminNav from "../components/AdminNav";
-import AdminMain from "../components/AdminMain";
+import { Route, Routes } from 'react-router-dom';
+import {
+  AdminNav,
+  AdminSetting,
+  AdminLog,
+  AdminUser,
+} from '@/components/index';
+import '@/styles/AdminRouter.css';
 
 function AdminRouter() {
   return (
@@ -15,7 +16,7 @@ function AdminRouter() {
         <Routes>
           <Route path="" element={<AdminSetting />} />
           <Route path="log" element={<AdminLog />} />
-          <Route path="user" element={<AdminUser />}/>
+          <Route path="user" element={<AdminUser />} />
         </Routes>
       </div>
     </div>

@@ -1,10 +1,10 @@
-import SideBar from '../components/SideBar';
 import { useEffect, useState } from 'react';
-import RoomLayout from './RoomLayout';
-import '../styles/SeatMain.css';
-import { RoomInfoType } from '../types/InfoType';
+import { SideBar } from '@/components/index';
+import RoomLayout from '@/layouts/RoomLayout';
+import { RoomInfoType } from '@/types/InfoType';
 import { READING_ROOM_DTO } from '../../main/data/type/Dto.type';
 import { ResponseEntity } from '../../main/data/class/Response.class';
+import '@/styles/SeatMain.css';
 
 function SeatMain() {
   const [roomData, setRoomData] = useState<{

@@ -12,7 +12,11 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": ".erb/dll"
+    "outDir": ".erb/dll",
+    "paths": {
+      "@/*": ["./src/renderer/*"]
+    }
   },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"]
 }

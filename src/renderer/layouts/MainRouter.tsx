@@ -1,8 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router-dom';
-import SeatMain from './SeatMain';
-import SideMenu from './SideMenu';
-import InquireMain from '../components/InquireMain';
 import AdminRouter from './AdminRouter';
+import { SeatMain, SideMenu, InquireMain } from '@/components';
 
 function MainRouter() {
   return (

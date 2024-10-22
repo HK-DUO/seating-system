@@ -1,21 +1,21 @@
-import React from "react";
-import {DialogContext} from "../hooks/useDialog";
-import Overlay from "./Overlay";
-import Alert from "../components/Alert";
-import Prompt from "../components/Prompt";
-import UserPrompt from "../components/UserPrompt";
-import InPrompt from "../components/InPrompt";
-import OutPrompt from "../components/OutPrompt";
-import { UserInfoType } from "../types/InfoType";
-import Confirm from "../components/Confirm";
-
-
+import React from 'react';
+import { DialogContext } from '../hooks/useDialog';
+import {
+  Alert,
+  InPrompt,
+  OutPrompt,
+  Confirm,
+  Prompt,
+  UserPrompt,
+} from '@/components/index';
+import Overlay from './Overlay';
+import { UserInfoType } from '@/types/InfoType';
 
 type AlertState = {
-  type: "alert",
+  type: 'alert';
   message: string;
-  subMessage: string,
-  onClickOk: () => void
+  subMessage: string;
+  onClickOk: () => void;
 };
 
 type ConfirmState = {
@@ -27,50 +27,57 @@ type ConfirmState = {
 };
 
 type PromptState = {
-  type: "prompt",
+  type: 'prompt';
   message: string;
-  subMessage: string,
-  onClickOk: (input:string) => void
-  onClickCancel: () => void
-}
+  subMessage: string;
+  onClickOk: (input: string) => void;
+  onClickCancel: () => void;
+};
 
 type UserPromptState = {
-  type: "userPrompt",
+  type: 'userPrompt';
   message: string;
-  subMessage: string,
-  onClickOk: (input: object) => void,
-  onClickCancel: () => void
+  subMessage: string;
+  onClickOk: (input: object) => void;
+  onClickCancel: () => void;
 };
 
 type InPromptState = {
-  type:"inPrompt",
-  onClickOk: (input:UserInfoType) => void,
-  onClickCancel: () => void
-  roomNum:string;
-  seatNum:string;
-}
+  type: 'inPrompt';
+  onClickOk: (input: UserInfoType) => void;
+  onClickCancel: () => void;
+  roomNum: string;
+  seatNum: string;
+};
 
 type OutPromptState = {
-  type:"outPrompt",
-  onClickOk: (input:UserInfoType) => void,
-  onClickCancel: () => void
-  roomNum:string;
-  seatNum:string;
-}
+  type: 'outPrompt';
+  onClickOk: (input: UserInfoType) => void;
+  onClickCancel: () => void;
+  roomNum: string;
+  seatNum: string;
+};
 
 type PropsType = {
   children: React.ReactNode;
 };
 
-function DialogProvider({children}: PropsType) {
-  const [state, setState] = React.useState<AlertState | ConfirmState | PromptState | UserPromptState | InPromptState | OutPromptState>();
+function DialogProvider({ children }: PropsType) {
+  const [state, setState] = React.useState<
+    | AlertState
+    | ConfirmState
+    | PromptState
+    | UserPromptState
+    | InPromptState
+    | OutPromptState
+  >();
 
-  const alert = (message?: string, subMessage?:string): Promise<boolean> => {
+  const alert = (message?: string, subMessage?: string): Promise<boolean> => {
     return new Promise((resolve) => {
       setState({
-        type: "alert",
+        type: 'alert',
         message: message ?? '',
-        subMessage: subMessage ?? "",
+        subMessage: subMessage ?? '',
         onClickOk: () => {
           setState(undefined);
           resolve(true);
@@ -79,7 +86,7 @@ function DialogProvider({children}: PropsType) {
     });
   };
 
-  const confirm = (message?: string, subMessage?:string): Promise<boolean> => {
+  const confirm = (message?: string, subMessage?: string): Promise<boolean> => {
     return new Promise((resolve) => {
       setState({
         type: 'confirm',
@@ -97,12 +104,15 @@ function DialogProvider({children}: PropsType) {
     });
   };
 
-  const prompt = (message?: string, subMessage?:string): Promise<string | undefined> => {
+  const prompt = (
+    message?: string,
+    subMessage?: string,
+  ): Promise<string | undefined> => {
     return new Promise((resolve) => {
       setState({
-        type: "prompt",
+        type: 'prompt',
         message: message ?? '',
-        subMessage: subMessage ?? "",
+        subMessage: subMessage ?? '',
         onClickOk: (input: string) => {
           setState(undefined);
           resolve(input);
@@ -113,14 +123,17 @@ function DialogProvider({children}: PropsType) {
         },
       });
     });
-  }
+  };
 
-  const userPrompt = (message?: string, subMessage?:string): Promise<object | undefined> => {
+  const userPrompt = (
+    message?: string,
+    subMessage?: string,
+  ): Promise<object | undefined> => {
     return new Promise((resolve) => {
       setState({
-        type: "userPrompt",
+        type: 'userPrompt',
         message: message ?? '',
-        subMessage: subMessage ?? "",
+        subMessage: subMessage ?? '',
         onClickOk: (input: object) => {
           setState(undefined);
           resolve(input);
@@ -131,14 +144,17 @@ function DialogProvider({children}: PropsType) {
         },
       });
     });
-  }
+  };
 
-  const inPrompt = (roomNum?: string, seatNum?: string): Promise<UserInfoType | undefined> => {
+  const inPrompt = (
+    roomNum?: string,
+    seatNum?: string,
+  ): Promise<UserInfoType | undefined> => {
     return new Promise((resolve) => {
       setState({
-        type: "inPrompt",
-        roomNum: roomNum ?? "",
-        seatNum: seatNum ?? "",
+        type: 'inPrompt',
+        roomNum: roomNum ?? '',
+        seatNum: seatNum ?? '',
         onClickOk: (input: UserInfoType) => {
           setState(undefined);
           resolve(input);
@@ -151,12 +167,15 @@ function DialogProvider({children}: PropsType) {
     });
   };
 
-  const outPrompt = (roomNum?: string, seatNum?: string): Promise<UserInfoType | undefined> => {
+  const outPrompt = (
+    roomNum?: string,
+    seatNum?: string,
+  ): Promise<UserInfoType | undefined> => {
     return new Promise((resolve) => {
       setState({
-        type: "outPrompt",
-        roomNum: roomNum ?? "",
-        seatNum: seatNum ?? "",
+        type: 'outPrompt',
+        roomNum: roomNum ?? '',
+        seatNum: seatNum ?? '',
         onClickOk: (input: UserInfoType) => {
           setState(undefined);
           resolve(input);

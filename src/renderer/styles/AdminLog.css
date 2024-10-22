@@ -1,24 +1,27 @@
 .admin-log {
-  @apply w-full h-[560px]
+  @apply w-full h-[560px];
 }
 
-.admin-log__filter{
-  @apply w-full h-[40px] px-[20px] flex justify-between items-center bg-light-blue
+.admin-log-filter {
+  @apply w-full h-[40px] px-[20px] flex justify-between items-center bg-light-blue;
+}
+.admin-log-filter > div > label {
+  @apply mr-[10px];
 }
 
-.admin-log__list {
-  @apply w-full h-[480px]
+.admin-log-list {
+  @apply w-full h-[480px];
 }
 
-.admin-log__pagination {
-  @apply w-full h-[40px] flex justify-center items-center
+.admin-log-pagination {
+  @apply w-full h-[40px] flex justify-center items-center;
 }
-.admin-log__pagination > div {
-  @apply h-full
+.admin-log-pagination > div {
+  @apply h-full;
 }
-.admin-log__pagination > div > button {
-  @apply w-[100px] h-full bg-light-blue
+.admin-log-pagination > div > button {
+  @apply w-[100px] h-full bg-light-blue;
 }
-.admin-log__pagination > div > label {
-  @apply mx-[20px]
+.admin-log-pagination > div > label {
+  @apply mx-[20px];
 }

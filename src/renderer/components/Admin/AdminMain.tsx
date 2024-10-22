@@ -1,23 +1,24 @@
-import "../styles/AdminMain.css"
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { LOG_DTO } from "../../main/data/type/Dto.type";
-import { ResponseEntity } from "../../main/data/class/Response.class";
-
+import '@/styles/AdminMain.css';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { LOG_DTO } from '../../../main/data/type/Dto.type';
+import { ResponseEntity } from '../../../main/data/class/Response.class';
 
 function AdminMain() {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchDate, setSearchDate] = useState("");
-  const [searchPhone, setSearchPhone] = useState("");
+  const [searchDate, setSearchDate] = useState('');
+  const [searchPhone, setSearchPhone] = useState('');
   const [logs, setLogs] = useState<LOG_DTO[]>([]);
   const logsPerPage = 10;
 
   // 데이터 로딩 함수
   const loadLogs = async () => {
-    console.log("loadLogs 실행");
+    console.log('loadLogs 실행');
     try {
-      const logs = await window.electron.viewAllLog() as ResponseEntity<LOG_DTO[]>;
+      const logs = (await window.electron.viewAllLog()) as ResponseEntity<
+        LOG_DTO[]
+      >;
       console.log(logs.data);
       setLogs(logs.data);
     } catch (error) {
@@ -26,15 +27,16 @@ function AdminMain() {
   };
 
   useEffect(() => {
-    console.log("admin-main: log - userEffect");
+    console.log('admin-main: log - userEffect');
     loadLogs();
   }, []);
 
   // 검색 필터
   const filteredLogs = logs.filter(
-    log =>
-      (searchDate === "" || new Date(log.timestamp).toISOString().slice(0, 10) === searchDate) &&
-      (searchPhone === "" || log.phoneNumber.includes(searchPhone))
+    (log) =>
+      (searchDate === '' ||
+        new Date(log.timestamp).toISOString().slice(0, 10) === searchDate) &&
+      (searchPhone === '' || log.phoneNumber.includes(searchPhone)),
   );
 
   // 페이지에 맞는 로그 데이터 자르기
@@ -77,30 +79,30 @@ function AdminMain() {
       <div className="log-table">
         <table>
           <thead>
-          <tr>
-            <th>로그 ID</th>
-            <th>열람실</th>
-            <th>좌석</th>
-            <th>기능</th>
-            <th>유저 닉네임</th>
-            <th>유저 전화번호</th>
-            <th>시간</th>
-            <th>날짜</th>
-          </tr>
+            <tr>
+              <th>로그 ID</th>
+              <th>열람실</th>
+              <th>좌석</th>
+              <th>기능</th>
+              <th>유저 닉네임</th>
+              <th>유저 전화번호</th>
+              <th>시간</th>
+              <th>날짜</th>
+            </tr>
           </thead>
           <tbody>
-          {currentLogs.map((log) => (
-            <tr key={log.id}>
-              <td>{log.id}</td>
-              <td>{log.room}</td>
-              <td>{log.seat}</td>
-              <td>{log.function}</td>
-              <td>{log.nickname}</td>
-              <td>{log.phoneNumber}</td>
-              <td>{new Date(log.timestamp).toISOString().slice(0, 10)}</td>
-              <td>{new Date(log.timestamp).toLocaleTimeString()}</td>
-            </tr>
-          ))}
+            {currentLogs.map((log) => (
+              <tr key={log.id}>
+                <td>{log.id}</td>
+                <td>{log.room}</td>
+                <td>{log.seat}</td>
+                <td>{log.function}</td>
+                <td>{log.nickname}</td>
+                <td>{log.phoneNumber}</td>
+                <td>{new Date(log.timestamp).toISOString().slice(0, 10)}</td>
+                <td>{new Date(log.timestamp).toLocaleTimeString()}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -109,7 +111,9 @@ function AdminMain() {
         <button onClick={handlePrevPage} disabled={currentPage === 1}>
           이전 페이지
         </button>
-        <span>{currentPage} / {totalPages}</span>
+        <span>
+          {currentPage} / {totalPages}
+        </span>
         <button onClick={handleNextPage} disabled={currentPage === totalPages}>
           다음 페이지
         </button>

@@ -99,8 +99,8 @@ const createWindow = async () => {
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
   mainWindow.on('close', (event) => {
-    canCloseApp = true;
-    app.quit();
+    // canCloseApp = true;
+    // app.quit();
     if (!canCloseApp) {
       event.preventDefault(); // Prevent closing
       mainWindow?.webContents.send('app:closeDenied'); // Notify renderer process about the attempt to close

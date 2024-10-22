@@ -1,10 +1,9 @@
-import CurrentTime from './CurrentTime';
-import CurrentSeat from './CurrentSeat';
-import '../styles/SideBar.css';
-import SeatInfo from './SeatInfo';
-import { useDialog } from '../hooks/useDialog';
-import { RoomInfoType } from '../types/InfoType';
-import { InComeIc, OutComeIc } from '../assets/svg';
+import { CurrentTime, CurrentSeat } from '../index';
+import { SeatInfo } from '@/components/index';
+import { useDialog } from '@/hooks/useDialog';
+import { RoomInfoType } from '@/types/InfoType';
+import { InComeIc, OutComeIc } from '@/assets/svg';
+import '@/styles/SideBar.css';
 
 type PropsType = {
   selectRoom?: number;
@@ -38,7 +37,7 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
                         await window.electron
                           .checkIn(res.name, res.number, item.id)
                           .then(async (res) => {
-                            if (res.data) {
+                            if (res.code == 200) {
                               await alert('입실', '좌석입실이 완료되었습니다.');
                               ok = true;
                               window.location.reload();
@@ -148,6 +147,7 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
                                 '퇴실요청이 완료되었습니다.',
                               );
                               ok = true;
+                              window.location.reload();
                             } else {
                               await alert('오류', res.message);
                             }
