@@ -16,22 +16,16 @@ import { ResponseEntity } from "../class/Response.class";
 //테이블,좌석 초기화
 export function init(){
 
-  const db =connect()
-  const initTransaction = db.transaction(() => {
-    init_table(db);          // Step 1: Table initialization
-    init_data(db,initSeat()).then(()=>update_priority(db)); // Step 2: Data initialization
-      // Step 3:Priority seat update
-  });
-  initTransaction();
+  init_table();
+  init_data(initSeat()).then(()=>update_priority());
   return new ResponseEntity("초기화 성공",200)
 }
 
 //데이터 리셋
 export function reset(){
-  const db = connect();
-  deleteData(db);
-  resetSeat(db);
-  update_priority(db);
+  deleteData();
+  resetSeat();
+  update_priority();
   configRepo.update_all(2,1,30)
   configRepo.update_password("admin")
   logRepo.create(1, persistUserRepo.find_id("admin","000-0000-0000"),"data-reset")
@@ -40,6 +34,7 @@ export function reset(){
 }
 
 export async function checkingPassword(password:string):Promise<ResponseEntity<boolean>> {
+
   let hashedPassword = configRepo.find().password;
 
   let result = await checkingPW(password,hashedPassword)
@@ -69,40 +64,27 @@ export function viewReadingRoom(room_id:number):ResponseEntity<READING_ROOM_DTO>
 //예약기능
 export function checkIn(name: string, phone_number: string, seat_id: number){
 
-  const db = connect();
-
-  const transaction = db.transaction(() => {
-
-    let seatAvailable = seatRepo.is_available(seat_id);
-    if (!seatAvailable) {
-      console.error("좌석이 이미 예약된 좌석입니다.");
-      throw new Error("좌석이 이미 예약된 좌석입니다.");
-    }
-
-
-    if(!persistUserRepo.is_exist(name,phone_number)){
-      persistUserRepo.create(name, phone_number);
-    }
-
-    let user_id = userRepo.create(name, phone_number);
-    let time = "+"+configRepo.find().reservation_time.toString()+" hours";
-    let reservation_id = reservationRepo.create(user_id, seat_id,time);
-
-    seatRepo.update_status(seat_id,"reserved")
-
-    //로그남기기
-    logRepo.create(seat_id,persistUserRepo.find_id(name,phone_number),"reservation")
-
-    return reservation_id;
-  })
-
-  try {
-    let result = transaction();
-    return new ResponseEntity(result,200);
-  } catch (error) {
-    console.error("예약 과정중 오류", error);
-    return new ResponseEntity(error,400,"예약 오류");
+  if (!seatRepo.is_available(seat_id)) {
+    console.error("좌석이 이미 예약된 좌석입니다.");
+    return new ResponseEntity("예약 오류",400,"이미 예약된 좌석입니다.");
   }
+
+  if(userRepo.is_exist(phone_number)) {
+    return new ResponseEntity("예약 오류",400,"이미 예약된 번호입니다.");
+  }
+
+  if (!persistUserRepo.is_exist(name, phone_number)) {
+    persistUserRepo.create(name, phone_number);
+  }
+  let user_id = userRepo.create(name, phone_number);
+  let time = "+" + configRepo.find().reservation_time.toString() + " hours";
+  let reservation_id = reservationRepo.create(user_id, seat_id, time);
+
+  seatRepo.update_status(seat_id, "reserved")
+
+  //로그남기기
+  logRepo.create(seat_id, persistUserRepo.find_id(name, phone_number), "reservation")
+  return new ResponseEntity(reservation_id,200);
 }
 
 export function deleteAllUser(){

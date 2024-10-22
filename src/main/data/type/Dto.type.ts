@@ -54,6 +54,10 @@ export type PERSIST_USER_EXIST_DTO = {
   userExists: number;
 };
 
+export type USER_EXIST_DTO = {
+  userExists: number;
+};
+
 export type LOG_DTO = {
   id: number;
   room: number;

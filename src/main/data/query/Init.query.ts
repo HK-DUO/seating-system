@@ -6,6 +6,7 @@ const createUserTableQuery:string = "CREATE TABLE IF NOT EXISTS User (user_id IN
 const createPersistUserTableQuery:string = "CREATE TABLE IF NOT EXISTS PersistUser (persist_user_id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255) NOT NULL, phone_number VARCHAR(255) NOT NULL,created_at DATETIME DEFAULT (datetime('now','localtime')), UNIQUE(name,phone_number) )"
 const createLogTableQuery:string="CREATE TABLE IF NOT EXISTS Log (log_id INTEGER PRIMARY KEY AUTOINCREMENT, seat_id INTEGER NOT NULL,persist_user_id INTEGER NOT NULL,feature VARCHAR(255) NOT NULL, created_at DATETIME DEFAULT (datetime('now','localtime')),FOREIGN KEY (seat_id) REFERENCES Seat(seat_id),FOREIGN KEY (persist_user_id) REFERENCES PersistUser(persist_user_id))"
 const createConfigTableQuery:string="CREATE TABLE IF NOT EXISTS Config (config_id INTEGER PRIMARY KEY AUTOINCREMENT, reservation_time INTEGER NOT NULL,extend_time INTEGER NOT NULL,ask_checkout_time INTEGER NOT NULL,password VARCHAR(255) DEFAULT ('admin'))"
+const createInquiryTableQuery:string="CREATE TABLE IF NOT EXISTS Inquiry (inquiry_id INTEGER PRIMARY KEY AUTOINCREMENT, persist_user_id INTEGER NOT NULL,title VARCHAR(255) NOT NULL,content TEXT NOT NULL ,created_at DATETIME DEFAULT (datetime('now','localtime')),FOREIGN KEY (persist_user_id) REFERENCES PersistUser(persist_user_id))"
 export const createTableQuery={
   reservation:createReservationTableQuery,
   seat:createSeatTableQuery,
@@ -13,7 +14,8 @@ export const createTableQuery={
   user:createUserTableQuery,
   persist_user:createPersistUserTableQuery,
   log:createLogTableQuery,
-  config:createConfigTableQuery
+  config:createConfigTableQuery,
+  inquiry:createInquiryTableQuery,
 }
 
 const initReadingRoomData1:string="INSERT into ReadingRoom(room_id,room_name,total_num_of_seat) VALUES(1,'제 1열람실',84)"

@@ -4,11 +4,9 @@ import { PERSIST_USER_EXIST_DTO } from "../type/Dto.type";
 import { PERSIST_USER } from "../type/Entity.type";
 
 
+const db=connect();
+
 function is_exist(name:string,phone_number:string){
-
-  const db=connect();
-
-  
 
   const stmt = db.prepare(persistUserQuery.exist);
   let result = stmt.get(name, phone_number) as PERSIST_USER_EXIST_DTO
@@ -17,14 +15,13 @@ function is_exist(name:string,phone_number:string){
 }
 
 function find_persist_user(user_id:number){
-  const db=connect();
+
   const stmt = db.prepare(persistUserQuery.find);
   return stmt.get(user_id) as PERSIST_USER
 }
 
 function find_persist_user_id(name:string,phone_number:string){
 
-  const db=connect();
 
   const stmt = db.prepare(persistUserQuery.find_id);
   let result = stmt.get(name, phone_number) as { persist_user_id:number }
@@ -32,8 +29,6 @@ function find_persist_user_id(name:string,phone_number:string){
   return result.persist_user_id;
 }
 function create_persist_user(name:string,phone_number:string){
-
-  const db=connect();
 
   const stmt = db.prepare(persistUserQuery.create);
   let result = stmt.run(name, phone_number);
