@@ -29,7 +29,6 @@ function InquireMain() {
               await alert('오류', '이름을 입력해주세요');
             } else if (res.number == '') {
               await alert('오류', '전화번호를 입력해주세요');
-            } else if (res == undefined) {
             } else {
               await window.electron
                 .submitInquiry(res.name, res.number, value.title, value.content)
