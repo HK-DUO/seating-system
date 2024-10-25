@@ -1,5 +1,5 @@
 import { connect } from "./Data.repo";
-import { Config } from "../type/Entity.type";
+import { CONFIG } from "../type/Entity.type";
 import { configQuery } from "../query/Config.query";
 import { hashingPW } from "../service/Data.service";
 
@@ -8,7 +8,7 @@ const db =connect();
 function find_config(){
 
   const stmt=db.prepare(configQuery.find);
-  return stmt.get() as Config;
+  return stmt.get() as CONFIG;
 }
 
 

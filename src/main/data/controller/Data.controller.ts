@@ -4,7 +4,7 @@ import {
   init_table, resetSeat, update_priority
 } from "../repo/Data.repo";
 import { checkingPW, initSeat, toConvertRowDtos } from "../service/Data.service";
-import { FeatureTranslations, LOG_DTO, READING_ROOM_DTO } from "../type/Dto.type";
+import { FeatureTranslations, LOG_DTO, READING_ROOM_DTO, USER_ID_DTO } from "../type/Dto.type";
 import { seatRepo } from "../repo/Seat.repo";
 import { reservationRepo } from "../repo/Reservation.repo";
 import { userRepo } from "../repo/User.repo";
@@ -12,6 +12,8 @@ import { persistUserRepo } from "../repo/PersistUser.repo";
 import { logRepo } from "../repo/Log.repo";
 import { configRepo } from "../repo/Config.repo";
 import { ResponseEntity } from "../class/Response.class";
+import { inquiryQuery } from "../query/Inquiry.query";
+import { inquiryRepo } from "../repo/Inquiry.repo";
 
 //테이블,좌석 초기화
 export function init(){
@@ -69,22 +71,24 @@ export function checkIn(name: string, phone_number: string, seat_id: number){
     return new ResponseEntity("예약 오류",400,"이미 예약된 좌석입니다.");
   }
 
-  if(userRepo.is_exist(phone_number)) {
-    return new ResponseEntity("예약 오류",400,"이미 예약된 번호입니다.");
+  if(userRepo.is_exist(phone_number)){
+    return new ResponseEntity("예약 오류",400,"이미 예약된 전화번호입니다.");
   }
 
   if (!persistUserRepo.is_exist(name, phone_number)) {
     persistUserRepo.create(name, phone_number);
   }
-  let user_id = userRepo.create(name, phone_number);
+  //여기서 user_id가 진짜 user_id가 아니다. create 하면 열의 순서가 나오는것이기때문에 따로 찾아야된다.
+  userRepo.create(name, phone_number);
+  let user_id_dto = userRepo.find_user_id(name,phone_number) as USER_ID_DTO;
   let time = "+" + configRepo.find().reservation_time.toString() + " hours";
-  let reservation_id = reservationRepo.create(user_id, seat_id, time);
+  let reservation_id = reservationRepo.create(user_id_dto.user_id, seat_id, time);
 
   seatRepo.update_status(seat_id, "reserved")
 
   //로그남기기
   logRepo.create(seat_id, persistUserRepo.find_id(name, phone_number), "reservation")
-  return new ResponseEntity(reservation_id,200);
+  return new ResponseEntity(reservation_id,200,"입실이 완료되었습니다.");
 }
 
 export function deleteAllUser(){
@@ -116,7 +120,7 @@ export function checkOut(name:string,phone_number:string){
   //로그
   logRepo.create(seat_id, persistUserRepo.find_id(name,phone_number),"manual-checkOut")
 
-  return new ResponseEntity(result.changes>0,200);
+  return new ResponseEntity(result.changes>0,200,"퇴실 완료되었습니다.");
 }
 
 //연장기능
@@ -146,7 +150,7 @@ export function extend(name:string,phone_number:string){
   }
   //로그
   logRepo.create(seat_id, persistUserRepo.find_id(name,phone_number),"extend")
-  return new ResponseEntity(result.changes>0,200);
+  return new ResponseEntity(result.changes>0,200,"연장되었습니다.");
 }
 
 //퇴실요청 기능
@@ -167,7 +171,7 @@ export function askCheckOut(seat_id:number,name:string,phone_number:string){
   let persist_user_id = persistUserRepo.find_id(name,phone_number);
   logRepo.create(seat_id, persist_user_id,"ask-CheckOut")
 
-  return new ResponseEntity(result.changes>0,200);
+  return new ResponseEntity(result.changes>0,200,"퇴실요청이 완료되었습니다.");
 }
 
 
@@ -226,4 +230,26 @@ export function viewConfig(){
 export function updateConfig(reservation_time:number,extend_time:number,ask_checkout_time:number){
   let result = configRepo.update_all(reservation_time,extend_time,ask_checkout_time);
   return new ResponseEntity(result.changes>0,200);
+}
+
+export function initConfig(){
+  let result = configRepo.update_all(2,1,30);
+  return new ResponseEntity(result.changes>0,200);
+}
+
+export function createInquiry(name:string,phone_number:string,title:string,content:string){
+  if(!persistUserRepo.is_exist(name,phone_number)){
+    persistUserRepo.create(name, phone_number);
+  }
+  let persist_user_id = persistUserRepo.find_id(name,phone_number);
+
+  inquiryRepo.create(persist_user_id,title,content);
+
+  //로그
+  logRepo.create(1,persist_user_id,"inquiry");
+}
+
+export function viewAllInquiry(){
+  let inquiries = inquiryRepo.find_all();
+  return new ResponseEntity(inquiries,200);
 }

@@ -2,8 +2,6 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { getCurrentTime, getPlusTime } from '@/utils/getTime';
 import '@/styles/InPrompt.css';
 import { UserInfoType } from '@/types/InfoType';
-import { Config } from '../../../main/data/type/Entity.type';
-import { ResponseEntity } from '../../../main/data/class/Response.class';
 
 type PropsType = {
   roomNum: string;

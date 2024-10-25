@@ -74,4 +74,5 @@ export enum FeatureTranslations {
   'extend' = '연장',
   'manual-checkOut' = '수동퇴실',
   'reservation' = '예약',
+  'inquiry'='문의',
 }

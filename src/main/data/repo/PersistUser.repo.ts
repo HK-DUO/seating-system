@@ -25,7 +25,7 @@ function find_persist_user_id(name:string,phone_number:string){
 
   const stmt = db.prepare(persistUserQuery.find_id);
   let result = stmt.get(name, phone_number) as { persist_user_id:number }
-
+  //TODO: 여기서 만약 name,phone에 대응하는 result가 안나오면 return값이 무엇인될지
   return result.persist_user_id;
 }
 function create_persist_user(name:string,phone_number:string){

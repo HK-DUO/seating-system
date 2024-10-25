@@ -42,7 +42,7 @@ export type LOG={
   feature:string;
 }
 
-export type Config={
+export type CONFIG={
   config_id:number;
   reservation_time:number;
   extend_time:number;
@@ -50,4 +50,10 @@ export type Config={
   password:string;
 }
 
-
+export type INQUIRY={
+  inquiry_id:number;
+  persist_user_id:number;
+  title:string;
+  content:string;
+  created_at:string;
+}

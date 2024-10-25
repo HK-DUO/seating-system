@@ -29,11 +29,11 @@ import {
   viewConfig,
   updateConfig,
   reset,
-  checkingPassword,
-} from './data/controller/Data.controller';
+  checkingPassword, initConfig, createInquiry, viewAllInquiry
+} from "./data/controller/Data.controller";
 import { ResponseEntity } from './data/class/Response.class';
 import { LOG_DTO, READING_ROOM_DTO } from './data/type/Dto.type';
-import { Config } from './data/type/Entity.type';
+import { CONFIG} from "./data/type/Entity.type";
 
 class AppUpdater {
   constructor() {
@@ -201,7 +201,7 @@ app
       return checkingPassword(password);
     });
     ipcMain.handle('config:view', async () => {
-      return viewConfig() as ResponseEntity<Config>;
+      return viewConfig() as ResponseEntity<CONFIG>;
     });
     ipcMain.handle(
       'config:update',
@@ -214,6 +214,15 @@ app
         return updateConfig(reservation_time, extend_time, ask_checkout_time);
       },
     );
+    ipcMain.handle('config:init',async()=>{
+      return initConfig() as ResponseEntity<boolean>
+    });
+    ipcMain.handle('inquiry:submit',async(_,name:string,phone_number:string,title:string,content:string)=>{
+      return createInquiry(name,phone_number,title,content);
+    });
+    ipcMain.handle('inquiry:view',async()=>{
+      return viewAllInquiry();
+    })
     ipcMain.on('app:requestClose', (event) => {
       canCloseApp = true;
       app.quit(); // Close the app
