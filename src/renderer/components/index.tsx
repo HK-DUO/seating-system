@@ -10,12 +10,11 @@ export { Alert, Confirm, InPrompt, OutPrompt, Prompt, UserPrompt };
 
 // admin
 import AdminLog from './Admin/AdminLog';
-import AdminMain from './Admin/AdminMain';
 import AdminNav from './Admin/AdminNav';
 import AdminSetting from './Admin/AdminSetting';
 import AdminUser from './Admin/AdminUser';
 
-export { AdminLog, AdminMain, AdminNav, AdminSetting, AdminUser };
+export { AdminLog, AdminNav, AdminSetting, AdminUser };
 
 // sidebar
 import SideBar from './SideBar/SideBar';

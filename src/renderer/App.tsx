@@ -3,6 +3,7 @@ import MainRouter from './layouts/MainRouter';
 import './styles/App.css';
 import { useDialog } from './hooks/useDialog';
 import prompt from './components/Dialog/Prompt';
+import { ResType } from './types/resType';
 
 function App() {
   const { alert, confirm } = useDialog();
@@ -26,21 +27,16 @@ function App() {
       '데이터를 초기화하시겠습니까?\n앱이 종료될때까지 다시 묻지 않습니다.',
     ).then((res) => {
       if (res) {
-        window.electron.reset().then(async (res: any) => {
+        window.electron.reset().then(async (res: ResType<string>) => {
           if (res.code == 200) {
-            await alert(
-              '데이터초기화',
-              '데이터가 성공적으로 초기화 되었습니다.',
-            ).then(() => {
+            await alert('데이터초기화', res.message).then(() => {
               localStorage.setItem('askDbReset', 'true');
               window.location.reload();
             });
           } else {
-            await alert('데이터초기화', '데이터 초기화에 실패했습니다.').then(
-              () => {
-                localStorage.setItem('askDbReset', 'true');
-              },
-            );
+            await alert('데이터초기화', res.message).then(() => {
+              localStorage.setItem('askDbReset', 'true');
+            });
           }
         });
       } else {

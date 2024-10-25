@@ -4,6 +4,7 @@ import { useDialog } from '@/hooks/useDialog';
 import { RoomInfoType } from '@/types/InfoType';
 import { InComeIc, OutComeIc } from '@/assets/svg';
 import '@/styles/SideBar.css';
+import { ResType } from '@/types/resType';
 
 type PropsType = {
   selectRoom?: number;
@@ -27,7 +28,7 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
               let ok = false;
               while (!ok) {
                 await inPrompt(String(selectRoom), String(selectSeat)).then(
-                  async (res: any) => {
+                  async (res) => {
                     if (res) {
                       if (res.name == '') {
                         await alert('오류', '이름을 입력하세요.');
@@ -36,9 +37,9 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
                       } else {
                         await window.electron
                           .checkIn(res.name, res.number, item.id)
-                          .then(async (res) => {
+                          .then(async (res: ResType<string>) => {
                             if (res.code == 200) {
-                              await alert('입실', '좌석입실이 완료되었습니다.');
+                              await alert('입실', res.message);
                               ok = true;
                               window.location.reload();
                             } else {
@@ -73,9 +74,9 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
           } else {
             await window.electron
               .checkOut(res.name, res.number)
-              .then(async (res) => {
-                if (res.data == true) {
-                  await alert('퇴실', '퇴실이 완료되었습니다');
+              .then(async (res: ResType<boolean>) => {
+                if (res.code == 200) {
+                  await alert('퇴실', res.message);
                   ok = true;
                   window.location.reload();
                 } else {
@@ -102,9 +103,9 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
           } else {
             await window.electron
               .extend(res.name, res.number)
-              .then(async (res: any) => {
+              .then(async (res: ResType<boolean>) => {
                 if (res.data) {
-                  await alert('연장', '이용시간 연장이 완료되었습니다.');
+                  await alert('연장', res.message);
                   ok = true;
                   window.location.reload();
                 } else {
@@ -140,12 +141,9 @@ function SideBar({ selectRoom, selectSeat, room }: PropsType) {
                       } else {
                         await window.electron
                           .askCheckout(item.id, res.name, res.number)
-                          .then(async (res: any) => {
-                            if (res.data) {
-                              await alert(
-                                '퇴실요청',
-                                '퇴실요청이 완료되었습니다.',
-                              );
+                          .then(async (res: ResType<boolean>) => {
+                            if (res.code == 200) {
+                              await alert('퇴실요청', res.message);
                               ok = true;
                               window.location.reload();
                             } else {

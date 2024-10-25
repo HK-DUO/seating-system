@@ -1,16 +1,16 @@
-export class ResponseEntity<T>{
-  data:T;
-  code:number;
-  message:string|null;
+export class ResponseEntity<T> {
+  data: T;
+  code: number;
+  message: string | null;
 
-  constructor(data:T,code:number,message:string|null);
-  constructor(data:T,code:number);
-  constructor(data:T);
+  constructor(data: T, code: number, message: string | null);
+  constructor(data: T, code: number);
+  constructor(data: T);
 
-  constructor(data:T,code?:number,message?:string|null){
-    this.data=data;
-    this.code = code !==undefined?code:200;
-    this.message = message !==undefined? message : null;
+  constructor(data: T, code?: number, message?: string | null) {
+    this.data = data;
+    this.code = code !== undefined ? code : 200;
+    this.message = message !== undefined ? message : null;
   }
 
   toJSON() {
@@ -21,4 +21,3 @@ export class ResponseEntity<T>{
     };
   }
 }
-

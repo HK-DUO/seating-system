@@ -1,6 +1,7 @@
 import '@/styles/AdminSetting.css';
 import { useEffect, useState } from 'react';
 import { useDialog } from '@/hooks/useDialog';
+import { ResType } from '@/types/resType';
 
 function AdminSetting() {
   const { alert } = useDialog();
@@ -16,12 +17,25 @@ function AdminSetting() {
   }, []);
 
   const viewConfig = async () => {
-    let res = await window.electron.viewConfig();
-    setBasicTime({
-      checkInTime: res.data.reservation_time,
-      extendTime: res.data.extend_time,
-      askCheckOutTime: res.data.ask_checkout_time,
-    });
+    await window.electron.viewConfig().then(
+      async (
+        res: ResType<{
+          reservation_time: number;
+          extend_time: number;
+          ask_checkout_time: number;
+        }>,
+      ) => {
+        if (res.code == 200) {
+          setBasicTime({
+            checkInTime: res.data.reservation_time,
+            extendTime: res.data.extend_time,
+            askCheckOutTime: res.data.ask_checkout_time,
+          });
+        } else {
+          await alert(res.message);
+        }
+      },
+    );
   };
 
   const onChange = (e: any) => {
@@ -31,17 +45,19 @@ function AdminSetting() {
   };
 
   const onSubmit = async () => {
-    let res = await window.electron.updateConfig(
-      basicTime.checkInTime,
-      basicTime.extendTime,
-      basicTime.askCheckOutTime,
-    );
-    if (res.code == 200) {
-      await alert('기본설정', '기본설정이 정상적으로 변경되었습니다.');
-      await viewConfig();
-    } else {
-      await alert('오류', '기본설정 변경에 오류가 발생했습니다.');
-    }
+    await window.electron
+      .updateConfig(
+        basicTime.checkInTime,
+        basicTime.extendTime,
+        basicTime.askCheckOutTime,
+      )
+      .then(async (res: ResType<any>) => {
+        if (res.code == 200) {
+          await alert('기본설절', res.message);
+        } else {
+          await alert('오류', res.message);
+        }
+      });
   };
 
   return (
