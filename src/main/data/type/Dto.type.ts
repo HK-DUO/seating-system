@@ -75,4 +75,5 @@ export enum FeatureTranslations {
   'manual-checkOut' = '수동퇴실',
   'reservation' = '예약',
   'inquiry'='문의',
+  'data-reset'='데이터 초기화'
 }

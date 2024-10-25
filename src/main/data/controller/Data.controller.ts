@@ -97,6 +97,16 @@ export function deleteAllUser(){
   return new ResponseEntity(true,200,"모든 사용자 삭제 완료");
 }
 
+export function checkOutForce(seat_id:number){
+  let user_id = reservationRepo.find_user_id(seat_id);
+  //seat_id로 유저아이디찾고
+  //입실삭제하고
+  //유저삭제하고
+  //좌석상태변경하기
+  //로그남기기
+}
+
+
 //수동 퇴실기능
 export function checkOut(name:string,phone_number:string){
 
@@ -232,11 +242,13 @@ export function updateConfig(reservation_time:number,extend_time:number,ask_chec
   return new ResponseEntity(result.changes>0,200);
 }
 
+//설정 초기화
 export function initConfig(){
   let result = configRepo.update_all(2,1,30);
   return new ResponseEntity(result.changes>0,200);
 }
 
+//문의사항 만들기
 export function createInquiry(name:string,phone_number:string,title:string,content:string){
   if(!persistUserRepo.is_exist(name,phone_number)){
     persistUserRepo.create(name, phone_number);
@@ -247,8 +259,10 @@ export function createInquiry(name:string,phone_number:string,title:string,conte
 
   //로그
   logRepo.create(1,persist_user_id,"inquiry");
+  return new ResponseEntity("문의사항 전달완료",200,"문의사항이 등록되었습니다.");
 }
 
+//문의사항 전체 보기
 export function viewAllInquiry(){
   let inquiries = inquiryRepo.find_all();
   return new ResponseEntity(inquiries,200);
