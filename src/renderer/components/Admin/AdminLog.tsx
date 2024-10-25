@@ -67,8 +67,6 @@ function AdminLog() {
       setValue({ ...value, pageNation: value.pageNation - 1 });
   };
 
-  // const logDataList =
-
   return (
     <div className={'admin-log'}>
       <div className={'admin-log-filter'}>
